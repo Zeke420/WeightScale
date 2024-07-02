@@ -1,0 +1,62 @@
+﻿<Window x:Class="WeightScale.Presentation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:WeightScale.Presentation.ViewModel"
+        Title="{Binding TitleWithVersion, Mode=OneTime}"
+        d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel}"
+        mc:Ignorable="d"
+        Height="900"
+        Width="1280"
+        MinHeight="560"
+        MinWidth="1280"
+        FontSize="20">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Brushes.xaml" />
+                <ResourceDictionary Source="/Resources/Converters.xaml" />
+                <ResourceDictionary Source="/Resources/Styles.xaml" />
+
+                <ResourceDictionary Source="/Resources/Styles/ComboBox/ComboBoxMain.xaml" />
+
+                <ResourceDictionary Source="/Resources/Styles/Button/ButtonMain.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Button/ButtonMainSmall.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Button/ButtonSecondary.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Button/ButtonSecondarySmall.xaml" />
+
+                <ResourceDictionary Source="Resources/Styles/TextBox/TextBoxMain.xaml" />
+                <ResourceDictionary Source="Resources/Styles/TextBox/PasswordBox.xaml" />
+
+                <ResourceDictionary Source="Resources/Styles/Border/BorderMain.xaml" />
+
+                <ResourceDictionary Source="/Resources/Styles/DataGrid/DataGridMain.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/CheckBox/CheckBoxMain.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ScrollVIew/ScrollViewMain.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <ContentControl Grid.Row="1"
+                        Content="{Binding NavigationService.HeaderRegion}" />
+        
+        <ContentControl Grid.Row="2"
+                        Content="{Binding NavigationService.MainRegion}" />
+        
+        <ContentControl Grid.Row="3"
+                        Panel.ZIndex="1"
+                        Content="{Binding NavigationService.FooterRegion}" />
+        
+        <StatusBar Grid.Row="3"
+                   Panel.ZIndex="0" />
+    </Grid>
+</Window>

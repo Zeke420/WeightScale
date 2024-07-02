@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:WeightScale.Presentation.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <converters:ListViewHeightConverter x:Key="HeightConverter" />
+        </ResourceDictionary>
+        <ResourceDictionary Source="/Resources/Styles/ScrollView/Base/ScrollViewColors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <ControlTemplate x:Key="ScrollViewTemplate"
+                     TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.RowSpan="2"
+                    BorderThickness="0"
+                    Background="{StaticResource ScrollView.Primary.Background}"
+                    CornerRadius="6"
+                    Margin="0,0,0,2"
+                    Height="{TemplateBinding ActualHeight,
+                    Converter={StaticResource HeightConverter}, ConverterParameter=4}" />
+            <Track IsDirectionReversed="True"
+                   Panel.ZIndex="1"
+                   x:Name="PART_Track"
+                   Grid.Row="1"
+                   Grid.RowSpan="1"
+                   ViewportSize="100">
+                <Track.Thumb>
+                    <Thumb IsHitTestVisible="True"
+                           Margin="0,0,0,2"
+                           BorderThickness="0"
+                           Foreground="{StaticResource ScrollView.Primary.Thumb}"
+                           Background="{StaticResource ScrollView.Primary.Thumb}">
+                        <Thumb.Template>
+                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                <Rectangle Fill="{StaticResource ScrollView.Primary.BorderBrush}"
+                                           RadiusY="6"
+                                           RadiusX="6" />
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

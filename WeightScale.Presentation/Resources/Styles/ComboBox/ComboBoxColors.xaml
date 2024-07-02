@@ -1,0 +1,77 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="ComboBox.Static.Background"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Button.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Static.Editable.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Background"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Button.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Static.Border"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Static.Editable.Border"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Glyph"
+                     Color="{StaticResource SecondaryText}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Border"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Border"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Editable.Button.Border"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Glyph"
+                     Color="{StaticResource SecondaryText}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Border"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Border"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Pressed.Editable.Button.Border"
+                     Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Glyph"
+                     Color="{StaticResource Grey}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Background"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Border"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Background"
+                     Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Border"
+                     Color="{StaticResource SecondaryDark}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Background"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Editable.Button.Border"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="ComboBox.Static.Glyph"
+                     Color="{StaticResource GreyDark}" />
+    <SolidColorBrush x:Key="ComboBox.ForegroundPrimary"
+                     Color="{StaticResource PrimaryText}" />
+    <SolidColorBrush x:Key="ComboBox.ForegroundSecondary"
+                     Color="{StaticResource SecondaryText}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Foreground"
+                     Color="{StaticResource Grey}" />
+    <SolidColorBrush x:Key="ComboBox.KeyboardFocused.Element.Border"
+                     Color="{StaticResource PrimaryDark}" />
+    <SolidColorBrush x:Key="ComboBox.MouseOver.BorderBrush"
+                     Color="{StaticResource BrushLightSteelBlue}" />
+    <SolidColorBrush x:Key="ComboBox.Disabled.Background.Gray"
+                     Color="{StaticResource Secondary}" />
+
+</ResourceDictionary>

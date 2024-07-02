@@ -1,0 +1,39 @@
+<Window x:Class="WeightScale.Presentation.Dialogs.MessageDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="MessageDialog" 
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/Button/ButtonMain.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            x:Name="Message"
+            Grid.Row="0"
+            Margin="0,6,0,0"
+            FontSize="20"
+            HorizontalAlignment="Center"
+            TextWrapping="Wrap"/>
+        <Button
+            Grid.Row="1"
+            Margin="16,16,16,0"
+            FontWeight="Bold"
+            Width="60"
+            HorizontalAlignment="Center"
+            Click="ButtonOk_OnClick"
+            IsDefault="True"
+            Content="Ok"/>
+    </Grid>
+</Window>

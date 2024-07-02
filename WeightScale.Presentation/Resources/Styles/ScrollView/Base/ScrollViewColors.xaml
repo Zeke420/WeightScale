@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <SolidColorBrush x:Key="ScrollView.Primary.BorderBrush"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="ScrollView.Primary.Background"
+                     Color="{StaticResource PrimaryBackground}" />
+    <SolidColorBrush x:Key="ScrollView.Primary.Thumb"
+                     Color="{StaticResource PrimaryBlue100}" />
+</ResourceDictionary>

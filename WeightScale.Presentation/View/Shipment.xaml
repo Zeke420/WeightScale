@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="WeightScale.Presentation.View.Shipment"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding ShipmentViewModel, Source={StaticResource Locator}}"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel>
+            <DatePicker x:Name="datePicker" SelectedDate="{Binding SelectedDate}" />
+            <ComboBox x:Name="courierComboBox"
+                      ItemsSource="{Binding Couriers}"
+                      SelectedItem="{Binding SelectedCourier}"
+                      DisplayMemberPath="Name" />
+
+            <Button Content="Add Courier"
+                    Command="{Binding AddCourierCommand}" />
+            
+            <Button Content="Get Shipments"
+                    Command="{Binding LoadShipmentsCommand}" />
+
+            <ListBox x:Name="ShipmentsListBox" 
+                     ItemsSource="{Binding Shipments}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Courier.Name}" />
+                            <Button Content="Delete"
+                                    Command="{Binding DataContext.DeleteShipmentCommand, ElementName=ShipmentsListBox}"
+                                    CommandParameter="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

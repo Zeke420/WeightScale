@@ -1,0 +1,78 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:WeightScale.Presentation.Converters">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../ComboBoxColors.xaml" />
+        <ResourceDictionary>
+            <converters:ListViewHeightConverter x:Key="HeightConverter" />
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="ComboBoxToggleButtonTemplate"
+                     TargetType="{x:Type ToggleButton}">
+        <Border x:Name="templateRoot"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{StaticResource ComboBox.Static.Border}"
+                BorderThickness="1"
+                Focusable="False"
+                CornerRadius="4"
+                SnapsToDevicePixels="true">
+            <Border x:Name="splitBorder"
+                    Width="{Binding ElementName=templateRoot, Path=ActualWidth,
+                    Converter={StaticResource HeightConverter}, ConverterParameter=200}"
+                    Margin="0"
+                    HorizontalAlignment="Right"
+                    BorderThickness="2"
+                    SnapsToDevicePixels="true">
+                <Border x:Name="Border"
+                        Width="20"
+                        Height="28"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="2"
+                        CornerRadius="2"
+                        ClipToBounds="True">
+                    <Path x:Name="CheckMark"
+                          Width="10"
+                          Height="8"
+                          HorizontalAlignment="Left"
+                          Margin="0,0,0,0"
+                          VerticalAlignment="Center"
+                          Data="F1M0,0L2.667,2.66665 5.3334,0 0,0z"
+                          Stretch="Fill"
+                          Fill="{StaticResource ComboBox.MouseOver.Editable.Button.Border}"
+                          Stroke="{StaticResource ComboBox.MouseOver.Editable.Button.Border}"
+                          StrokeEndLineCap="Round"
+                          StrokeStartLineCap="Round"
+                          StrokeThickness="3" />
+                </Border>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver"
+                               Value="True" />
+                    <Condition Property="IsChecked"
+                               Value="False" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter TargetName="templateRoot"
+                            Property="BorderBrush"
+                            Value="{StaticResource ComboBox.MouseOver.Editable.Button.Border}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter TargetName="CheckMark"
+                        Property="Visibility"
+                        Value="Collapsed" />
+                <Setter TargetName="templateRoot"
+                        Property="BorderBrush"
+                        Value="{StaticResource ComboBox.Disabled.Background.Gray}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+</ResourceDictionary>

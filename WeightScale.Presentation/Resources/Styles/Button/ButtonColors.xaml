@@ -1,0 +1,44 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="Button.Primary.BorderBrush"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="Button.Primary.Background"
+                     Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="Button.Primary.MouseOver.Background"
+                     Color="{StaticResource PrimaryDark}" />
+    <SolidColorBrush x:Key="Button.Primary.MouseOver.BorderBrush"
+                     Color="{StaticResource PrimaryDark}" />
+    <SolidColorBrush x:Key="Button.Primary.Disabled.Background"
+                     Color="{StaticResource GreyLight}" />
+    <SolidColorBrush x:Key="Button.Primary.Disabled.Border"
+                     Color="{StaticResource Grey}" />
+    <SolidColorBrush x:Key="Button.Primary.Disabled.Foreground"
+                     Color="{StaticResource GreyDark}" />
+    <SolidColorBrush x:Key="Button.Primary.Enabled.Foreground"
+                     Color="{StaticResource SecondaryText}" />
+    <SolidColorBrush x:Key="Button.Primary.ShadowColor"
+                     Color="{StaticResource MainShadow}" />
+
+    <SolidColorBrush x:Key="Button.Secondary.BorderBrush"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="Button.Secondary.Background"
+                     Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="Button.Secondary.MouseOver.Background"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="Button.Secondary.MouseOver.BorderBrush"
+                     Color="{StaticResource PrimaryLight}" />
+    <SolidColorBrush x:Key="Button.Secondary.Disabled.Background"
+                     Color="{StaticResource GreyLight}" />
+    <SolidColorBrush x:Key="Button.Secondary.Disabled.Border"
+                     Color="{StaticResource Grey}" />
+    <SolidColorBrush x:Key="Button.Secondary.Disabled.Foreground"
+                     Color="{StaticResource GreyDark}" />
+    <SolidColorBrush x:Key="Button.Secondary.Enabled.Foreground"
+                     Color="{StaticResource SecondaryText}" />
+
+</ResourceDictionary>

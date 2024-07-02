@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ComboBoxColors.xaml" />
+
+        <ResourceDictionary Source="Base/ComboBoxItem.xaml" />
+        <ResourceDictionary Source="Base/ComboBoxItemStyle.xaml" />
+
+        <ResourceDictionary Source="Base/ComboBoxToggleButton.xaml" />
+        <ResourceDictionary Source="Base/ComboBoxToggleButtonStyle.xaml" />
+
+        <ResourceDictionary Source="Base/ComboBoxTemplate.xaml" />
+        <ResourceDictionary Source="Base/ComboBoxEditableTextBoxStyle.xaml" />
+
+        <ResourceDictionary Source="Base/ComboBoxEditableTemplate.xaml" />
+        <ResourceDictionary Source="Base/ComboBoxStyle.xaml" />
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
