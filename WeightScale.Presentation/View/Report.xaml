@@ -3,10 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:WeightScale.Presentation.View"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             DataContext="{Binding ReportViewModel, Source={StaticResource Locator}}"
+             mc:Ignorable="d">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <DatePicker SelectedDate="{Binding StartDate}" />
+            <DatePicker SelectedDate="{Binding EndDate}" />
+            
+            <ComboBox ItemsSource="{Binding Couriers}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Courier.Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <Button Content="Load Data"
+                    Command="{Binding LoadDataCommand}" />
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Shipments}" Grid.Row="1" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Shipment Date" Binding="{Binding ShipmentDate}" />
+                <DataGridTextColumn Header="Courier" Binding="{Binding Courier.Name}" />
+                <DataGridCheckBoxColumn Header="Is Finished" Binding="{Binding IsFinished}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
