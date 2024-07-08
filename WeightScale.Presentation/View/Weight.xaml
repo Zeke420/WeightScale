@@ -42,8 +42,23 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Full Weight" Binding="{Binding FullWeight}" />
                                     <DataGridTextColumn Header="Empty Weight" Binding="{Binding EmptyWeight}" />
+                                    <DataGridTemplateColumn Header="Actions">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Button Content="↑"
+                                                            Command="{Binding DataContext.MovePackageUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                            CommandParameter="{Binding}" />
+                                                    <Button Content="↓"
+                                                            Command="{Binding DataContext.MovePackageDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                            CommandParameter="{Binding}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
+
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
