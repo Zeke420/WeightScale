@@ -22,6 +22,8 @@ public class WeightViewModel : ViewModelBase
         
         SelectedDate = DateTime.Today;
         CompleteShipmentCommand = new DelegateCommand(CompleteShipment);
+        MovePackageUpCommand = new DelegateCommand(MovePackageUp);
+        MovePackageDownCommand = new DelegateCommand(MovePackageDown);
         Shipments = new List<Shipment>();
     }
 
@@ -31,6 +33,8 @@ public class WeightViewModel : ViewModelBase
     }
 
     public DelegateCommand CompleteShipmentCommand { get; set; }
+    public DelegateCommand MovePackageUpCommand { get; set; }
+    public DelegateCommand MovePackageDownCommand { get; set; }
 
     public DateTime SelectedDate
     {
@@ -65,10 +69,51 @@ public class WeightViewModel : ViewModelBase
         OnPropertyChanged(nameof(Shipments));
         GetShipmentWeightByDate(_selectedDate);
     }
+    
     private void GetShipmentWeightByDate(DateTime date)
     {
         Shipments?.Clear();
         Shipments = _weightService.GetShipmentWeightByDate(date);
+    }
+    
+    private void MovePackageDown(object obj)
+    {
+        if (!(obj is Package package))
+        {
+            return;
+        }
+
+        var shipment = Shipments.Find(s => s.Id == package.ShipmentId);
+        var index = Shipments.IndexOf(shipment);
+        var nextShipment = Shipments[index + 1];
+        
+        if(nextShipment == null)
+        {
+            return;
+        }
+        
+        _shipmentService.MovePackage(package, nextShipment);
+        GetShipmentWeightByDate(_selectedDate);
+    }
+    
+    private void MovePackageUp(object obj)
+    {
+        if (!(obj is Package package))
+        {
+            return;
+        }
+
+        var shipment = Shipments.Find(s => s.Id == package.ShipmentId);
+        var index = Shipments.IndexOf(shipment);
+        var previousShipment = Shipments[index - 1];
+        
+        if(previousShipment == null)
+        {
+            return;
+        }
+        
+        _shipmentService.MovePackage(package, previousShipment);
+        GetShipmentWeightByDate(_selectedDate);
     }
 }
 }
