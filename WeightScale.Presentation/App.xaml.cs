@@ -92,6 +92,7 @@ namespace WeightScale.Presentation
             services.AddTransient<IDialogService, DialogService>();
 
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IFileExportService, FileExportService>();
             services.AddSingleton<IMessenger, Messenger>();
 
             services.AddSingleton<IDeviceManager, DeviceManager>();

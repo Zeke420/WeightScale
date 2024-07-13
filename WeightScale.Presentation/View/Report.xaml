@@ -24,6 +24,8 @@
             
             <Button Content="Load Data"
                     Command="{Binding LoadDataCommand}" />
+            <Button Content="Export"
+                    Command="{Binding ExportDataCommand}"/>
         </StackPanel>
         <DataGrid ItemsSource="{Binding Shipments}" Grid.Row="1" AutoGenerateColumns="False">
             <DataGrid.Columns>
