@@ -58,7 +58,9 @@ namespace WeightScale.Integration.Fixtures.Scale
 
                 var isInput1 = _wtxDevice.DigitalIO.Input1;
 
-                if (isInput1 && !_is1DigitalInput1ActiveLastState && !_isWeightDataProcessed)
+                if (isInput1 
+                    && !_is1DigitalInput1ActiveLastState 
+                    && !_isWeightDataProcessed)
                 {
                     OnWeightDataReceived(e.ProcessData.Weight.Net);
                     _isInput1ActiveLastState = true;

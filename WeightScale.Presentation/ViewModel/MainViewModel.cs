@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using System.Windows;
+using Microsoft.Extensions.Options;
+using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
 using WeightScale.Presentation.Enums;
 using WeightScale.Presentation.Resources.Constants;
@@ -11,16 +13,20 @@ namespace WeightScale.Presentation.ViewModel
     {
         private readonly IDialogService _dialogService;
         private INavigationService _navigationService;
+        private readonly ApplicationSettings _applicationSettings;
 
         public MainViewModel(INavigationService navigationService,
                              IDialogService dialogService,
-                             IPackageService packageService)
+                             IPackageService packageService,
+                             IOptions<ApplicationSettings> applicationSettings)
         {
             _navigationService = navigationService;
             _dialogService = dialogService;
+            _applicationSettings = applicationSettings.Value;
             _navigationService.NavigateTo<HeaderViewModel>(NavigationRegion.Header);
             _navigationService.NavigateTo<WeightViewModel>(NavigationRegion.Main);
-            //packageService.ConnectDevices("192.168.1.37","192.168.1.38");
+            // packageService.ConnectDevices(_applicationSettings.IpAddressFullWeight,
+            //                               _applicationSettings.IpAddressEmptyWeight);
         }
 
         public string TitleWithVersion

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
 using WeightScale.DataAccessLayer.Entities;
@@ -13,6 +15,7 @@ namespace WeightScale.Presentation.ViewModel
     {
         private readonly IShipmentService _shipmentService;
         private readonly ICourierService _courierService;
+        private readonly IFileExportService _fileExportService;
         
         private DateTime _startDate;
         private DateTime _endDate;
@@ -20,10 +23,12 @@ namespace WeightScale.Presentation.ViewModel
         private List<Shipment> _shipments;
 
         public ReportViewModel(IShipmentService shipmentService,
-                               ICourierService courierService)
+                               ICourierService courierService,
+                               IFileExportService fileExportService)
         {
             _shipmentService = shipmentService;
             _courierService = courierService;
+            _fileExportService = fileExportService;
 
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;
@@ -31,13 +36,15 @@ namespace WeightScale.Presentation.ViewModel
             Shipments = new ObservableCollection<Shipment>();
             
             LoadDataCommand = new DelegateCommand(LoadData);
+            ExportDataCommand = new DelegateCommand(ExportData);
             LoadCouriers();
         }
-        
+
         public ObservableCollection<CouriersSelectionModel> Couriers { get; set; }
         public ObservableCollection<Shipment> Shipments { get; set; }
         
         public DelegateCommand LoadDataCommand { get; set; }
+        public DelegateCommand ExportDataCommand { get; set; }
 
         public DateTime StartDate
         {
@@ -97,6 +104,12 @@ namespace WeightScale.Presentation.ViewModel
             }
             
             OnPropertyChanged(nameof(Couriers));
+        }
+
+        private void ExportData(object obj)
+        {
+            var shipments = Shipments.ToList();
+            _fileExportService.ExportToCsv(shipments);
         }
     }
 }
