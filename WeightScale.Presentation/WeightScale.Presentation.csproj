@@ -130,6 +130,7 @@
             <SubType>Designer</SubType>
         </ApplicationDefinition>
         <Compile Include="Command\DelegateCommand.cs" />
+        <Compile Include="Converters\BooleanToConnectionStatusConverter.cs" />
         <Compile Include="Converters\EnumBindingSourceExtension.cs" />
         <Compile Include="Converters\IndexConverter.cs" />
         <Compile Include="Converters\InvertBoolConverter.cs" />
@@ -148,13 +149,12 @@
         <Compile Include="Resources\Views\TextBlockResources.Designer.cs" />
         <Compile Include="Services\DialogService.cs" />
         <Compile Include="Services\Interfaces\IDialogService.cs" />
-        <Compile Include="Services\Interfaces\IMessenger.cs" />
         <Compile Include="Services\Interfaces\INavigationAware.cs" />
         <Compile Include="Services\Interfaces\INavigationService.cs" />
-        <Compile Include="Services\Messenger.cs" />
         <Compile Include="Services\NavigationService.cs" />
         <Compile Include="ValidationRules\DateTextBoxValidationRule.cs" />
         <Compile Include="ViewModel\CourierViewModel.cs" />
+        <Compile Include="ViewModel\FooterViewModel.cs" />
         <Compile Include="ViewModel\HeaderViewModel.cs" />
         <Compile Include="ViewModel\MainViewModel.cs" />
         <Compile Include="ViewModel\ReportViewModel.cs" />
@@ -163,6 +163,9 @@
         <Compile Include="ViewModel\WeightViewModel.cs" />
         <Compile Include="View\Courier.xaml.cs">
           <DependentUpon>Courier.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="View\Footer.xaml.cs">
+          <DependentUpon>Footer.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Header.xaml.cs">
           <DependentUpon>Header.xaml</DependentUpon>
@@ -238,6 +241,7 @@
         <Page Include="Resources\Styles\TextBox\TextBoxColors.xaml" />
         <Page Include="Resources\Styles\TextBox\TextBoxMain.xaml" />
         <Page Include="View\Courier.xaml" />
+        <Page Include="View\Footer.xaml" />
         <Page Include="View\Header.xaml" />
         <Page Include="View\Report.xaml" />
         <Page Include="View\Shipment.xaml" />

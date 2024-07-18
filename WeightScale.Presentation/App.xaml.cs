@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity.Infrastructure;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
+using WeightScale.BusinessLogicLayer.Utils;
 using WeightScale.DataAccessLayer.Contexts;
 using WeightScale.DataAccessLayer.Repository;
 using WeightScale.DataAccessLayer.Repository.Implementation;
@@ -63,8 +63,7 @@ namespace WeightScale.Presentation
             var applicationSettings = configuration.Get<ApplicationSettings>()
                                       ?? throw new ArgumentNullException(nameof(ApplicationSettings));
 
-            var resourceManager = new ResourceManager(
-                                                      "WeightScale.BusinessLogicLayer.Resources",
+            var resourceManager = new ResourceManager("WeightScale.BusinessLogicLayer.Resources",
                                                       Assembly.GetExecutingAssembly());
 
             services.Configure<ApplicationSettings>(configuration);
@@ -74,12 +73,13 @@ namespace WeightScale.Presentation
             services.AddSingleton<ViewModelLocator>();
             services.AddTransient<MainWindow>();
 
-            services.AddTransient<MainViewModel>();
+            services.AddSingleton<MainViewModel>();
             services.AddTransient<HeaderViewModel>();
             services.AddTransient<CourierViewModel>();
             services.AddTransient<ShipmentViewModel>();
-            services.AddTransient<WeightViewModel>();
+            services.AddSingleton<WeightViewModel>();
             services.AddTransient<ReportViewModel>();
+            services.AddSingleton<FooterViewModel>();
 
             services.AddSingleton<Func<Type, ViewModelBase>>(serviceProvider =>
                                                                  viewModelType =>
@@ -97,7 +97,7 @@ namespace WeightScale.Presentation
 
             services.AddSingleton<IDeviceManager, DeviceManager>();
             services.AddSingleton<IPackageService, PackageService>();
-            
+
             services.AddTransient<IScaleDevice, ScaleDevice>();
             services.AddTransient<ICourierService, CourierService>();
             services.AddTransient<IShipmentService, ShipmentService>();

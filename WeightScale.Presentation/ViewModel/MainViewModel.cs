@@ -25,8 +25,9 @@ namespace WeightScale.Presentation.ViewModel
             _applicationSettings = applicationSettings.Value;
             _navigationService.NavigateTo<HeaderViewModel>(NavigationRegion.Header);
             _navigationService.NavigateTo<WeightViewModel>(NavigationRegion.Main);
-            // packageService.ConnectDevices(_applicationSettings.IpAddressFullWeight,
-            //                               _applicationSettings.IpAddressEmptyWeight);
+            _navigationService.NavigateTo<FooterViewModel>(NavigationRegion.Footer);
+            packageService.ConnectDevices(_applicationSettings.IpAddressFullWeight,
+                                          _applicationSettings.IpAddressEmptyWeight);
         }
 
         public string TitleWithVersion
