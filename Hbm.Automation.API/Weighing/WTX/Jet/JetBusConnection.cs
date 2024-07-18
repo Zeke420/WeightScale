@@ -44,7 +44,7 @@
 
             IJetConnection jetConnection = new WebSocketJetConnection(_uri, RemoteCertificationCheck);
             _peer = new JetPeer(jetConnection);
-            
+
             this._user = user;
             this._password = password;
             this.IpAddress = ipAddress;
@@ -86,7 +86,7 @@
             // ConnectPeer
             //  OnConnectAuthenticate
             //      OnAuthenticateFetchAll
-            //          FetchAll   
+            //          FetchAll
             WaitOne(3);
         }
 
@@ -235,7 +235,7 @@
         {
             Matcher matcher = new Matcher();
             FetchId id;
-            _peer.Fetch(out id, matcher, OnFetchData, OnFetch, this._timeoutMs);                      
+            _peer.Fetch(out id, matcher, OnFetchData, OnFetch, this._timeoutMs);
         }
 
         private void OnFetch(bool success, JToken token)
@@ -255,7 +255,7 @@
             this.UpdateData?.Invoke(this, new EventArgs());
 
             CommunicationLog?.Invoke(this, new LogEventArgs("Fetch-All success: " + success + " - Buffer size is " + AllData.Count));
-        }            
+        }
 
         private void WaitOne(int timeoutMultiplier = 1)
         {
@@ -263,16 +263,16 @@
             {
                 throw new Exception("Jet connection timeout");
             }
-                     
-            if (_localException != null)
-            {
-                CommunicationLog?.Invoke(this, new LogEventArgs(_localException.Message));
-                Exception exception = _localException;
-                _localException = null;
-                throw exception;
-            }                        
+
+            // if (_localException != null)
+            // {
+            //     CommunicationLog?.Invoke(this, new LogEventArgs(_localException.Message));
+            //     Exception exception = _localException;
+            //     _localException = null;
+            //     throw exception;
+            // }
         }
-        
+
         /// <summary>
         /// Event will be called when device sends new fetch events
         /// </summary>
@@ -297,16 +297,16 @@
                         AllData[path] = data["value"].ToString();
                         break;
                 }
-      
+
                 if (IsConnected)
                 {
                     this.UpdateData?.Invoke(this, new EventArgs());
                 }
-         
+
                 CommunicationLog?.Invoke(this, new LogEventArgs(data.ToString()));
             }
         }
-               
+
         /// <summary>
         /// Sets data for a single jet path
         /// </summary>
@@ -314,7 +314,7 @@
         /// <param name="value">The new value for the path</param>
         private void SetData(string path, JValue value)
         {
-            _localException = null; 
+            _localException = null;
             try
             {
                 JObject request = _peer.Set(path.ToString(), value, OnSet, this._timeoutMs);
@@ -332,12 +332,12 @@
            {
                 _localException = new JetBusException(token);
             }
-            
+
            _successEvent.Set();
-            
+
            CommunicationLog?.Invoke(this, new LogEventArgs("Set data" + success));
         }
-            
+
         /// <summary>
         /// Callback-Method wich is called from SslStream for SSL certificate validation
         /// </summary>
@@ -347,10 +347,10 @@
         /// <param name="sslPolicyErrors">Any policy violations</param>
         /// <returns>Indicates if validation was successful or not</returns>
         private bool RemoteCertificationCheck(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-        {            
+        {
             try
             {
-                X509Certificate2 clientCertificate = new X509Certificate2(CertificateToByteArray(), string.Empty);                
+                X509Certificate2 clientCertificate = new X509Certificate2(CertificateToByteArray(), string.Empty);
                 SslStream sslStream = sender as SslStream;
                 if (sslPolicyErrors == SslPolicyErrors.None || sslPolicyErrors == SslPolicyErrors.RemoteCertificateChainErrors)
                 {

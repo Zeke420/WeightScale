@@ -24,5 +24,6 @@ namespace WeightScale.Presentation.Helpers
         public ShipmentViewModel ShipmentViewModel => _serviceProvider.GetService<ShipmentViewModel>();
         public WeightViewModel WeightViewModel => _serviceProvider.GetService<WeightViewModel>();
         public ReportViewModel ReportViewModel => _serviceProvider.GetService<ReportViewModel>();
+        public FooterViewModel FooterViewModel => _serviceProvider.GetService<FooterViewModel>();
     }
 }

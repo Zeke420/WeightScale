@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using WeightScale.BusinessLogicLayer.Utils;
 using WeightScale.Presentation.Enums;
 using WeightScale.Presentation.Resources.Constants;
 using WeightScale.Presentation.Services.Interfaces;
@@ -137,7 +138,7 @@ namespace WeightScale.Presentation.Services
                 newViewModel.OnNavigatedTo(parameter);
                 return newViewModel;
             }
-            
+
             oldViewModel.OnNavigatedFrom();
             newViewModel.OnNavigatedTo(parameter);
 

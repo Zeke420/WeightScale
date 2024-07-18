@@ -1,6 +1,6 @@
 ﻿// <copyright file="WTXJet.cs" company="Hottinger Baldwin Messtechnik GmbH">
 //
-// Hbm.Automation.Api, a library to communicate with HBM weighing technology devices  
+// Hbm.Automation.Api, a library to communicate with HBM weighing technology devices
 //
 // The MIT License (MIT)
 //
@@ -44,7 +44,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
     public class WTXJet : BaseWTXDevice, IDataScale, IDataDigitalFilter
     {
         #region ==================== constants & fields ====================
-        private const int CONVERISION_FACTOR_MVV_TO_D = 500000;  
+        private const int CONVERISION_FACTOR_MVV_TO_D = 500000;
         private const int SCALE_COMMAND_CALIBRATE_ZERO = 2053923171;
         private const int SCALE_COMMAND_CALIBRATE_NOMINAL = 1852596579;
         private const int SCALE_COMMAND_EXIT_CALIBRATE = 1953069157;
@@ -59,7 +59,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
         private const int SCALE_COMMAND_STATUS_ERROR_E3 = 860184415;
         private INetConnection _connection;
         #endregion
-        
+
         #region ==================== events & delegates ====================
         /// <summary>
         /// Event handler to raise whenever new process data from the device is available
@@ -74,7 +74,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
         /// <param name="connection">Inject connection (e.g. JetBusConnection)</param>
         /// <param name="timerIntervalms">Interval for updating ProcessData</param>
         /// <param name="onProcessData">This event is automatically called when new ProcessData is available</param>
-        public WTXJet(INetConnection connection, int timerIntervalms, EventHandler<ProcessDataReceivedEventArgs> onProcessData) 
+        public WTXJet(INetConnection connection, int timerIntervalms, EventHandler<ProcessDataReceivedEventArgs> onProcessData)
             : base(connection, timerIntervalms)
         {
             _connection = connection;
@@ -88,17 +88,17 @@ namespace Hbm.Automation.Api.Weighing.WTX
 
         #region ======================== Properties ========================
         /// <summary>
-        /// Gets or sets the extended filler data 
+        /// Gets or sets the extended filler data
         /// </summary>
         public IDataFillerExtended Filler { get; set; }
 
         /// <summary>
-        /// Gets or sets the digital IO data 
+        /// Gets or sets the digital IO data
         /// </summary>
         public override IDataDigitalIO DigitalIO { get; set; }
 
         /// <summary>
-        /// Gets or sets the extended limit switch data 
+        /// Gets or sets the extended limit switch data
         /// </summary>
         public override IDataLimitSwitch LimitSwitch { get; set; }
 
@@ -330,7 +330,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
         }
 
         /// <summary>
-        /// Gets the product code 
+        /// Gets the product code
         /// </summary>
         public int ProductCode
         {
@@ -351,7 +351,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
 
         ///<inheritdoc/>
         public override string Identification
-        { 
+        {
             get
             {
                 return Connection.ReadFromBuffer(JetBusCommands.HWVHardwareVersion);
@@ -384,9 +384,9 @@ namespace Hbm.Automation.Api.Weighing.WTX
         }
 
         /// <summary>
-        /// Gets the legal-for-trade software identification  
+        /// Gets the legal-for-trade software identification
         /// </summary>
-        public string SoftwareIdentification 
+        public string SoftwareIdentification
         {
             get
             {
@@ -408,7 +408,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
         /// <summary>
         /// Gets or sets the local gravity factor
         /// </summary>
-        public int LocalGravityFactor 
+        public int LocalGravityFactor
         {
             get
             {
@@ -701,7 +701,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
         /// Gets or sets the output function of digital output 1
         /// </summary>
         public OutputFunction Output1Function
-        { 
+        {
             get
             {
                 return IntToOutputFunction(Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.OM1DigitalOutput1Mode)));
@@ -783,7 +783,7 @@ namespace Hbm.Automation.Api.Weighing.WTX
             Connection.Connect();
             ProcessDataTimer.Change(0, ProcessDataInterval);
         }
-        
+
         ///<inheritdoc/>
         public override void Connect(Action<bool> completed, double timeoutMs)
         {
@@ -820,66 +820,66 @@ namespace Hbm.Automation.Api.Weighing.WTX
         {
             Connection.WriteInteger(JetBusCommands.CIA461ScaleCommand, SCALE_COMMAND_ZERO);
         }
-        
+
         ///<inheritdoc/>
         public override void SetGross()
         {
             Connection.WriteInteger(JetBusCommands.CIA461ScaleCommand, SCALE_COMMAND_SET_GROSS);
         }
-        
+
         ///<inheritdoc/>
         public override void Tare()
         {
             Connection.WriteInteger(JetBusCommands.CIA461ScaleCommand, SCALE_COMMAND_TARE);
         }
-        
+
         ///<inheritdoc/>
         public override void TareManually(double manualTareValue)
         {
             Connection.WriteInteger(JetBusCommands.CIA461TareValue, MeasurementUtils.DoubleToDigit(manualTareValue, ProcessData.Decimals));
         }
-        
+
         ///<inheritdoc/>
         public override void RecordWeight()
         {
             Connection.WriteInteger(JetBusCommands.STORecordWeight, SCALE_COMMAND_TARE);
         }
-                
+
         ///<inheritdoc/>
         public override void CalculateAdjustment(double scaleZeroLoad_mVV, double scaleCapacity_mVV)
         {
             int scalZeroLoad_d;
-            int scaleCapacity_d; 
+            int scaleCapacity_d;
 
             scalZeroLoad_d = (int)(scaleZeroLoad_mVV * CONVERISION_FACTOR_MVV_TO_D);
             scaleCapacity_d = (int)(scalZeroLoad_d + (scaleCapacity_mVV * CONVERISION_FACTOR_MVV_TO_D));
-                        
-            Connection.WriteInteger(JetBusCommands.LDWZeroValue, scalZeroLoad_d); 
-            Connection.WriteInteger(JetBusCommands.LWTNominalValue, Convert.ToInt32(scaleCapacity_d)); 
+
+            Connection.WriteInteger(JetBusCommands.LDWZeroValue, scalZeroLoad_d);
+            Connection.WriteInteger(JetBusCommands.LWTNominalValue, Convert.ToInt32(scaleCapacity_d));
         }
 
         ///<inheritdoc/>
         public override bool AdjustZeroSignal()
         {
-            Connection.WriteInteger(JetBusCommands.CIA461ScaleCommand, SCALE_COMMAND_CALIBRATE_ZERO); 
+            Connection.WriteInteger(JetBusCommands.CIA461ScaleCommand, SCALE_COMMAND_CALIBRATE_ZERO);
 
             while (Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.CIA461ScaleCommandStatus)) != SCALE_COMMAND_STATUS_ONGOING)
             {
                 Thread.Sleep(200);
-            }     
+            }
             while (Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.CIA461ScaleCommandStatus)) == SCALE_COMMAND_STATUS_ONGOING)
             {
                 Thread.Sleep(200);
             }
-            
+
             if (Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.CIA461ScaleCommandStatus)) == SCALE_COMMAND_STATUS_OK)
             {
                 return true;
             }
-            
+
             return false;
         }
-        
+
         ///<inheritdoc/>
         public override bool AdjustNominalSignal()
         {
@@ -902,27 +902,27 @@ namespace Hbm.Automation.Api.Weighing.WTX
 
             return false;
         }
-        
+
         ///<inheritdoc/>
         public override bool AdjustNominalSignalWithCalibrationWeight(double calibrationWeight)
         {
             Connection.WriteInteger(JetBusCommands.CIA461CalibrationWeight, MeasurementUtils.DoubleToDigit(calibrationWeight, ProcessData.Decimals));
 
             Connection.WriteInteger(JetBusCommands.CIA461ScaleCommand, SCALE_COMMAND_CALIBRATE_NOMINAL);
-           
-            
+
+
             while (Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.CIA461ScaleCommandStatus)) != SCALE_COMMAND_STATUS_ONGOING)
             {
                 Thread.Sleep(100);
             }
-            
+
             while (Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.CIA461ScaleCommandStatus)) == SCALE_COMMAND_STATUS_ONGOING)
             {
                 Thread.Sleep(100);
             }
 
             if (Convert.ToInt32(Connection.ReadFromBuffer(JetBusCommands.CIA461ScaleCommandStatus)) == SCALE_COMMAND_STATUS_OK)
-            { 
+            {
                 return true;
             }
 

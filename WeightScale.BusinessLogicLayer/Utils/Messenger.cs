@@ -2,10 +2,17 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using WeightScale.Presentation.Services.Interfaces;
+using WeightScale.BusinessLogicLayer.Models;
 
-namespace WeightScale.Presentation.Services
+namespace WeightScale.BusinessLogicLayer.Utils
 {
+    public interface IMessenger
+    {
+        void Send<TMessage>(TMessage message);
+        void Subscribe<TMessage>(object subscriber, Action<object> action);
+        void Unsubscribe<TMessage>(object subscriber);
+    }
+
     public class Messenger : IMessenger
     {
         private ConcurrentDictionary<Type, object> _currentState = new ConcurrentDictionary<Type, object>();
@@ -23,7 +30,7 @@ namespace WeightScale.Presentation.Services
                 _subscriptions.TryAdd(typeof(TMessage), new List<Subscription>());
             }
 
-            _currentState.AddOrUpdate(typeof(TMessage), (o) => message, (o, old) => message);
+            _currentState.AddOrUpdate(typeof(TMessage), o => message, (o, old) => message);
             foreach (var subscription in _subscriptions[typeof(TMessage)])
             {
                 subscription.Action(message);
@@ -54,18 +61,6 @@ namespace WeightScale.Presentation.Services
             {
                 _subscriptions[typeof(TMessage)].Remove(subscription);
             }
-        }
-    }
-
-    public class Subscription
-    {
-        public object Subscriber { get; }
-        public Action<object> Action { get; }
-
-        public Subscription(object subscriber, Action<object> action)
-        {
-            Subscriber = subscriber;
-            Action = action;
         }
     }
 }

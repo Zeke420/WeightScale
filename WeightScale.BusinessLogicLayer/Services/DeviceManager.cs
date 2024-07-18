@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+using WeightScale.BusinessLogicLayer.Models.Messages;
+using WeightScale.BusinessLogicLayer.Utils;
 using WeightScale.DataAccessLayer.DTOs;
 using WeightScale.Integration.Fixtures.Scale;
 
@@ -14,21 +18,32 @@ namespace WeightScale.BusinessLogicLayer.Services
     {
         private readonly IScaleDevice _fullWeightDevice;
         private readonly IScaleDevice _emptyWeightDevice;
+        private readonly IMessenger _messenger;
+        private readonly Dispatcher _uiDispatcher;
         private PackageWeights _packageWeights;
         public event Action<PackageWeights> PackageWeightsFilledOut;
         private bool _isWeightsProcessed;
-        private bool isUpdating;
+        private bool _isUpdating;
 
-        public DeviceManager(IScaleDevice fullWeightDevice, IScaleDevice emptyWeightDevice)
+        public DeviceManager(IScaleDevice fullWeightDevice,
+                             IScaleDevice emptyWeightDevice,
+                             IMessenger messenger)
         {
             _fullWeightDevice = fullWeightDevice;
             _emptyWeightDevice = emptyWeightDevice;
+            _messenger = messenger;
+            _uiDispatcher = Dispatcher.CurrentDispatcher;
 
             _fullWeightDevice.WeightDataReceived += OnFullWeightDataReceived;
+            _fullWeightDevice.WeightStable += OnFullWeightStabilized;
+            _fullWeightDevice.ConnectionStatusChanged += OnFullScaleConnectionStatusChanged;
+
             _emptyWeightDevice.WeightDataReceived += OnEmptyWeightDataReceived;
+            _emptyWeightDevice.WeightStable += OnEmptyWeightStabilized;
+            _emptyWeightDevice.ConnectionStatusChanged += OnEmptyScaleConnectionStatusChange;
 
             _packageWeights = new PackageWeights();
-            isUpdating = false;
+            _isUpdating = false;
         }
 
         public void ConnectDevicesAsync(string fullWeightDeviceIp, string emptyWeightDeviceIp)
@@ -37,56 +52,103 @@ namespace WeightScale.BusinessLogicLayer.Services
             _emptyWeightDevice.Connect(emptyWeightDeviceIp);
         }
 
+        private void OnFullScaleConnectionStatusChanged(bool isConnected)
+        {
+            var message = new FullConnectionStatus
+                          {
+                              IsConnected = isConnected
+                          };
+
+            _messenger.Send(message);
+        }
+
+        private void OnEmptyScaleConnectionStatusChange(bool isConnected)
+        {
+            var message = new EmptyConnectionStatus
+                          {
+                              IsConnected = isConnected
+                          };
+
+            _messenger.Send(message);
+        }
+
+        private void OnFullWeightStabilized(bool isStable)
+        {
+            var message = new FullScaleWeightStable
+                          {
+                              IsStable = isStable
+                          };
+
+            _messenger.Send(message);
+        }
+
+        private void OnEmptyWeightStabilized(bool isStable)
+        {
+            var message = new EmptyScaleWeightStable
+                          {
+                              IsStable = isStable
+                          };
+
+            _messenger.Send(message);
+        }
+
         private void OnFullWeightDataReceived(double weight)
         {
             if(_isWeightsProcessed)
             {
                 return;
             }
-            
+
             _packageWeights.FullWeight = weight;
         }
 
         private void OnEmptyWeightDataReceived(double weight)
         {
-            if (_isWeightsProcessed)
-            {
-                return;
-            }
-            
-            _packageWeights.EmptyWeight = weight;
-            CheckIfPackageWeightsAreFilledOut();
+            Task.Run(() =>
+                     {
+                         if (_isWeightsProcessed)
+                         {
+                             return;
+                         }
+
+                         _packageWeights.EmptyWeight = weight;
+                         CheckIfPackageWeightsAreFilledOut();
+                     });
         }
 
         private void CheckIfPackageWeightsAreFilledOut()
         {
-            if(isUpdating)
-            {
-                return;
-            }
+            Task.Run(() =>
+                     {
+                         if (_isUpdating)
+                         {
+                             return;
+                         }
 
-            try
-            {
-                isUpdating = true;
-                if (!_packageWeights.IsFilledOut || _isWeightsProcessed)
-                {
-                    return;
-                }
+                         try
+                         {
+                             _isUpdating = true;
+                             if (!_packageWeights.IsFilledOut || _isWeightsProcessed)
+                             {
+                                 return;
+                             }
 
-                _isWeightsProcessed = true;
-                PackageWeightsFilledOut?.Invoke(_packageWeights);
-                ResetWeights();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                isUpdating = false;
-                
-            }
+                             _isWeightsProcessed = true;
+
+                             // Use the captured UI dispatcher
+                             _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(_packageWeights); });
+                             ResetWeights();
+                         }
+                         catch (Exception e)
+                         {
+                             Console.WriteLine(e);
+                             throw;
+                         }
+                         finally
+                         {
+                             _isUpdating = false;
+                         }
+                     });
         }
 
         private void ResetWeights()
