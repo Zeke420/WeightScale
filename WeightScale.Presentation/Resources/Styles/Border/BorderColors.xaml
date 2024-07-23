@@ -6,10 +6,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <SolidColorBrush x:Key="Border.Background"
-                     Color="{StaticResource SecondaryLight}" />
-    <SolidColorBrush x:Key="Border.BorderBrush"
-                     Color="{StaticResource Secondary}" />
+                     Color="Transparent" />
     <SolidColorBrush x:Key="Border.Header.Background"
-                     Color="{StaticResource Primary}" />
+                     Color="{StaticResource Primary300}" />
+    <SolidColorBrush x:Key="Border.BorderStroke"
+                     Color="{StaticResource PrimaryText}"/>
 
 </ResourceDictionary>

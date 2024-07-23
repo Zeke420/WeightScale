@@ -16,7 +16,7 @@
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="BorderBrush"
-                Value="CornflowerBlue" />
+                Value="{StaticResource Primary800}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -38,7 +38,7 @@
                                           VerticalAlignment="Center"
                                           Data="M0,3 3,6 9,0"
                                           Stretch="Fill"
-                                          Stroke="{StaticResource SecondaryLightBrush}"
+                                          Stroke="{StaticResource PrimaryTextBrush}"
                                           StrokeEndLineCap="Round"
                                           StrokeStartLineCap="Round"
                                           StrokeThickness="3" />
@@ -60,7 +60,7 @@
                         <Trigger Property="IsFocused"
                                  Value="true">
                             <Setter Property="BorderBrush"
-                                    Value="{StaticResource SecondaryLightBrush}" />
+                                    Value="{StaticResource PrimaryTextBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">

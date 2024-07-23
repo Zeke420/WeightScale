@@ -21,11 +21,13 @@ public class WeightViewModel : ViewModelBase
         _shipmentService = shipmentService;
         _shipmentService.PackageAdded += OnPackageAdded;
 
-        SelectedDate = DateTime.Today;
         CompleteShipmentCommand = new DelegateCommand(CompleteShipment);
         MovePackageUpCommand = new DelegateCommand(MovePackageUp);
         MovePackageDownCommand = new DelegateCommand(MovePackageDown);
+        LoadShipmentsCommand = new DelegateCommand(LoadShipments);
         Shipments = new ObservableCollection<Shipment>();
+        SelectedDate = DateTime.Today;
+        LoadShipmentsCommand.Execute(null);
     }
 
     private void OnPackageAdded(Package obj)
@@ -37,6 +39,7 @@ public class WeightViewModel : ViewModelBase
     public DelegateCommand CompleteShipmentCommand { get; set; }
     public DelegateCommand MovePackageUpCommand { get; set; }
     public DelegateCommand MovePackageDownCommand { get; set; }
+    public DelegateCommand LoadShipmentsCommand { get; set; }
 
     public DateTime SelectedDate
     {
@@ -47,6 +50,11 @@ public class WeightViewModel : ViewModelBase
             OnPropertyChanged();
             GetShipmentWeightByDate(_selectedDate);
         }
+    }
+    
+    private void LoadShipments(object obj)
+    {
+        GetShipmentWeightByDate(SelectedDate);
     }
 
     private void CompleteShipment(object obj)

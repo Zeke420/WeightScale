@@ -5,61 +5,100 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              DataContext="{Binding WeightViewModel, Source={StaticResource Locator}}"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/Button/ButtonMain.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <DatePicker Grid.Row="0" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <DatePicker SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+            <Button Content="Load"
+                    Command="{Binding LoadShipmentsCommand}"
+                    Margin="8,0,0,0" />
+        </StackPanel>
 
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1"
+                      CanContentScroll="True">
             <ItemsControl ItemsSource="{Binding Shipments}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Id, StringFormat='Shipment ID: {0}'}" />
-                            <TextBlock Text="{Binding ShipmentDate, StringFormat='Shipment Date: {0}'}" />
-                            <TextBlock Text="{Binding Courier.Name, StringFormat='Courier Name: {0}'}" />
-                            <TextBlock Text="{Binding IsFinished, StringFormat='Is Finished: {0}'}" />
+                        <Border Style="{DynamicResource TableCard}"
+                                Margin="30,30,30,0">
+                            <StackPanel VerticalAlignment="Stretch">
+                                <Border Style="{DynamicResource TableCardHeader}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Courier.Name}"
+                                                   FontWeight="SemiBold"
+                                                   TextAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Margin="10,0" />
+                                        <Button Content="Complete"
+                                                Command="{Binding DataContext.CompleteShipmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button"
+                                                       BasedOn="{StaticResource ButtonStyle}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Setter Property="Margin" Value="5" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFinished}" Value="False">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
 
-                            <Button Content="Complete"
-                                    Command="{Binding DataContext.CompleteShipmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}">
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsFinished}" Value="False">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-
-                            <DataGrid ItemsSource="{Binding Packages}" AutoGenerateColumns="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Full Weight" Binding="{Binding FullWeight}" />
-                                    <DataGridTextColumn Header="Empty Weight" Binding="{Binding EmptyWeight}" />
-                                    <DataGridTemplateColumn Header="Actions">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button Content="↑"
-                                                            Command="{Binding DataContext.MovePackageUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                            CommandParameter="{Binding}" />
-                                                    <Button Content="↓"
-                                                            Command="{Binding DataContext.MovePackageDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                            CommandParameter="{Binding}" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-
-                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                                <Border>
+                                    <Border CornerRadius="0,0,12,12"
+                                            Background="Transparent"
+                                            BorderBrush="Black"
+                                            BorderThickness="1"
+                                            Padding="0,0,0,10">
+                                        <DataGrid ItemsSource="{Binding Packages}"
+                                                  AutoGenerateColumns="False"
+                                                  Style="{DynamicResource DataGridBaseStyle}"
+                                                  RowStyle="{DynamicResource DataGridRowStyle}"
+                                                  CellStyle="{DynamicResource CellStyle}"
+                                                  AlternationCount="2">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Full Weight"
+                                                                    Binding="{Binding FullWeight}" />
+                                                <DataGridTextColumn Header="Empty Weight"
+                                                                    Binding="{Binding EmptyWeight}" />
+                                                <DataGridTemplateColumn Header="Actions">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal"
+                                                                        HorizontalAlignment="Center">
+                                                                <Button Content="↑"
+                                                                        Command="{Binding DataContext.MovePackageUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        CommandParameter="{Binding}"
+                                                                        Margin="0,0,5,0" />
+                                                                <Button Content="↓"
+                                                                        Command="{Binding DataContext.MovePackageDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        CommandParameter="{Binding}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Border>
+                                </Border>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
