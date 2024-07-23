@@ -6,16 +6,20 @@
              DataContext="{Binding HeaderViewModel, Source={StaticResource Locator}}"
              mc:Ignorable="d">
     <Grid>
-        <StackPanel Orientation="Horizontal" 
-                    HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="10,5">
             <Button Content="Weight"
-                    Command="{Binding NavigateToWeightCommand}"/>
-            <Button Content="Delivery" 
-                    Command="{Binding NavigateToShipmentsCommand}"/>
-            <Button Content="Courier" 
-                    Command="{Binding NavigateToCourierCommand}"/>
+                    Command="{Binding NavigateToWeightCommand}"
+                    Margin="0,0,8,0" />
+            <Button Content="Delivery"
+                    Command="{Binding NavigateToShipmentsCommand}"
+                    Margin="0,0,8,0" />
+            <Button Content="Courier"
+                    Command="{Binding NavigateToCourierCommand}"
+                    Margin="0,0,8,0" />
             <Button Content="Report"
-                    Command="{Binding NavigateToReportCommand}"/>
+                    Command="{Binding NavigateToReportCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -5,10 +5,6 @@
         <ResourceDictionary Source="DataGridColumnHeaderStyle.xaml" />
         <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
-                     Color="{StaticResource PrimaryBlue100}" />
-    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
-                     Color="{StaticResource PrimaryBlue100}" />
     <Style x:Key="DataGridBaseStyle"
            TargetType="{x:Type DataGrid}">
         <Setter Property="AutoGenerateColumns"
@@ -21,8 +17,6 @@
                 Value="0" />
         <Setter Property="GridLinesVisibility"
                 Value="Horizontal" />
-        <Setter Property="HorizontalGridLinesBrush"
-                Value="{StaticResource SecondaryBrush}" />
         <Setter Property="CanUserAddRows"
                 Value="False" />
         <Setter Property="CanUserDeleteRows"

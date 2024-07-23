@@ -6,32 +6,80 @@
              DataContext="{Binding ShipmentViewModel, Source={StaticResource Locator}}"
              mc:Ignorable="d">
     <Grid>
-        <StackPanel>
-            <DatePicker x:Name="datePicker" SelectedDate="{Binding SelectedDate}" />
-            <ComboBox x:Name="courierComboBox"
-                      ItemsSource="{Binding Couriers}"
-                      SelectedItem="{Binding SelectedCourier}"
-                      DisplayMemberPath="Name" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <Button Content="Add Courier"
-                    Command="{Binding AddCourierCommand}" />
-            
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <DatePicker SelectedDate="{Binding SelectedDate}"
+                        Margin="10"/>
+
             <Button Content="Get Shipments"
-                    Command="{Binding LoadShipmentsCommand}" />
-
-            <ListBox x:Name="ShipmentsListBox" 
-                     ItemsSource="{Binding Shipments}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Courier.Name}" />
-                            <Button Content="Delete"
-                                    Command="{Binding DataContext.DeleteShipmentCommand, ElementName=ShipmentsListBox}"
-                                    CommandParameter="{Binding}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                    Command="{Binding LoadShipmentsCommand}"
+                    Margin="10"/>
         </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Border Style="{DynamicResource TableCard}"
+                    Margin="15">
+                <StackPanel Orientation="Vertical">
+                    <Border Style="{DynamicResource TableCardHeader}">
+                        <TextBlock Text="Courier Selection"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Padding="10,5"
+                                   FontWeight="SemiBold"/>
+                    </Border>
+                    <Border>
+                        <StackPanel Orientation="Vertical">
+                            <ComboBox ItemsSource="{Binding Couriers}"
+                                      SelectedItem="{Binding SelectedCourier}"
+                                      DisplayMemberPath="Name"
+                                      Margin="10"/>
+                            <Button Content="Add Courier"
+                                    Command="{Binding AddCourierCommand}"
+                                    Margin="10"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Shipments Card -->
+            <Border Style="{DynamicResource TableCard}"
+                    Margin="15">
+                <StackPanel Orientation="Vertical">
+                    <Border Style="{DynamicResource TableCardHeader}">
+                        <TextBlock Text="Couriers"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Padding="10,5"
+                                   FontWeight="SemiBold"/>
+                    </Border>
+                    <Border Margin="0,0,0,10">
+                        <ListBox x:Name="ShipmentsListBox"
+                                 ItemsSource="{Binding Shipments}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Courier.Name}"
+                                                   Margin="10"/>
+                                        <Button Content="Delete"
+                                                Command="{Binding DataContext.DeleteShipmentCommand, ElementName=ShipmentsListBox}"
+                                                CommandParameter="{Binding}"
+                                                Margin="10"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
     </Grid>
 </UserControl>

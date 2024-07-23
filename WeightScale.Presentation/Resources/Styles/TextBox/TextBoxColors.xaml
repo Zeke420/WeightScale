@@ -6,9 +6,9 @@
     </ResourceDictionary.MergedDictionaries>
 
     <SolidColorBrush x:Key="TextBox.Foreground"
-                     Color="{StaticResource SecondaryText}" />
+                     Color="{StaticResource PrimaryText}" />
     <SolidColorBrush x:Key="TextBox.Background"
-                     Color="{StaticResource SecondaryLight}" />
+                     Color="White" />
     <SolidColorBrush x:Key="TextBox.Error"
                      Color="{StaticResource Error}" />
 

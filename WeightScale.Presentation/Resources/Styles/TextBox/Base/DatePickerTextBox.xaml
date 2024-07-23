@@ -7,6 +7,7 @@
 
     <Style x:Key="TextBoxForDate"
            TargetType="{x:Type TextBox}">
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -17,11 +18,11 @@
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource TextBox.Error}"
                                             Background="{StaticResource TextBox.Background}"
-                                            BorderThickness="1"
+                                            BorderThickness="0"
                                             Opacity="1"
                                             CornerRadius="2">
                                         <TextBlock Foreground="{StaticResource TextBox.Error}"
-                                                   FontSize="13"
+                                                   FontSize="20"
                                                    Text="Format: dd/mm/yyyy"
                                                    Margin="1 0 2 1" />
                                     </Border>

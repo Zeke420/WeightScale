@@ -3,15 +3,15 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    
     <Style x:Key="DataGridColumnHeaderStyle"
            TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="Height"
-                Value="40" />
-        <Setter Property="BorderThickness"
-                Value="0,0,0,1" />
-        <Setter Property="BorderBrush"
-                Value="{StaticResource SecondaryBrush}" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryTextBrush}" />
+        <Setter Property="Background" Value="{StaticResource SecondaryBrush700}" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryTextBrush}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Padding" Value="10,5"/>
     </Style>
 </ResourceDictionary>

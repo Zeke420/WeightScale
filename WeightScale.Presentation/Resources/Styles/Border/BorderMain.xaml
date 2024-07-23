@@ -14,19 +14,15 @@
         <Setter Property="Margin"
                 Value="10 0 10 0" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource Border.BorderBrush}" />
+                Value="{StaticResource Border.BorderStroke}" />
         <Setter Property="BorderThickness"
                 Value="1" />
-        <Setter Property="MinHeight"
-                Value="240" />
-        <Setter Property="MaxHeight"
-                Value="650" />
     </Style>
 
     <Style x:Key="TableCardHeader"
            TargetType="Border">
         <Setter Property="Height"
-                Value="30" />
+                Value="Auto" />
         <Setter Property="Background"
                 Value="{StaticResource Border.Header.Background}" />
         <Setter Property="CornerRadius"

@@ -50,6 +50,7 @@ namespace WeightScale.DataAccessLayer.Repository.Implementation
             return _dbContext.Shipments
                              .Where(x => x.ShipmentDate == date)
                              .Include(x => x.Packages)
+                             .Include(x=>x.Courier)
                              .ToList();
         }
 

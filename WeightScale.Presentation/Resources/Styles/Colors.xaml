@@ -1,25 +1,98 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-    <Color x:Key="PrimaryDark">DodgerBlue</Color>
-    <Color x:Key="Primary">CornflowerBlue</Color>
-    <Color x:Key="PrimaryLight">#FF7EB4EA</Color>
-    <Color x:Key="PrimaryBackground">#E0F0FD</Color>
-    <Brush x:Key="PrimaryBrush">CornFlowerBlue</Brush>
-    <Color x:Key="PrimaryBlue100">#BBDEFB</Color>
-    <Color x:Key="SecondaryDark">#FFBFBFBF</Color>
-    <Color x:Key="Secondary">#D9D9D9</Color>
-    <Color x:Key="SecondaryLight">White</Color>
-    <Brush x:Key="SecondaryLightBrush">White</Brush>
-    <Brush x:Key="SecondaryBrush">#D9D9D9</Brush>
-    <Color x:Key="BrushLightSteelBlue">LightSteelBlue</Color>
-    <Brush x:Key="BrushLightSteelBlueBrush">LightSteelBlue</Brush>
+    
+    <Color x:Key="Primary">#FFFFA500</Color>
+    <Color x:Key="Primary900">#ffae19</Color>
+    <Color x:Key="Primary800">#ffb732</Color>
+    <Color x:Key="Primary700">#ffc04c</Color>
+    <Color x:Key="Primary600">#ffc966</Color>
+    <Color x:Key="Primary500">#ffd27f</Color>
+    <Color x:Key="Primary400">#ffdb99</Color>
+    <Color x:Key="Primary300">#ffe4b2</Color>
+    <Color x:Key="PrimaryText">Black</Color>
+    
+    <Brush x:Key="PrimaryBrush">#FFFFA500</Brush>
+    <Brush x:Key="PrimaryBrush900">#ffae19</Brush>
+    <Brush x:Key="PrimaryBrush800">#ffb732</Brush>
+    <Brush x:Key="PrimaryBrush700">#ffc04c</Brush>
+    <Brush x:Key="PrimaryBrush600">#ffc966</Brush>
+    <Brush x:Key="PrimaryBrush500">#ffd27f</Brush>
+    <Brush x:Key="PrimaryBrush400">#ffdb99</Brush>
+    <Brush x:Key="PrimaryBrush300">#ffe4b2</Brush>
+    <Brush x:Key="PrimaryTextBrush">Black</Brush>
+    
+    <SolidColorBrush x:Key="PrimarySolidColorBrush">#FFFFA500</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush900">#ffae19</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush800">#ffb732</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush700">#ffc04c</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush600">#ffc966</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush500">#ffd27f</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush400">#ffdb99</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorBrush300">#ffe4b2</SolidColorBrush>
+    <SolidColorBrush x:Key="PrimarySolidColorTextBrush">Black</SolidColorBrush>
+    
+    <Color x:Key="Secondary">#007FFF</Color>
+    <Color x:Key="Secondary900">#198bff</Color>
+    <Color x:Key="Secondary800">#329cff</Color>
+    <Color x:Key="Secondary700">#4cafff</Color>
+    <Color x:Key="Secondary600">#66c2ff</Color>
+    <Color x:Key="Secondary500">#7fd5ff</Color>
+    <Color x:Key="Secondary400">#99e8ff</Color>
+    <Color x:Key="Secondary300">#b2fbff</Color>
+    <Color x:Key="SecondaryText">White</Color>
+    
+    <Brush x:Key="SecondaryBrush">#007FFF</Brush>
+    <Brush x:Key="SecondaryBrush900">#198bff</Brush>
+    <Brush x:Key="SecondaryBrush800">#329cff</Brush>
+    <Brush x:Key="SecondaryBrush700">#4cafff</Brush>
+    <Brush x:Key="SecondaryBrush600">#66c2ff</Brush>
+    <Brush x:Key="SecondaryBrush500">#7fd5ff</Brush>
+    <Brush x:Key="SecondaryBrush400">#99e8ff</Brush>
+    <Brush x:Key="SecondaryBrush300">#b2fbff</Brush>
+    <Brush x:Key="SecondaryTextBrush">White</Brush>
+    
+    <SolidColorBrush x:Key="SecondarySolidColorBrush">#007FFF</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush900">#198bff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush800">#329cff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush700">#4cafff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush600">#66c2ff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush500">#7fd5ff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush400">#99e8ff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorBrush300">#b2fbff</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondarySolidColorTextBrush">White</SolidColorBrush>
+    
+    <Color x:Key="Accent">#89cff0</Color>
+    <Color x:Key="Accent900">#94d3f1</Color>
+    <Color x:Key="Accent800">#a0d8f3</Color>
+    <Color x:Key="Accent700">#acddf4</Color>
+    <Color x:Key="Accent600">#b8e2f6</Color>
+    <Color x:Key="Accent500">#c4e7f7</Color>
+    <Color x:Key="Accent400">#cfebf9</Color>
+    <Color x:Key="Accent300">#dbf0fa</Color>
+    
+    <Brush x:Key="AccentBrush">#89cff0</Brush>
+    <Brush x:Key="AccentBrush900">#94d3f1</Brush>
+    <Brush x:Key="AccentBrush800">#a0d8f3</Brush>
+    <Brush x:Key="AccentBrush700">#acddf4</Brush>
+    <Brush x:Key="AccentBrush600">#b8e2f6</Brush>
+    <Brush x:Key="AccentBrush500">#c4e7f7</Brush>
+    <Brush x:Key="AccentBrush400">#cfebf9</Brush>
+    <Brush x:Key="AccentBrush300">#dbf0fa</Brush>
+    
+    <SolidColorBrush x:Key="AccentSolidColorBrush">#89cff0</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush900">#94d3f1</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush800">#a0d8f3</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush700">#acddf4</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush600">#b8e2f6</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush500">#c4e7f7</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush400">#cfebf9</SolidColorBrush>
+    <SolidColorBrush x:Key="AccentSolidColorBrush300">#dbf0fa</SolidColorBrush>
+    
     <Color x:Key="GreyDark">#FF606060</Color>
     <Color x:Key="Grey">#FF707070</Color>
     <Color x:Key="GreyLight">#FF909090</Color>
     <Brush x:Key="GreyBrush">#FF707070</Brush>
-    <Color x:Key="PrimaryText">#D9D9D9</Color>
-    <Color x:Key="SecondaryText">#FF000000</Color>
+    
     <Color x:Key="MainShadow">#000000</Color>
     <Color x:Key="Error">Firebrick</Color>
     <Color x:Key="ConfirmedGreen">Green</Color>

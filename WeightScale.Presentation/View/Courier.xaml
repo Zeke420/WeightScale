@@ -6,29 +6,67 @@
              DataContext="{Binding CourierViewModel, Source={StaticResource Locator}}"
              mc:Ignorable="d">
     <Grid>
-        <StackPanel>
-            <ListView ItemsSource="{Binding Couriers}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Courier Name" 
-                                        DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Action">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="Delete"
-                                            Command="{Binding DataContext.DeleteCourierCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                            CommandParameter="{Binding}" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <Label Content="Courier Name" />
-            <TextBox Text="{Binding CourierName, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Content="Create Courier"
-                    Command="{Binding CreateCourierCommand}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical">
+                <Border Style="{DynamicResource TableCard}"
+                        Margin="15">
+                    <StackPanel Orientation="Vertical">
+                        <Border Style="{DynamicResource TableCardHeader}">
+                            <TextBlock Text="Courier Creation"
+                                       TextAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Padding="10,5"
+                                       FontWeight="SemiBold"/>
+                        </Border>
+                        <Border>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="Courier Name"
+                                       Margin="10,0"/>
+                                <TextBox Text="{Binding CourierName, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="10,0"/>
+                                <Button Content="Create Courier"
+                                        Command="{Binding CreateCourierCommand}"
+                                        Margin="10"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <Border Style="{DynamicResource TableCard}"
+                    Margin="15">
+                <StackPanel Orientation="Vertical">
+                    <Border Style="{DynamicResource TableCardHeader}">
+                        <TextBlock Text="Couriers"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Padding="10,5"
+                                   FontWeight="SemiBold"/>
+                    </Border>
+                    <ListView ItemsSource="{Binding Couriers}"
+                              Margin="0,0,0,10">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Courier Name"
+                                                DisplayMemberBinding="{Binding Name}" />
+                                <GridViewColumn Header="Action">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Delete"
+                                                    Command="{Binding DataContext.DeleteCourierCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>
