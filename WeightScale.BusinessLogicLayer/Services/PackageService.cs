@@ -39,6 +39,15 @@ namespace WeightScale.BusinessLogicLayer.Services
         private void OnPackageWeightsFilledOut(PackageWeights obj)
         {
             var shipment = _shipmentRepository.GetFirstUnFinishedShipment();
+
+            if (obj.EmptyWeight == null
+                && obj.FullWeight.HasValue)
+            {
+                var updatePackage = shipment.Packages.Find(x => x.FullWeight == null);
+                updatePackage.FullWeight = obj.FullWeight;
+                _packageRepository.Update(updatePackage);
+            }
+
             var package = new Package
                           {
                               FullWeight = obj.FullWeight,

@@ -20,7 +20,6 @@ namespace WeightScale.BusinessLogicLayer.Services
         private readonly IScaleDevice _emptyWeightDevice;
         private readonly IMessenger _messenger;
         private readonly Dispatcher _uiDispatcher;
-        private PackageWeights _packageWeights;
         public event Action<PackageWeights> PackageWeightsFilledOut;
         private bool _isWeightsProcessed;
         private bool _isUpdating;
@@ -42,7 +41,6 @@ namespace WeightScale.BusinessLogicLayer.Services
             _emptyWeightDevice.WeightStable += OnEmptyWeightStabilized;
             _emptyWeightDevice.ConnectionStatusChanged += OnEmptyScaleConnectionStatusChange;
 
-            _packageWeights = new PackageWeights();
             _isUpdating = false;
         }
 
@@ -99,7 +97,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                 return;
             }
 
-            _packageWeights.FullWeight = weight;
+            UpdatePackage(weight);
         }
 
         private void OnEmptyWeightDataReceived(double weight)
@@ -111,12 +109,11 @@ namespace WeightScale.BusinessLogicLayer.Services
                              return;
                          }
 
-                         _packageWeights.EmptyWeight = weight;
-                         CheckIfPackageWeightsAreFilledOut();
+                         CreateNewPackage(weight);
                      });
         }
 
-        private void CheckIfPackageWeightsAreFilledOut()
+        private void CreateNewPackage(double emptyWeight)
         {
             Task.Run(() =>
                      {
@@ -127,17 +124,11 @@ namespace WeightScale.BusinessLogicLayer.Services
 
                          try
                          {
-                             _isUpdating = true;
-                             if (!_packageWeights.IsFilledOut || _isWeightsProcessed)
-                             {
-                                 return;
-                             }
-
-                             _isWeightsProcessed = true;
-
-                             // Use the captured UI dispatcher
-                             _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(_packageWeights); });
-                             ResetWeights();
+                             var packageWeight = new PackageWeights
+                                                 {
+                                                     EmptyWeight = emptyWeight
+                                                 };
+                             _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
                          }
                          catch (Exception e)
                          {
@@ -151,10 +142,43 @@ namespace WeightScale.BusinessLogicLayer.Services
                      });
         }
 
-        private void ResetWeights()
+        private void UpdatePackage(double fullWeight)
         {
-            _packageWeights = new PackageWeights();
-            _isWeightsProcessed = false;
+            Task.Run(() =>
+                     {
+                         if (_isUpdating)
+                         {
+                             return;
+                         }
+
+                         try
+                         {
+                             _isUpdating = true;
+                             if (_isWeightsProcessed)
+                             {
+                                 return;
+                             }
+
+                             _isWeightsProcessed = true;
+
+                             // Use the captured UI dispatcher
+                             var packageWeight = new PackageWeights
+                                                 {
+                                                         FullWeight = fullWeight
+                                                 };
+
+                             _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
+                         }
+                         catch (Exception e)
+                         {
+                             Console.WriteLine(e);
+                             throw;
+                         }
+                         finally
+                         {
+                             _isUpdating = false;
+                         }
+                     });
         }
     }
 }

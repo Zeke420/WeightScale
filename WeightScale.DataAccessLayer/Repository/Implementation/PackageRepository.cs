@@ -1,4 +1,5 @@
-﻿using WeightScale.DataAccessLayer.Contexts;
+﻿using System.Data.Entity.Migrations;
+using WeightScale.DataAccessLayer.Contexts;
 using WeightScale.DataAccessLayer.Entities;
 
 namespace WeightScale.DataAccessLayer.Repository.Implementation
@@ -15,8 +16,17 @@ namespace WeightScale.DataAccessLayer.Repository.Implementation
         public void Add(Package package)
         {
             using (var dbContext = new WeightScaleDbContext())
-            { 
+            {
                 dbContext.Packages.Add(package);
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void Update(Package package)
+        {
+            using (var dbContext = new WeightScaleDbContext())
+            {
+                dbContext.Packages.AddOrUpdate(package);
                 dbContext.SaveChanges();
             }
         }
