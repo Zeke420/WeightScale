@@ -55,6 +55,10 @@
     <Compile Include="Migrations\202406260737586_Initial.Designer.cs">
       <DependentUpon>202406260737586_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202407290913052_PackageWeightNulls.cs" />
+    <Compile Include="Migrations\202407290913052_PackageWeightNulls.Designer.cs">
+      <DependentUpon>202407290913052_PackageWeightNulls.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ICouriersRepository.cs" />
@@ -71,6 +75,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202406260737586_Initial.resx">
       <DependentUpon>202406260737586_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407290913052_PackageWeightNulls.resx">
+      <DependentUpon>202407290913052_PackageWeightNulls.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
