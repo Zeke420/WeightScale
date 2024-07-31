@@ -1,4 +1,6 @@
 ﻿using System;
+using WeightScale.BusinessLogicLayer.Mappers;
+using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.DataAccessLayer.DTOs;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.DataAccessLayer.Repository;
@@ -9,6 +11,7 @@ namespace WeightScale.BusinessLogicLayer.Services
     {
         void ConnectDevices(string fullWeightDeviceIp, string emptyWeightDeviceIp);
         event Action<Package> PackageAdded;
+        void MovePackage(PackageModel package, ShipmentModel newShipment);
     }
 
     public class PackageService : IPackageService
@@ -57,6 +60,13 @@ namespace WeightScale.BusinessLogicLayer.Services
 
             _packageRepository.Add(package);
             PackageAdded?.Invoke(package);
+        }
+
+        public void MovePackage(PackageModel package, ShipmentModel newShipment)
+        {
+            var packageEntity = PackageMapper.MapToEntity(package);
+            packageEntity.ShipmentId = newShipment.Id;
+            _packageRepository.Update(packageEntity);
         }
     }
 }

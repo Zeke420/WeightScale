@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.Presentation.Command;
@@ -12,20 +13,23 @@ public class WeightViewModel : ViewModelBase
 {
     private readonly IWeightService _weightService;
     private readonly IShipmentService _shipmentService;
+    private readonly IPackageService _packageService;
     private DateTime _selectedDate;
 
     public WeightViewModel(IWeightService weightService,
-                           IShipmentService shipmentService)
+                           IShipmentService shipmentService,
+                           IPackageService packageService)
     {
         _weightService = weightService;
         _shipmentService = shipmentService;
+        _packageService = packageService;
         _shipmentService.PackageAdded += OnPackageAdded;
 
         CompleteShipmentCommand = new DelegateCommand(CompleteShipment);
         MovePackageUpCommand = new DelegateCommand(MovePackageUp);
         MovePackageDownCommand = new DelegateCommand(MovePackageDown);
         LoadShipmentsCommand = new DelegateCommand(LoadShipments);
-        Shipments = new ObservableCollection<Shipment>();
+        Shipments = new ObservableCollection<ShipmentModel>();
         SelectedDate = DateTime.Today;
         LoadShipmentsCommand.Execute(null);
     }
@@ -35,7 +39,7 @@ public class WeightViewModel : ViewModelBase
         GetShipmentWeightByDate(SelectedDate);
     }
 
-    public ObservableCollection<Shipment> Shipments { get; set; }
+    public ObservableCollection<ShipmentModel> Shipments { get; set; }
     public DelegateCommand CompleteShipmentCommand { get; set; }
     public DelegateCommand MovePackageUpCommand { get; set; }
     public DelegateCommand MovePackageDownCommand { get; set; }
@@ -51,7 +55,7 @@ public class WeightViewModel : ViewModelBase
             GetShipmentWeightByDate(_selectedDate);
         }
     }
-    
+
     private void LoadShipments(object obj)
     {
         GetShipmentWeightByDate(SelectedDate);
@@ -82,41 +86,41 @@ public class WeightViewModel : ViewModelBase
 
     private void MovePackageDown(object obj)
     {
-        if (!(obj is Package package))
+        if (!(obj is PackageModel packageModel))
         {
             return;
         }
 
-        var shipment = Shipments.First(s => s.Id == package.ShipmentId);
+        var shipment = Shipments.First(s => s.Id == packageModel.ShipmentId);
         var index = Shipments.IndexOf(shipment);
-        var nextShipment = Shipments[index + 1];
+        var nextShipmentModel = Shipments[index + 1];
 
-        if(nextShipment == null)
+        if(nextShipmentModel == null)
         {
             return;
         }
 
-        _shipmentService.MovePackage(package, nextShipment);
+        _packageService.MovePackage(packageModel, nextShipmentModel);
         GetShipmentWeightByDate(_selectedDate);
     }
 
     private void MovePackageUp(object obj)
     {
-        if (!(obj is Package package))
+        if (!(obj is PackageModel packageModel))
         {
             return;
         }
 
-        var shipment = Shipments.First(s => s.Id == package.ShipmentId);
+        var shipment = Shipments.First(s => s.Id == packageModel.ShipmentId);
         var index = Shipments.IndexOf(shipment);
-        var previousShipment = Shipments[index - 1];
+        var nextShipmentModel = Shipments[index - 1];
 
-        if(previousShipment == null)
+        if(nextShipmentModel == null)
         {
             return;
         }
 
-        _shipmentService.MovePackage(package, previousShipment);
+        _packageService.MovePackage(packageModel, nextShipmentModel);
         GetShipmentWeightByDate(_selectedDate);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using WeightScale.BusinessLogicLayer.Mappers;
+using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.DataAccessLayer.Repository;
 
@@ -15,7 +17,6 @@ namespace WeightScale.BusinessLogicLayer.Services
         event Action<Package> PackageAdded;
         void DeleteShipment(Shipment shipment);
         List<Shipment> GetShipmentsInRange(DateTime startDate, DateTime endDate, List<Courier> couriers);
-        void MovePackage(Package package, Shipment newShipment);
     }
 
     public class ShipmentService : IShipmentService
@@ -68,12 +69,6 @@ namespace WeightScale.BusinessLogicLayer.Services
         public List<Shipment> GetShipmentsInRange(DateTime startDate, DateTime endDate, List<Courier> couriers)
         {
             return _shipmentRepository.GetShipmentsInRange(startDate, endDate, couriers);
-        }
-
-        public void MovePackage(Package package, Shipment newShipment)
-        {
-            var updatedPackage = package.Shipment = newShipment;
-            _shipmentRepository.UpdateShipment(updatedPackage);
         }
     }
 }

@@ -24,11 +24,8 @@ namespace WeightScale.DataAccessLayer.Repository.Implementation
 
         public void Update(Package package)
         {
-            using (var dbContext = new WeightScaleDbContext())
-            {
-                dbContext.Packages.AddOrUpdate(package);
-                dbContext.SaveChanges();
-            }
+            _dbContext.Packages.AddOrUpdate(package);
+            _dbContext.SaveChanges();
         }
     }
 }
