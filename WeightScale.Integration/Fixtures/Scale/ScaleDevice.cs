@@ -77,7 +77,6 @@ namespace WeightScale.Integration.Fixtures.Scale
                 var isWeightStable = e.ProcessData.WeightStable;
                 var netWeight = e.ProcessData.Weight.Net;
 
-                Console.WriteLine(_wtxDevice.DigitalIO.Output1);
                 HandleWeightStability(isWeightStable,
                                       netWeight);
             }

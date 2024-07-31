@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using WeightScale.BusinessLogicLayer.Mappers;
 using WeightScale.BusinessLogicLayer.Models;
-using WeightScale.DataAccessLayer.Entities;
 
 namespace WeightScale.BusinessLogicLayer.Services
 {
     public interface IWeightService
     {
         List<ShipmentModel> GetShipmentWeightByDate(DateTime date);
-        void CompleteShipment(Shipment shipment);
+        void CompleteShipment(ShipmentModel shipmentModel);
     }
 
     public class WeightService : IWeightService
@@ -28,8 +27,9 @@ namespace WeightScale.BusinessLogicLayer.Services
             return shipmentModels;
         }
 
-        public void CompleteShipment(Shipment shipment)
+        public void CompleteShipment(ShipmentModel shipmentModel)
         {
+            var shipment = ShipmentMapper.MapToEntity(shipmentModel);
             _shipmentService.CompleteShipment(shipment);
         }
     }

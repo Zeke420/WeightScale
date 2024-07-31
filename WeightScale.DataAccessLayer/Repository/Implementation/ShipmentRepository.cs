@@ -21,16 +21,19 @@ namespace WeightScale.DataAccessLayer.Repository.Implementation
         {
             using (var dbContext = new WeightScaleDbContext())
             {
-                return dbContext.Shipments.First(s => !s.IsFinished);
+                return dbContext.Shipments
+                                .Where(s => !s.IsFinished)
+                                .Include(x => x.Packages)
+                                .First();
             }
         }
-    
+
         public void AddShipment(Shipment shipment)
         {
             _dbContext.Shipments.Add(shipment);
             _dbContext.SaveChanges();
         }
-    
+
         public void UpdateShipment(Shipment shipment)
         {
             _dbContext.Shipments.AddOrUpdate(shipment);
@@ -50,7 +53,7 @@ namespace WeightScale.DataAccessLayer.Repository.Implementation
             return _dbContext.Shipments
                              .Where(x => x.ShipmentDate == date)
                              .Include(x => x.Packages)
-                             .Include(x=>x.Courier)
+                             .Include(x => x.Courier)
                              .ToList();
         }
 
@@ -68,11 +71,11 @@ namespace WeightScale.DataAccessLayer.Repository.Implementation
 
         public List<Shipment> GetShipmentsInRange(DateTime startDate, DateTime endDate, List<Courier> couriers)
         {
-            var courierIds = couriers.Select(c => c.Id).ToList();
+            var courierIds = couriers.Select(c => c.Id)
+                                     .ToList();
 
             var query = _dbContext.Shipments
-                                  .Where(x => x.ShipmentDate >= startDate
-                                              && x.ShipmentDate <= endDate)
+                                  .Where(x => x.ShipmentDate >= startDate && x.ShipmentDate <= endDate)
                                   .Include(x => x.Packages)
                                   .Include(x => x.Courier);
 

@@ -21,7 +21,6 @@ namespace WeightScale.BusinessLogicLayer.Services
         private readonly IMessenger _messenger;
         private readonly Dispatcher _uiDispatcher;
         public event Action<PackageWeights> PackageWeightsFilledOut;
-        private bool _isWeightsProcessed;
         private bool _isUpdating;
 
         public DeviceManager(IScaleDevice fullWeightDevice,
@@ -54,7 +53,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new FullConnectionStatus
                           {
-                              IsConnected = isConnected
+                                  IsConnected = isConnected
                           };
 
             _messenger.Send(message);
@@ -64,7 +63,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new EmptyConnectionStatus
                           {
-                              IsConnected = isConnected
+                                  IsConnected = isConnected
                           };
 
             _messenger.Send(message);
@@ -74,7 +73,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new FullScaleWeightStable
                           {
-                              IsStable = isStable
+                                  IsStable = isStable
                           };
 
             _messenger.Send(message);
@@ -84,7 +83,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new EmptyScaleWeightStable
                           {
-                              IsStable = isStable
+                                  IsStable = isStable
                           };
 
             _messenger.Send(message);
@@ -92,28 +91,21 @@ namespace WeightScale.BusinessLogicLayer.Services
 
         private void OnFullWeightDataReceived(double weight)
         {
-            if(_isWeightsProcessed)
-            {
-                return;
-            }
-
-            UpdatePackage(weight);
+            Task.Run(() =>
+                     {
+                         CreateNewPackage(weight);
+                     });
         }
 
         private void OnEmptyWeightDataReceived(double weight)
         {
             Task.Run(() =>
                      {
-                         if (_isWeightsProcessed)
-                         {
-                             return;
-                         }
-
-                         CreateNewPackage(weight);
+                         UpdatePackage(weight);
                      });
         }
 
-        private void CreateNewPackage(double emptyWeight)
+        private void CreateNewPackage(double fullWeight)
         {
             Task.Run(() =>
                      {
@@ -126,8 +118,9 @@ namespace WeightScale.BusinessLogicLayer.Services
                          {
                              var packageWeight = new PackageWeights
                                                  {
-                                                     EmptyWeight = emptyWeight
+                                                         FullWeight = fullWeight
                                                  };
+
                              _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
                          }
                          catch (Exception e)
@@ -142,7 +135,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                      });
         }
 
-        private void UpdatePackage(double fullWeight)
+        private void UpdatePackage(double emptyWeight)
         {
             Task.Run(() =>
                      {
@@ -154,17 +147,11 @@ namespace WeightScale.BusinessLogicLayer.Services
                          try
                          {
                              _isUpdating = true;
-                             if (_isWeightsProcessed)
-                             {
-                                 return;
-                             }
-
-                             _isWeightsProcessed = true;
 
                              // Use the captured UI dispatcher
                              var packageWeight = new PackageWeights
                                                  {
-                                                         FullWeight = fullWeight
+                                                         EmptyWeight = emptyWeight
                                                  };
 
                              _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });

@@ -43,12 +43,20 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var shipment = _shipmentRepository.GetFirstUnFinishedShipment();
 
-            if (obj.EmptyWeight == null
-                && obj.FullWeight.HasValue)
+            if (obj.FullWeight == null
+                && obj.EmptyWeight.HasValue)
             {
-                var updatePackage = shipment.Packages.Find(x => x.FullWeight == null);
-                updatePackage.FullWeight = obj.FullWeight;
+                var updatePackage = shipment.Packages.Find(x => x.EmptyWeight == null);
+                if (updatePackage == null)
+                {
+                    return;
+                }
+
+                updatePackage.EmptyWeight = obj.EmptyWeight;
                 _packageRepository.Update(updatePackage);
+                PackageAdded?.Invoke(updatePackage);
+
+                return;
             }
 
             var package = new Package

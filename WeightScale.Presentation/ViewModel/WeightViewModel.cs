@@ -63,13 +63,13 @@ public class WeightViewModel : ViewModelBase
 
     private void CompleteShipment(object obj)
     {
-        if (!(obj is Shipment shipment))
+        if (!(obj is ShipmentModel shipmentModel))
         {
             return;
         }
 
-        shipment.IsFinished = true;
-        _weightService.CompleteShipment(shipment);
+        shipmentModel.IsFinished = true;
+        _weightService.CompleteShipment(shipmentModel);
         OnPropertyChanged(nameof(Shipments));
         GetShipmentWeightByDate(_selectedDate);
     }
