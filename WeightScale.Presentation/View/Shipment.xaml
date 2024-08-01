@@ -15,11 +15,11 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <DatePicker SelectedDate="{Binding SelectedDate}"
-                        Margin="10"/>
+                        Margin="10" />
 
             <Button Content="Get Shipments"
                     Command="{Binding LoadShipmentsCommand}"
-                    Margin="10"/>
+                    Margin="10" />
         </StackPanel>
 
         <StackPanel Grid.Row="1"
@@ -33,17 +33,17 @@
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center"
                                    Padding="10,5"
-                                   FontWeight="SemiBold"/>
+                                   FontWeight="SemiBold" />
                     </Border>
                     <Border>
                         <StackPanel Orientation="Vertical">
                             <ComboBox ItemsSource="{Binding Couriers}"
                                       SelectedItem="{Binding SelectedCourier}"
                                       DisplayMemberPath="Name"
-                                      Margin="10"/>
+                                      Margin="10" />
                             <Button Content="Add Courier"
                                     Command="{Binding AddCourierCommand}"
-                                    Margin="10"/>
+                                    Margin="10" />
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -58,7 +58,7 @@
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center"
                                    Padding="10,5"
-                                   FontWeight="SemiBold"/>
+                                   FontWeight="SemiBold" />
                     </Border>
                     <Border Margin="0,0,0,10">
                         <ListBox x:Name="ShipmentsListBox"
@@ -67,11 +67,11 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="{Binding Courier.Name}"
-                                                   Margin="10"/>
+                                                   Margin="10" />
                                         <Button Content="Delete"
                                                 Command="{Binding DataContext.DeleteShipmentCommand, ElementName=ShipmentsListBox}"
                                                 CommandParameter="{Binding}"
-                                                Margin="10"/>
+                                                Margin="10" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

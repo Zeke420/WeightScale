@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using WeightScale.DataAccessLayer.Entities;
 
 namespace WeightScale.DataAccessLayer.Repository

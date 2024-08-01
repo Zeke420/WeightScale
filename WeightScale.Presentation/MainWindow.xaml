@@ -45,17 +45,17 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <ContentControl Grid.Row="1"
                         Content="{Binding NavigationService.HeaderRegion}" />
-        
+
         <ContentControl Grid.Row="2"
                         Content="{Binding NavigationService.MainRegion}" />
-        
+
         <ContentControl Grid.Row="3"
                         Panel.ZIndex="1"
                         Content="{Binding NavigationService.FooterRegion}" />
-        
+
         <StatusBar Grid.Row="3"
                    Panel.ZIndex="0" />
     </Grid>

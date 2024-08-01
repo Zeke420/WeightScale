@@ -6,6 +6,8 @@ namespace WeightScale.BusinessLogicLayer.Models
         public double? FullWeight { get; set; }
         public double? EmptyWeight { get; set; }
         public int ShipmentId { get; set; }
-        public double? WeightDifference => FullWeight - EmptyWeight;
+
+        public double? WeightDifference =>
+                FullWeight - EmptyWeight;
     }
 }

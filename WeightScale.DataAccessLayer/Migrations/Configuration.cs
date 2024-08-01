@@ -1,18 +1,16 @@
-﻿namespace WeightScale.DataAccessLayer.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+﻿using System.Data.Entity.Migrations;
+using WeightScale.DataAccessLayer.Contexts;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WeightScale.DataAccessLayer.Contexts.WeightScaleDbContext>
+namespace WeightScale.DataAccessLayer.Migrations
+{
+    internal sealed class Configuration : DbMigrationsConfiguration<WeightScaleDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(WeightScale.DataAccessLayer.Contexts.WeightScaleDbContext context)
+        protected override void Seed(WeightScaleDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

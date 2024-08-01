@@ -28,23 +28,25 @@
 //
 // </copyright>
 
+using System;
+
 namespace Hbm.Automation.Api.Data
 {
-    using System;
-
     /// <summary>
-    /// Interface containing the data for the filler mode of your WTX device.
-    /// A class inheriting from interface IDataFiller contains the input word 
-    /// and output words for the filler mode of WTX device 120 and 110.
+    ///     Interface containing the data for the filler mode of your WTX device.
+    ///     A class inheriting from interface IDataFiller contains the input word
+    ///     and output words for the filler mode of WTX device 120 and 110.
     /// </summary>
     public interface IDataFiller
     {
-
         #region ==================== events & delegates ====================
+
         void UpdateFillerData(object sender, EventArgs e);
+
         #endregion
 
         #region ======================== properties ========================
+
         int CoarseFlow { get; }
 
         int FineFlow { get; }
@@ -84,66 +86,69 @@ namespace Hbm.Automation.Api.Data
         int ToleranceErrorMinus { get; }
 
         int ParameterSetProduct { get; }
-        
+
         int ResidualFlowTime { get; set; }
 
-        double TargetFillingWeight { get;  set; }
+        double TargetFillingWeight { get; set; }
 
-        double CoarseFlowCutOffLevel { get;  set; }
+        double CoarseFlowCutOffLevel { get; set; }
 
-        double FineFlowCutOffLevel { get;  set; }
+        double FineFlowCutOffLevel { get; set; }
 
-        double MinimumFineFlow { get;  set; }
+        double MinimumFineFlow { get; set; }
 
-        int OptimizationMode { get;  set; }
+        int OptimizationMode { get; set; }
 
-        int MaxFillingTime { get;  set; }
+        int MaxFillingTime { get; set; }
 
-        int StartWithFineFlow { get;  set; }
-        
-        int TareMode { get;  set; }
+        int StartWithFineFlow { get; set; }
 
-        int TareDelay { get;  set; }
+        int TareMode { get; set; }
 
-        double UpperToleranceLimit { get;  set; }
+        int TareDelay { get; set; }
 
-        double LowerToleranceLimit { get;  set; }
+        double UpperToleranceLimit { get; set; }
 
-        double MinimumStartWeight { get;  set; }
+        double LowerToleranceLimit { get; set; }
 
-        double EmptyWeight { get;  set; }
+        double MinimumStartWeight { get; set; }
 
-        int CoarseLockoutTime { get;  set; }
+        double EmptyWeight { get; set; }
 
-        int FineLockoutTime { get;  set; }
+        int CoarseLockoutTime { get; set; }
 
-        double CoarseFlowMonitoring { get;  set; }
+        int FineLockoutTime { get; set; }
 
-        int CoarseFlowMonitoringTime { get;  set; }
+        double CoarseFlowMonitoring { get; set; }
 
-        double FineFlowMonitoring { get;  set; }
+        int CoarseFlowMonitoringTime { get; set; }
 
-        int FineFlowMonitoringTime { get;  set; }
+        double FineFlowMonitoring { get; set; }
 
-        int DelayTimeAfterFilling { get;  set; }
+        int FineFlowMonitoringTime { get; set; }
 
-        int ActivationTimeAfterFilling { get;  set; }
+        int DelayTimeAfterFilling { get; set; }
 
-        double SystematicDifference { get;  set; }
+        int ActivationTimeAfterFilling { get; set; }
 
-        int FillingMode { get;  set; }
+        double SystematicDifference { get; set; }
 
-        int ValveControl { get;  set; }
+        int FillingMode { get; set; }
 
-        int EmptyingMode { get;  set; }
+        int ValveControl { get; set; }
+
+        int EmptyingMode { get; set; }
+
         #endregion
 
-        #region ================ public & internal methods ================= 
+        #region ================ public & internal methods =================
+
         void StartFilling();
 
         void BreakFilling();
 
         void ClearFillingResult();
+
         #endregion
     }
 }

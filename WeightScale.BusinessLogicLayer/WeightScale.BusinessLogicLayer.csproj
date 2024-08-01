@@ -34,81 +34,81 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Options, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Options.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Options.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Primitives, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Primitives.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Primitives.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
         </Reference>
-        <Reference Include="mscorlib" />
+        <Reference Include="mscorlib"/>
         <Reference Include="System"/>
         <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+            <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
         </Reference>
-        <Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
         <Reference Include="System.Core"/>
         <Reference Include="System.Data"/>
         <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+            <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
         </Reference>
-        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics"/>
         <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+            <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
         </Reference>
         <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+            <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
         </Reference>
         <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+            <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
         </Reference>
         <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+            <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
         </Reference>
         <Reference Include="System.Xml"/>
-        <Reference Include="WindowsBase" />
+        <Reference Include="WindowsBase"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Mappers\PackageMapper.cs" />
-        <Compile Include="Mappers\ShipmentMapper.cs" />
-        <Compile Include="Models\ApplicationSettings.cs" />
-        <Compile Include="Models\CouriersSelectionModel.cs" />
-        <Compile Include="Models\Messages\EmptyConnectionStatus.cs" />
-        <Compile Include="Models\Messages\EmptyScaleWeightStable.cs" />
-        <Compile Include="Models\Messages\FullConnectionStatus.cs" />
-        <Compile Include="Models\Messages\FullScaleWeightStable.cs" />
-        <Compile Include="Models\PackageModel.cs" />
-        <Compile Include="Models\ShipmentModel.cs" />
-        <Compile Include="Models\Subscription.cs" />
+        <Compile Include="Mappers\PackageMapper.cs"/>
+        <Compile Include="Mappers\ShipmentMapper.cs"/>
+        <Compile Include="Models\ApplicationSettings.cs"/>
+        <Compile Include="Models\CouriersSelectionModel.cs"/>
+        <Compile Include="Models\Messages\EmptyConnectionStatus.cs"/>
+        <Compile Include="Models\Messages\EmptyScaleWeightStable.cs"/>
+        <Compile Include="Models\Messages\FullConnectionStatus.cs"/>
+        <Compile Include="Models\Messages\FullScaleWeightStable.cs"/>
+        <Compile Include="Models\PackageModel.cs"/>
+        <Compile Include="Models\ShipmentModel.cs"/>
+        <Compile Include="Models\Subscription.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="Services\CourierService.cs" />
-        <Compile Include="Services\DeviceManager.cs" />
-        <Compile Include="Services\FileExportService.cs" />
-        <Compile Include="Services\PackageService.cs" />
-        <Compile Include="Services\ShipmentService.cs" />
-        <Compile Include="Services\WeightService.cs" />
-        <Compile Include="Utils\Messenger.cs" />
+        <Compile Include="Services\CourierService.cs"/>
+        <Compile Include="Services\DeviceManager.cs"/>
+        <Compile Include="Services\FileExportService.cs"/>
+        <Compile Include="Services\PackageService.cs"/>
+        <Compile Include="Services\ShipmentService.cs"/>
+        <Compile Include="Services\WeightService.cs"/>
+        <Compile Include="Utils\Messenger.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\WeightScale.DataAccessLayer\WeightScale.DataAccessLayer.csproj">
-        <Project>{f54a2de3-7917-43e8-9571-b04f902a2be6}</Project>
-        <Name>WeightScale.DataAccessLayer</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\WeightScale.Integration\WeightScale.Integration.csproj">
-        <Project>{fff08669-5e44-49c5-b411-b6ec081c0b38}</Project>
-        <Name>WeightScale.Integration</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\WeightScale.DataAccessLayer\WeightScale.DataAccessLayer.csproj">
+            <Project>{f54a2de3-7917-43e8-9571-b04f902a2be6}</Project>
+            <Name>WeightScale.DataAccessLayer</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\WeightScale.Integration\WeightScale.Integration.csproj">
+            <Project>{fff08669-5e44-49c5-b411-b6ec081c0b38}</Project>
+            <Name>WeightScale.Integration</Name>
+        </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-      <None Include="App.config" />
-      <None Include="packages.config" />
+        <None Include="App.config"/>
+        <None Include="packages.config"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
     </Target>

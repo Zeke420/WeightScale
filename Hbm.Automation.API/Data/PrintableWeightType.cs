@@ -28,33 +28,53 @@
 //
 // </copyright>
 
+using System.Globalization;
+
 namespace Hbm.Automation.Api.Data
 {
-    using System.Globalization;
-
     /// <summary>
-    /// Holds the current weight values (gross, net, tare)
+    ///     Holds the current weight values (gross, net, tare)
     /// </summary>
     public class PrintableWeightType
     {
         #region ==================== constants & fields ====================
 
-        private NumberFormatInfo setPrecision;
+        private readonly NumberFormatInfo setPrecision;
 
         #endregion
 
         #region =============== constructors & destructors =================
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PrintableWeightType" /> class.
+        ///     Initializes a new instance of the <see cref="PrintableWeightType" /> class.
         /// </summary>
         public PrintableWeightType()
         {
             setPrecision = new NumberFormatInfo();
 
-            Net   = "0";
+            Net = "0";
             Gross = "0";
-            Tare  = "0";
+            Tare = "0";
+        }
+
+        #endregion
+
+        #region ================ public & internal methods =================
+
+        /// <summary>
+        ///     Updates the device properties net, gross and tare from external
+        /// </summary>
+        /// <param name="net"></param>
+        /// <param name="gross"></param>
+        /// <param name="tare"></param>
+        /// <param name="decimals"></param>
+        public void Update(double net, double gross, double tare, int decimals)
+        {
+            setPrecision.NumberDecimalDigits = decimals;
+
+            Net = ( (decimal)net ).ToString("F", setPrecision);
+            Gross = ( (decimal)gross ).ToString("F", setPrecision);
+            Tare = ( (decimal)tare ).ToString("F", setPrecision);
         }
 
         #endregion
@@ -62,39 +82,19 @@ namespace Hbm.Automation.Api.Data
         #region ======================== properties ========================
 
         /// <summary>
-        /// Gets the gross value of weight in string without a unit
+        ///     Gets the gross value of weight in string without a unit
         /// </summary>
         public string Gross { get; private set; }
 
         /// <summary>
-        /// Gets the net value of weight in string without a unit
+        ///     Gets the net value of weight in string without a unit
         /// </summary>
         public string Net { get; private set; }
 
         /// <summary>
-        /// Gets the tare value of weight in string without a unit
+        ///     Gets the tare value of weight in string without a unit
         /// </summary>
         public string Tare { get; private set; }
-
-        #endregion
-
-        #region ================ public & internal methods =================
-
-        /// <summary>
-        /// Updates the device properties net, gross and tare from external
-        /// </summary>
-        /// <param name="net"></param>
-        /// <param name="gross"></param>
-        /// <param name="tare"></param>
-        /// <param name="decimals"></param>
-        public void Update(double net, double gross, double tare, int decimals)
-        {          
-            setPrecision.NumberDecimalDigits = decimals;
-
-            Net = ((decimal)net).ToString("F", setPrecision);
-            Gross = ((decimal)gross).ToString("F", setPrecision);
-            Tare = ((decimal)tare).ToString("F", setPrecision);
-        }
 
         #endregion
     }

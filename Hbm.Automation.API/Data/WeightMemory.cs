@@ -28,42 +28,19 @@
 //
 // </copyright>
 
+using System;
+
 namespace Hbm.Automation.Api.Data
 {
-    using System;
-
     /// <summary>
-    /// Holds a weight memory record
+    ///     Holds a weight memory record
     /// </summary>
     public class WeightMemory
     {
-        #region ======================== properties ========================
-
-        /// <summary>
-        /// Gets a value indicating the date of this weight memory record
-        /// </summary>
-        public DateTime Date { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating the record ID of this weight memory record
-        /// </summary>
-        public int RecordID { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating the gross value of this weight memory record
-        /// </summary>
-        public int Gross { get; private set; }
-
-        /// <summary>
-        /// Gets a value indicating the net value of this weight memory record
-        /// </summary>
-        public int Net { get; private set; }
-        #endregion
-
         #region ================ public & internal methods =================
 
         /// <summary>
-        /// Updates this weight memory record
+        ///     Updates this weight memory record
         /// </summary>
         /// <param name="year">Year of recording</param>
         /// <param name="month">Month of recording</param>
@@ -78,6 +55,31 @@ namespace Hbm.Automation.Api.Data
             Gross = gross;
             Net = net;
         }
+
+        #endregion
+
+        #region ======================== properties ========================
+
+        /// <summary>
+        ///     Gets a value indicating the date of this weight memory record
+        /// </summary>
+        public DateTime Date { get; private set; }
+
+        /// <summary>
+        ///     Gets a value indicating the record ID of this weight memory record
+        /// </summary>
+        public int RecordID { get; private set; }
+
+        /// <summary>
+        ///     Gets a value indicating the gross value of this weight memory record
+        /// </summary>
+        public int Gross { get; private set; }
+
+        /// <summary>
+        ///     Gets a value indicating the net value of this weight memory record
+        /// </summary>
+        public int Net { get; private set; }
+
         #endregion
     }
 }

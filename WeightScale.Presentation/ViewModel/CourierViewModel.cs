@@ -42,15 +42,15 @@ namespace WeightScale.Presentation.ViewModel
 
         private void DeleteCourier(object obj)
         {
-            if (!(obj is Courier courier))
+            if (!( obj is Courier courier ))
             {
                 return;
             }
-            
+
             _courierService.DeleteCourier(courier);
             Couriers.Remove(courier);
         }
-        
+
         private void LoadCouriers()
         {
             Couriers.Clear();

@@ -28,18 +28,18 @@
 //
 // </copyright>
 
+using Hbm.Automation.Api.Data;
+
 namespace Hbm.Automation.Api.Weighing
 {
-    using Hbm.Automation.Api;
-    using Hbm.Automation.Api.Data;
-
     /// <summary>
-    /// Class containing extended data and functionality to BaseWtDevice.
-    /// It inherits from BaseWtdevice. Used by a Jetbus connection and application.
+    ///     Class containing extended data and functionality to BaseWtDevice.
+    ///     It inherits from BaseWtdevice. Used by a Jetbus connection and application.
     /// </summary>
     public abstract class BaseWTXDevice : BaseWTDevice
     {
         #region =============== constructors & destructors =================
+
         public BaseWTXDevice(INetConnection connection, int timerIntervalms) : base(connection, timerIntervalms)
         {
         }
@@ -47,21 +47,21 @@ namespace Hbm.Automation.Api.Weighing
         public BaseWTXDevice(INetConnection connection) : base(connection)
         {
         }
+
         #endregion
 
         #region ======================== properties ========================
 
         /// <summary>
-        /// Gets or sets the current digital IO status
+        ///     Gets or sets the current digital IO status
         /// </summary>
         public abstract IDataDigitalIO DigitalIO { get; set; }
 
         /// <summary>
-        /// Gets or sets the current limit switch configuration and status
+        ///     Gets or sets the current limit switch configuration and status
         /// </summary>
         public abstract IDataLimitSwitch LimitSwitch { get; set; }
 
         #endregion
-
     }
 }

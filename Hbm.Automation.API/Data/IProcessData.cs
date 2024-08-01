@@ -28,116 +28,116 @@
 //
 // </copyright>
 
+using System;
+
 namespace Hbm.Automation.Api.Data
 {
-    using System;
-
     /// <summary>
-    /// Interface containing the process data of a device.
-    /// Among these are gross weight, net and weight status signals (e.g. TareMode or ScaleRange).
+    ///     Interface containing the process data of a device.
+    ///     Among these are gross weight, net and weight status signals (e.g. TareMode or ScaleRange).
     /// </summary>
     public interface IProcessData
     {
-
         #region ==================== events & delegates ====================
+
         /// <summary>
-        /// Use this Method to update all properties of this interface.
+        ///     Use this Method to update all properties of this interface.
         /// </summary>
         /// <param name="sender">Sender of this event</param>
         /// <param name="e">EventArgs of this event</param>
         void UpdateData(object sender, EventArgs e);
+
         #endregion
 
         #region ======================== properties ========================
+
         /// <summary>
-        /// Gets the application mode (e.g. Standard/Filler)
+        ///     Gets the application mode (e.g. Standard/Filler)
         /// </summary>
         ApplicationMode ApplicationMode { get; }
 
         /// <summary>
-        /// Gets the weight values gross, net , tare as double
+        ///     Gets the weight values gross, net , tare as double
         /// </summary>
         WeightType Weight { get; }
 
         /// <summary>
-        /// Gets the weight values gross, net , tare as string
+        ///     Gets the weight values gross, net , tare as string
         /// </summary>
         PrintableWeightType PrintableWeight { get; }
 
         /// <summary>
-        /// Gets the engineering unit (e.g. "g", "kg",´"t", "lb", "N")
+        ///     Gets the engineering unit (e.g. "g", "kg",´"t", "lb", "N")
         /// </summary>
         string Unit { get; }
 
         /// <summary>
-        /// Gets the number of decimals
+        ///     Gets the number of decimals
         /// </summary>
         int Decimals { get; }
 
         /// <summary>
-        /// Gets the current tare mode
+        ///     Gets the current tare mode
         /// </summary>
         TareMode TareMode { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the weight is stable
+        ///     Gets a value indicating whether the weight is stable
         /// </summary>
         bool WeightStable { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale is in the center-of-zero status
+        ///     Gets a value indicating whether the scale is in the center-of-zero status
         /// </summary>
         bool CenterOfZero { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the weight is inside zeroing range
+        ///     Gets a value indicating whether the weight is inside zeroing range
         /// </summary>
         bool InsideZero { get; }
 
         /// <summary>
-        /// Gets a value indicating whether zeroing is required
+        ///     Gets a value indicating whether zeroing is required
         /// </summary>
         bool ZeroRequired { get; }
 
         /// <summary>
-        /// Gets a value indicating the scale range (ranges 1, 2, 3 are valid)
+        ///     Gets a value indicating the scale range (ranges 1, 2, 3 are valid)
         /// </summary>
         int ScaleRange { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale is in legal-for-trade mode
+        ///     Gets a value indicating whether the scale is in legal-for-trade mode
         /// </summary>
         bool LegalForTrade { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale is in underload 
+        ///     Gets a value indicating whether the scale is in underload
         /// </summary>
         bool Underload { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale is in overload 
+        ///     Gets a value indicating whether the scale is in overload
         /// </summary>
         bool Overload { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale is higher than safe load limit
+        ///     Gets a value indicating whether the scale is higher than safe load limit
         /// </summary>
         bool HigherSafeLoadLimit { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale is in error status
+        ///     Gets a value indicating whether the scale is in error status
         /// </summary>
         bool GeneralScaleError { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the scale alarm is active
+        ///     Gets a value indicating whether the scale alarm is active
         /// </summary>
         bool ScaleAlarm { get; }
 
         string Is1DigitalInput1Active { get; set; }
 
         #endregion
-
-
     }
 }

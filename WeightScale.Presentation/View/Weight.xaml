@@ -78,7 +78,7 @@
                                                 <DataGridTextColumn Header="Empty Weight"
                                                                     Binding="{Binding EmptyWeight}" />
                                                 <DataGridTextColumn Header="Net Weight"
-                                                                    Binding="{Binding WeightDifference}"/>
+                                                                    Binding="{Binding WeightDifference}" />
                                                 <DataGridTemplateColumn Header="Actions">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>

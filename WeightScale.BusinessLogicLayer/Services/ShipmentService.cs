@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using WeightScale.BusinessLogicLayer.Mappers;
-using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.DataAccessLayer.Repository;
 
@@ -21,9 +18,8 @@ namespace WeightScale.BusinessLogicLayer.Services
 
     public class ShipmentService : IShipmentService
     {
-        private readonly IShipmentRepository _shipmentRepository;
         private readonly IPackageService _packageService;
-        public event Action<Package> PackageAdded;
+        private readonly IShipmentRepository _shipmentRepository;
 
         public ShipmentService(IShipmentRepository shipmentRepository,
                                IPackageService packageService)
@@ -33,10 +29,7 @@ namespace WeightScale.BusinessLogicLayer.Services
             _packageService.PackageAdded += OnPackageAdded;
         }
 
-        private void OnPackageAdded(Package obj)
-        {
-            PackageAdded?.Invoke(obj);
-        }
+        public event Action<Package> PackageAdded;
 
         public List<Shipment> GetShipmentsByDate(DateTime date)
         {
@@ -69,6 +62,11 @@ namespace WeightScale.BusinessLogicLayer.Services
         public List<Shipment> GetShipmentsInRange(DateTime startDate, DateTime endDate, List<Courier> couriers)
         {
             return _shipmentRepository.GetShipmentsInRange(startDate, endDate, couriers);
+        }
+
+        private void OnPackageAdded(Package obj)
+        {
+            PackageAdded?.Invoke(obj);
         }
     }
 }

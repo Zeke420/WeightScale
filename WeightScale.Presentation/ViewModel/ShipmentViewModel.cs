@@ -9,10 +9,10 @@ namespace WeightScale.Presentation.ViewModel
 {
     public class ShipmentViewModel : ViewModelBase
     {
-        private readonly IShipmentService _shipmentService;
         private readonly ICourierService _courierService;
-        private DateTime _selectedDate;
+        private readonly IShipmentService _shipmentService;
         private Courier _selectedCourier;
+        private DateTime _selectedDate;
 
         public ShipmentViewModel(IShipmentService shipmentService,
                                  ICourierService courierService)
@@ -28,12 +28,13 @@ namespace WeightScale.Presentation.ViewModel
             LoadCouriers();
             LoadShipments(null);
         }
-        
+
         public DelegateCommand LoadShipmentsCommand { get; set; }
         public DelegateCommand AddCourierCommand { get; set; }
         public DelegateCommand DeleteShipmentCommand { get; set; }
         public ObservableCollection<Shipment> Shipments { get; set; }
         public List<Courier> Couriers { get; }
+
         public DateTime SelectedDate
         {
             get => _selectedDate;
@@ -43,7 +44,7 @@ namespace WeightScale.Presentation.ViewModel
                 OnPropertyChanged();
             }
         }
-        
+
         public Courier SelectedCourier
         {
             get => _selectedCourier;
@@ -60,10 +61,11 @@ namespace WeightScale.Presentation.ViewModel
             {
                 return;
             }
-            
+
             _shipmentService.AddShipment(SelectedCourier, SelectedDate);
             LoadShipments(null);
         }
+
         private void LoadShipments(object obj)
         {
             Shipments.Clear();
@@ -73,18 +75,18 @@ namespace WeightScale.Presentation.ViewModel
                 Shipments.Add(shipment);
             }
         }
-        
+
         private void DeleteShipment(object obj)
         {
-            if(!(obj is Shipment shipment))
+            if (!( obj is Shipment shipment ))
             {
                 return;
             }
-            
+
             _shipmentService.DeleteShipment(shipment);
             LoadShipmentsCommand.Execute(null);
         }
-        
+
         private void LoadCouriers()
         {
             var couriers = _courierService.GetCouriers();
@@ -92,6 +94,7 @@ namespace WeightScale.Presentation.ViewModel
             {
                 Couriers.Add(courier);
             }
+
             OnPropertyChanged(nameof(Couriers));
         }
     }

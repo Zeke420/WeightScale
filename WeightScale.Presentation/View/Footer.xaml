@@ -8,26 +8,26 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <converters:BooleanToConnectionStatusConverter x:Key="BooleanToConnectionStatusConverter"/>
-            <converters:PassFailToColorConverter x:Key="PassFailToColorConverter"/>
+            <converters:BooleanToConnectionStatusConverter x:Key="BooleanToConnectionStatusConverter" />
+            <converters:PassFailToColorConverter x:Key="PassFailToColorConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0"
                     Orientation="Horizontal">
             <TextBlock Text="Empty " />
             <TextBlock
-                Text="{Binding IsEmptyScaleConnected,Converter={StaticResource BooleanToConnectionStatusConverter}}"/>
+                Text="{Binding IsEmptyScaleConnected,Converter={StaticResource BooleanToConnectionStatusConverter}}" />
             <TextBlock Text=" Stable: " />
             <TextBlock Text="{Binding IsEmptyWeightStable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Ellipse Fill="{Binding IsEmptyWeightStable, Converter={StaticResource PassFailToColorConverter}}"
                      Width="20"
-                     Height="20"/>
+                     Height="20" />
         </StackPanel>
 
         <StackPanel Grid.Column="1"
@@ -35,12 +35,12 @@
                     Margin="10,0,0,0">
             <TextBlock Text="Full " />
             <TextBlock
-                Text="{Binding IsFullScaleConnected,Converter={StaticResource BooleanToConnectionStatusConverter}}"/>
+                Text="{Binding IsFullScaleConnected,Converter={StaticResource BooleanToConnectionStatusConverter}}" />
             <TextBlock Text=" Stable: " />
             <TextBlock Text="{Binding IsFullWeightStable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Ellipse Fill="{Binding IsFullWeightStable, Converter={StaticResource PassFailToColorConverter}}"
                      Width="20"
-                     Height="20"/>
+                     Height="20" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -31,55 +31,57 @@
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Holds the current weight values (gross, net, tare)
+    ///     Holds the current weight values (gross, net, tare)
     /// </summary>
     public class WeightType
     {
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="WeightType" /> class.
+        ///     Initializes a new instance of the <see cref="WeightType" /> class.
         /// </summary>
         public WeightType()
         {
-            Net   = 0.0;
+            Net = 0.0;
             Gross = 0.0;
-            Tare  = 0.0;
+            Tare = 0.0;
         }
-        #endregion
-
-        #region ======================== properties ========================
-
-        /// <summary>
-        /// Gets the gross value of weight
-        /// </summary>
-        public double Gross { get; private set; }
-
-        /// <summary>
-        /// Gets the net value of weight
-        /// </summary>
-        public double Net { get; private set; }
-
-        /// <summary>
-        /// Gets the tare value of weight
-        /// </summary>
-        public double Tare { get; private set; }
 
         #endregion
 
         #region ================== public method - update ==================
 
         /// <summary>
-        /// Updates the value of the class : net, gross and tare value
+        ///     Updates the value of the class : net, gross and tare value
         /// </summary>
         /// <param name="net">Net value </param>
         /// <param name="gross">Gross value</param>
         /// <param name="tare">Tare value</param>
         public void Update(double net, double gross, double tare)
         {
-            Net   = net;
+            Net = net;
             Gross = gross;
-            Tare  = tare;
+            Tare = tare;
         }
+
+        #endregion
+
+        #region ======================== properties ========================
+
+        /// <summary>
+        ///     Gets the gross value of weight
+        /// </summary>
+        public double Gross { get; private set; }
+
+        /// <summary>
+        ///     Gets the net value of weight
+        /// </summary>
+        public double Net { get; private set; }
+
+        /// <summary>
+        ///     Gets the tare value of weight
+        /// </summary>
+        public double Tare { get; private set; }
 
         #endregion
     }

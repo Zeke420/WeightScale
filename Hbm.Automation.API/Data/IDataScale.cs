@@ -31,42 +31,42 @@
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Class containing extended data and functionality to BaseWtDevice.
-    /// It inherits from BaseWtdevice. Used by a Jetbus connection and application.
+    ///     Class containing extended data and functionality to BaseWtDevice.
+    ///     It inherits from BaseWtdevice. Used by a Jetbus connection and application.
     /// </summary>
     public interface IDataScale
     {
-
         #region ======================== properties ========================
 
         /// <summary>
-        /// Gets or sets the weight step in weight unit
+        ///     Gets or sets the weight step in weight unit
         /// </summary>
         double WeightStep { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="ScaleRangeMode"/>
+        ///     Gets or sets the <see cref="ScaleRangeMode" />
         /// </summary>
         ScaleRangeMode ScaleRangeMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the lower limit of a scale with 2 or 3 ranges/intervals in weight unit
+        ///     Gets or sets the lower limit of a scale with 2 or 3 ranges/intervals in weight unit
         /// </summary>
         double MultiScaleLimit1 { get; set; }
 
         /// <summary>
-        /// Gets or sets the upper limit of a scale with 3 ranges/intervals in weight unit
+        ///     Gets or sets the upper limit of a scale with 3 ranges/intervals in weight unit
         /// </summary>
         double MultiScaleLimit2 { get; set; }
 
         /// <summary>
-        /// Gets or sets the weight movement detection
+        ///     Gets or sets the weight movement detection
         /// </summary>
         int WeightMovementDetection { get; set; }
+
         #endregion
 
         #region ================ public & internal methods =================
-        #endregion
 
+        #endregion
     }
 }

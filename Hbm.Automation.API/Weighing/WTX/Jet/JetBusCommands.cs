@@ -31,11 +31,12 @@
 namespace Hbm.Automation.Api.Weighing.WTX.Jet
 {
     /// <summary>
-    /// Class with all JetBus commands and additional command information 
+    ///     Class with all JetBus commands and additional command information
     /// </summary>
     public static class JetBusCommands
     {
         #region =============== constructors & destructors =================
+
         static JetBusCommands()
         {
             CIA461CalibrationWeight = new JetBusCommand(DataType.S32, "6152/00", 0, 0);
@@ -233,9 +234,11 @@ namespace Hbm.Automation.Api.Weighing.WTX.Jet
             WDPWriteDosingParameterSet = new JetBusCommand(DataType.U08, "2200/01", 0, 0);
             WRSWeightMemoryEntry = new JetBusCommand(DataType.ASCII, "2040/06", 0, 0);
         }
+
         #endregion
 
         #region ======================== properties ========================
+
         public static JetBusCommand CIA461CalibrationWeight { get; private set; }
 
         public static JetBusCommand CIA461CertificaitonInfoNTEP { get; private set; }
@@ -443,9 +446,9 @@ namespace Hbm.Automation.Api.Weighing.WTX.Jet
         public static JetBusCommand DSELowPassCutOffFrequencyIIR { get; private set; }
 
         public static JetBusCommand DSEFilterModeStage2 { get; private set; }
- 
+
         public static JetBusCommand DSEFilterModeStage3 { get; private set; }
- 
+
         public static JetBusCommand DSEFilterModeStage4 { get; private set; }
 
         public static JetBusCommand DSEFilterModeStage5 { get; private set; }
@@ -623,7 +626,7 @@ namespace Hbm.Automation.Api.Weighing.WTX.Jet
         public static JetBusCommand WDPWriteDosingParameterSet { get; private set; }
 
         public static JetBusCommand WRSWeightMemoryEntry { get; private set; }
-        
+
         #endregion
     }
 }

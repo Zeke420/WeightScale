@@ -16,11 +16,10 @@ namespace WeightScale.BusinessLogicLayer.Services
 
     public class DeviceManager : IDeviceManager
     {
-        private readonly IScaleDevice _fullWeightDevice;
         private readonly IScaleDevice _emptyWeightDevice;
+        private readonly IScaleDevice _fullWeightDevice;
         private readonly IMessenger _messenger;
         private readonly Dispatcher _uiDispatcher;
-        public event Action<PackageWeights> PackageWeightsFilledOut;
         private bool _isUpdating;
 
         public DeviceManager(IScaleDevice fullWeightDevice,
@@ -42,6 +41,8 @@ namespace WeightScale.BusinessLogicLayer.Services
 
             _isUpdating = false;
         }
+
+        public event Action<PackageWeights> PackageWeightsFilledOut;
 
         public void ConnectDevicesAsync(string fullWeightDeviceIp, string emptyWeightDeviceIp)
         {
@@ -91,18 +92,12 @@ namespace WeightScale.BusinessLogicLayer.Services
 
         private void OnFullWeightDataReceived(double weight)
         {
-            Task.Run(() =>
-                     {
-                         CreateNewPackage(weight);
-                     });
+            Task.Run(() => { CreateNewPackage(weight); });
         }
 
         private void OnEmptyWeightDataReceived(double weight)
         {
-            Task.Run(() =>
-                     {
-                         UpdatePackage(weight);
-                     });
+            Task.Run(() => { UpdatePackage(weight); });
         }
 
         private void CreateNewPackage(double fullWeight)

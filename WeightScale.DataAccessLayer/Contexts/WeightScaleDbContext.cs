@@ -8,7 +8,7 @@ namespace WeightScale.DataAccessLayer.Contexts
         public WeightScaleDbContext() : base("WeightScaleDbContext")
         {
         }
-        
+
         public DbSet<Courier> Couriers { get; set; }
         public DbSet<Package> Packages { get; set; }
         public DbSet<Shipment> Shipments { get; set; }

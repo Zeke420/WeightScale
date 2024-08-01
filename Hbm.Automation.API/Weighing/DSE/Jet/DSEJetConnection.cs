@@ -28,45 +28,29 @@
 //
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Hbm.Automation.Api.Weighing.WTX.Jet;
+using Hbm.Devices.Jet;
+using Newtonsoft.Json.Linq;
+
 namespace Hbm.Automation.Api.Weighing.DSE.Jet
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Net.Security;
-    using System.Security.Cryptography.X509Certificates;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Hbm.Devices.Jet;
-    using Hbm.Automation.Api.Weighing.WTX.Jet;
-    using Newtonsoft.Json.Linq;
-
     /// <summary>
-    /// Use this class to handle a connection via Ethernet.
-    /// This class establishes the communication to your WTX device, starts/ends the connection,
-    /// receives and stores new data or writes new data.
+    ///     Use this class to handle a connection via Ethernet.
+    ///     This class establishes the communication to your WTX device, starts/ends the connection,
+    ///     receives and stores new data or writes new data.
     /// </summary>
     public class DSEJetConnection : INetConnection, IDisposable
     {
-        #region ==================== constants & fields ====================
-        private JetPeer _peer;
-        private AutoResetEvent _successEvent = new AutoResetEvent(false);
-        private Exception _localException = null;
-        private int _timeoutMs;
-        private bool _disposedValue = false;
-        #endregion
-
-        #region ==================== events & delegates ====================
-        public event EventHandler<LogEventArgs> CommunicationLog;
-
-        public event EventHandler<EventArgs> UpdateData;
-        #endregion
-
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="JetBusConnection" /> class.
-        /// Use this constructor for individual authentication
+        ///     Initializes a new instance of the <see cref="JetBusConnection" /> class.
+        ///     Use this constructor for individual authentication
         /// </summary>
         /// <param name="ipAddress">IP address of the target device</param>
         public DSEJetConnection(string ipAddress)
@@ -74,77 +58,103 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
             string _uri;
             IJetConnection jetConnection;
 
-           _uri = "ws://" + ipAddress + ":80/jet/canopen";
-           jetConnection = new WebSocketJetConnection(_uri);
-            
+            _uri = "ws://" + ipAddress + ":80/jet/canopen";
+            jetConnection = new WebSocketJetConnection(_uri);
+
             _peer = new JetPeer(jetConnection);
-            
-            this.IpAddress = ipAddress;
+
+            IpAddress = ipAddress;
         }
+
+        #endregion
+
+        #region ==================== constants & fields ====================
+
+        private readonly JetPeer _peer;
+        private readonly AutoResetEvent _successEvent = new AutoResetEvent(false);
+        private Exception _localException;
+        private int _timeoutMs;
+        private bool _disposedValue;
+
+        #endregion
+
+        #region ==================== events & delegates ====================
+
+        public event EventHandler<LogEventArgs> CommunicationLog;
+
+        public event EventHandler<EventArgs> UpdateData;
+
         #endregion
 
         #region ======================== properties ========================
-        ///<inheritdoc/>
-        public ConnectionType ConnectionType => ConnectionType.DSEJet;
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
+        public ConnectionType ConnectionType =>
+                ConnectionType.DSEJet;
+
+        /// <inheritdoc />
         public bool IsConnected { get; private set; }
-        
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public string IpAddress { get; set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public Dictionary<string, string> AllData { get; } = new Dictionary<string, string>();
+
         #endregion
 
         #region ================ public & internal methods =================
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public void Connect(int timeoutMs = 20000)
         {
             IsConnected = false;
             _timeoutMs = timeoutMs;
-            ConnectPeer(timeoutMs); 
+            ConnectPeer(timeoutMs);
             WaitOne(3);
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public void Disconnect()
         {
-            if (this.IsConnected)
+            if (IsConnected)
             {
                 _peer.Disconnect();
-                this.IsConnected = false;
+                IsConnected = false;
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public string Read(object command)
         {
             return ReadFromBuffer(command);
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public Task<string> ReadAsync(object command)
         {
             throw new NotImplementedException();
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public string ReadFromBuffer(object command)
         {
-            string result = "0";
-            JetBusCommand jetcommand = (JetBusCommand)command;
+            var result = "0";
+            var jetcommand = (JetBusCommand)command;
             if (AllData.ContainsKey(jetcommand.Path))
+            {
                 result = jetcommand.ToString(AllData[jetcommand.Path]);
+            }
+
             return result;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public string ReadFromDevice(object command)
         {
-            string result = "0";
-            JetBusCommand jetcommand = (JetBusCommand)command;
-            if(!DSEFetchTargets.Contains(jetcommand.Path))
+            var result = "0";
+            var jetcommand = (JetBusCommand)command;
+            if (!DSEFetchTargets.Contains(jetcommand.Path))
             {
                 result = jetcommand.ToString(OneTimeFetch(jetcommand));
             }
@@ -152,20 +162,24 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
             {
                 result = jetcommand.ToString(AllData[jetcommand.Path]);
             }
+
             return result;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         private string OneTimeFetch(JetBusCommand jetcommand)
         {
-            string result = "-1";
+            var result = "-1";
             FetchId id;
-            Matcher matcher = new Matcher();
+            var matcher = new Matcher();
             matcher.EqualsTo = jetcommand.Path;
-            _peer.Fetch(out id, matcher, OnFetchData, OnFetch, this._timeoutMs);
-            while (!AllData.ContainsKey(jetcommand.Path)) { }
+            _peer.Fetch(out id, matcher, OnFetchData, OnFetch, _timeoutMs);
+            while (!AllData.ContainsKey(jetcommand.Path))
+            {
+            }
+
             result = jetcommand.ToString(AllData[jetcommand.Path]);
-            _peer.Unfetch(id, OnFetch, this._timeoutMs);
+            _peer.Unfetch(id, OnFetch, _timeoutMs);
             AllData.Remove(jetcommand.Path);
             return result;
         }
@@ -173,49 +187,47 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
         /// <inheritdoc />
         public int ReadIntegerFromBuffer(object command)
         {
-            JetBusCommand jetcommand = (JetBusCommand)command;
+            var jetcommand = (JetBusCommand)command;
 
-            if(!DSEFetchTargets.Contains(jetcommand.Path))
+            if (!DSEFetchTargets.Contains(jetcommand.Path))
             {
                 return jetcommand.ToSValue(OneTimeFetch(jetcommand));
             }
-            else
-            {
-                return jetcommand.ToSValue(AllData[jetcommand.Path]);
-            }
+
+            return jetcommand.ToSValue(AllData[jetcommand.Path]);
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool WriteInteger(object command, int value)
         {
-            bool result = false;
-            JValue jasonValue = new JValue(value);
-            JetBusCommand _command = (JetBusCommand)command;
+            var result = false;
+            var jasonValue = new JValue(value);
+            var _command = (JetBusCommand)command;
             SetData(_command.Path, jasonValue);
-            WaitOne(1);
+            WaitOne();
             result = true;
             return result;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Write(object command, string value)
         {
-            bool result = false;
-            JValue jasonValue = new JValue(value);
-            JetBusCommand _command = (JetBusCommand)command;
+            var result = false;
+            var jasonValue = new JValue(value);
+            var _command = (JetBusCommand)command;
             SetData(_command.Path, jasonValue);
-            WaitOne(1);
+            WaitOne();
             result = true;
             return result;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public Task<int> WriteAsync(object command, int commandParam)
         {
             throw new NotImplementedException();
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
@@ -224,9 +236,11 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
             // uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
+
         #endregion
 
         #region =============== protected & private methods ================
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -262,41 +276,40 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
 
         private void FetchAll()
         {
-            Matcher matcher = new Matcher();
+            var matcher = new Matcher();
             FetchId id;
-            _peer.Fetch(out id, matcher, OnFetchData, OnFetch, this._timeoutMs);
+            _peer.Fetch(out id, matcher, OnFetchData, OnFetch, _timeoutMs);
         }
 
 
-        string[] DSEFetchTargets = new string[]
+        private readonly string[] DSEFetchTargets =
         {
-
-            "6002/02",   //Scale Status: OK: 6b6f5f5f | ONGO: 6f676e6f
-            "6012/01",   //6012.1 = Weighing device 1 (scale) weight status
-            "6013/01",   //6013.1 = Scale1 decimal point
-            "6015/01",   //6015.1 = Weighing Device 1 (scale) unit and prefix output weight
-            "6016/01",   //6016.1 = weight step. 1=1
-            "601A/01",   //601a.1 = output weight    
-            "6113/01",   //scale maximum capacity
-            "611C/01",   //611c.1 = control
-            "611C/02",   //611c.2 = limit1
-            "611C/03",   //611c.3 = limit2
-            "6141/02",   //6142.0 = Zero value
-            "6143/00",   //6143.0 = Tare value
-            "6144/00",   //6144.0 = Gross value
-            //"6152/00",   //Scale calibration weight
-            "6153/00",   //6153.0 = Weight movement detection
-            "6002/00",     //Scale command status
+                "6002/02", //Scale Status: OK: 6b6f5f5f | ONGO: 6f676e6f
+                "6012/01", //6012.1 = Weighing device 1 (scale) weight status
+                "6013/01", //6013.1 = Scale1 decimal point
+                "6015/01", //6015.1 = Weighing Device 1 (scale) unit and prefix output weight
+                "6016/01", //6016.1 = weight step. 1=1
+                "601A/01", //601a.1 = output weight    
+                "6113/01", //scale maximum capacity
+                "611C/01", //611c.1 = control
+                "611C/02", //611c.2 = limit1
+                "611C/03", //611c.3 = limit2
+                "6141/02", //6142.0 = Zero value
+                "6143/00", //6143.0 = Tare value
+                "6144/00", //6144.0 = Gross value
+                //"6152/00",   //Scale calibration weight
+                "6153/00", //6153.0 = Weight movement detection
+                "6002/00" //Scale command status
         };
 
         private void FetchSelective()
         {
-            Matcher matcher = new Matcher();
+            var matcher = new Matcher();
             FetchId id;
-            foreach (string fetchtarget in DSEFetchTargets)
+            foreach (var fetchtarget in DSEFetchTargets)
             {
                 matcher.EqualsTo = fetchtarget;
-                _peer.Fetch(out id, matcher, OnFetchData, OnFetch, this._timeoutMs);
+                _peer.Fetch(out id, matcher, OnFetchData, OnFetch, _timeoutMs);
             }
         }
 
@@ -308,16 +321,20 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
             }
             else
             {
-                JetBusException exception = new JetBusException(token);
+                var exception = new JetBusException(token);
                 _localException = new Exception(exception.ErrorCode.ToString());
             }
 
             _successEvent.Set();
 
-            this.UpdateData?.Invoke(this, new EventArgs());
+            UpdateData?.Invoke(this, new EventArgs());
 
-            CommunicationLog?.Invoke(this, new LogEventArgs("Fetch-Selective success: " + success + " - Buffer size is " + AllData.Count));
-        }            
+            CommunicationLog?.Invoke(this,
+                                     new LogEventArgs("Fetch-Selective success: " +
+                                                      success +
+                                                      " - Buffer size is " +
+                                                      AllData.Count));
+        }
 
         private void WaitOne(int timeoutMultiplier = 1)
         {
@@ -325,61 +342,66 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
             {
                 throw new Exception("Jet connection timeout");
             }
-                     
+
             if (_localException != null)
             {
                 CommunicationLog?.Invoke(this, new LogEventArgs(_localException.Message));
-                Exception exception = _localException;
+                var exception = _localException;
                 _localException = null;
                 throw exception;
-            }                        
+            }
         }
-        
+
         /// <summary>
-        /// Event will be called when device sends new fetch events
+        ///     Event will be called when device sends new fetch events
         /// </summary>
         /// <param name="data">New device data from jet peer</param>
         private void OnFetchData(JToken data)
         {
-            string path = data["path"].ToString();
+            var path = data["path"]
+                    .ToString();
 
             lock (AllData)
             {
-                switch (data["event"].ToString())
+                switch (data["event"]
+                                .ToString())
                 {
                     case "add":
-                        AllData.Add(path, data["value"].ToString());
+                        AllData.Add(path, data["value"]
+                                            .ToString());
                         break;
 
                     case "fetch":
-                        AllData[path] = data["value"].ToString();
+                        AllData[path] = data["value"]
+                                .ToString();
                         break;
 
                     case "change":
-                        AllData[path] = data["value"].ToString();
+                        AllData[path] = data["value"]
+                                .ToString();
                         break;
                 }
-      
+
                 if (IsConnected)
                 {
-                    this.UpdateData?.Invoke(this, new EventArgs());
+                    UpdateData?.Invoke(this, new EventArgs());
                 }
-         
+
                 CommunicationLog?.Invoke(this, new LogEventArgs(data.ToString()));
             }
         }
-               
+
         /// <summary>
-        /// Sets data for a single jet path
+        ///     Sets data for a single jet path
         /// </summary>
         /// <param name="path">Jet path for the data (e.g. "6002/01)"</param>
         /// <param name="value">The new value for the path</param>
         private void SetData(string path, JValue value)
         {
-            _localException = null; 
+            _localException = null;
             try
             {
-                JObject request = _peer.Set(path.ToString(), value, OnSet, this._timeoutMs);
+                var request = _peer.Set(path, value, OnSet, _timeoutMs);
             }
             catch (Exception e)
             {
@@ -390,16 +412,16 @@ namespace Hbm.Automation.Api.Weighing.DSE.Jet
 
         private void OnSet(bool success, JToken token)
         {
-           if (!success)
-           {
+            if (!success)
+            {
                 _localException = new JetBusException(token);
             }
-            
-           _successEvent.Set();
-            
-           CommunicationLog?.Invoke(this, new LogEventArgs("Set data" + success));
-        }      
- 
+
+            _successEvent.Set();
+
+            CommunicationLog?.Invoke(this, new LogEventArgs("Set data" + success));
+        }
+
         #endregion
     }
 }

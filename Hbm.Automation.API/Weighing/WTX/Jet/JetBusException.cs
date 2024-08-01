@@ -28,43 +28,47 @@
 //
 // </copyright>
 
+using System;
+using Newtonsoft.Json.Linq;
+
 namespace Hbm.Automation.Api.Weighing.WTX.Jet
 {
-    using System;
-    using Newtonsoft.Json.Linq;
-
     /// <summary>
-    /// Class for exception handling
+    ///     Class for exception handling
     /// </summary>
     public class JetBusException : Exception
     {
         #region ==================== constants & fields ====================
-        private string message;
+
+        private readonly string message;
+
         #endregion
 
         /// <summary>
-        /// Constructor defining the information of an exception by extracting the token (type JToken)
-        /// Information is error code and its message
+        ///     Constructor defining the information of an exception by extracting the token (type JToken)
+        ///     Information is error code and its message
         /// </summary>
         /// <param name="token"></param>
+
         #region =============== constructors & destructors =================
+
         public JetBusException(JToken token)
         {
-            ErrorCode = token["error"]["code"].ToObject<int>();
-            message = token["error"]["message"].ToString();
+            ErrorCode = token["error"]["code"]
+                    .ToObject<int>();
+            message = token["error"]["message"]
+                    .ToString();
         }
+
         #endregion
 
         #region ======================== properties ========================
+
         public int ErrorCode { get; private set; }
-        
-        public override string Message
-        {
-            get
-            {
-                return message;
-            }
-        }
+
+        public override string Message =>
+                message;
+
         #endregion
     }
 }

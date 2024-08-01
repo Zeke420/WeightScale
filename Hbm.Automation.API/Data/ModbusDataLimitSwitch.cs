@@ -28,45 +28,25 @@
 //
 // </copyright>
 
-using Hbm.Automation.Api.Utils;
-using Hbm.Automation.Api.Weighing.WTX.Modbus;
 using System;
 using System.Collections.Generic;
+using Hbm.Automation.Api.Utils;
+using Hbm.Automation.Api.Weighing.WTX.Modbus;
 
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Implementation of the interface IDataStandard for the standard mode.
-    /// The class DataStandardModbus contains the data input word and data output words for the standard mode
-    /// of WTX device 120 and 110 via Modbus.
+    ///     Implementation of the interface IDataStandard for the standard mode.
+    ///     The class DataStandardModbus contains the data input word and data output words for the standard mode
+    ///     of WTX device 120 and 110 via Modbus.
     /// </summary>
     public class ModbusDataLimitSwitch : IDataLimitSwitch
     {
-
-        #region ==================== constants & fields ====================
-        private LimitSwitchSource _limitSwitch1Source;
-        private LimitSwitchMode _limitSwitch1Mode;
-        private int _limitSwitch1LevelAndLowerBandValue;
-        private int _limitSwitch1HysteresisAndBandHeight;
-        private LimitSwitchSource _limitSwitch2Source;
-        private LimitSwitchMode _limitSwitch2Mode;
-        private int _limitSwitch2LevelAndLowerBandValue;
-        private int _limitSwitch2HysteresisAndBandHeight;
-        private LimitSwitchSource _limitSwitch3Source;
-        private LimitSwitchMode _limitSwitch3Mode;
-        private int _limitSwitch3LevelAndLowerBandValue;
-        private int _limitSwitch3HysteresisAndBandHeight;
-        private LimitSwitchSource _limitSwitch4Source;
-        private LimitSwitchMode _limitSwitch4Mode;
-        private int _limitSwitch4LevelAndLowerBandValue;
-        private int _limitSwitch4HysteresisAndBandHeight;               
-        private INetConnection _connection;
-        #endregion
-
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Constructor of class DataStandardModbus : Initalizes values and connects 
-        /// the eventhandler from Connection to the interal update method
+        ///     Constructor of class DataStandardModbus : Initalizes values and connects
+        ///     the eventhandler from Connection to the interal update method
         /// </summary>
         /// <param name="Connection">Target connection</param>
         public ModbusDataLimitSwitch(INetConnection Connection)
@@ -92,14 +72,15 @@ namespace Hbm.Automation.Api.Data
             _limitSwitch4Source = LimitSwitchSource.Gross;
             _limitSwitch4Mode = LimitSwitchMode.AboveLevel;
             _limitSwitch4LevelAndLowerBandValue = 0;
-            _limitSwitch4HysteresisAndBandHeight = 0;            
+            _limitSwitch4HysteresisAndBandHeight = 0;
         }
+
         #endregion
 
         #region ==================== events & delegates ====================
 
         /// <summary>
-        /// Updates and converts the values from buffer
+        ///     Updates and converts the values from buffer
         /// </summary>
         /// <param name="sender">Connection class</param>
         /// <param name="e">EventArgs, Event argument</param>
@@ -107,30 +88,51 @@ namespace Hbm.Automation.Api.Data
         {
             try
             {
-                LimitStatus1 = MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
-                LimitStatus2 = MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
-                LimitStatus3 = MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
-                LimitStatus4 = MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
-  
-                ApplicationMode _applicationMode = (ApplicationMode)Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.IMDApplicationMode));
+                LimitStatus1 =
+                        MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
+                LimitStatus2 =
+                        MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
+                LimitStatus3 =
+                        MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
+                LimitStatus4 =
+                        MeasurementUtils.StringToBool(_connection.ReadFromBuffer(ModbusCommands.LVSLimitValueStatus));
+
+                var _applicationMode =
+                        (ApplicationMode)Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.IMDApplicationMode));
                 if (_applicationMode == ApplicationMode.Standard)
                 {
-                    _limitSwitch1Mode = StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
-                    _limitSwitch1Source = StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
-                    _limitSwitch1LevelAndLowerBandValue = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
-                    _limitSwitch1HysteresisAndBandHeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
-                    _limitSwitch2Mode = StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
-                    _limitSwitch2Source = StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
-                    _limitSwitch2LevelAndLowerBandValue = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
-                    _limitSwitch2HysteresisAndBandHeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
-                    _limitSwitch3Mode = StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
-                    _limitSwitch3Source = StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
-                    _limitSwitch3LevelAndLowerBandValue = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
-                    _limitSwitch3HysteresisAndBandHeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
-                    _limitSwitch4Mode = StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
-                    _limitSwitch4Source = StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
-                    _limitSwitch4LevelAndLowerBandValue = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
-                    _limitSwitch4HysteresisAndBandHeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
+                    _limitSwitch1Mode =
+                            StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
+                    _limitSwitch1Source =
+                            StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
+                    _limitSwitch1LevelAndLowerBandValue =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
+                    _limitSwitch1HysteresisAndBandHeight =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
+                    _limitSwitch2Mode =
+                            StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
+                    _limitSwitch2Source =
+                            StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
+                    _limitSwitch2LevelAndLowerBandValue =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
+                    _limitSwitch2HysteresisAndBandHeight =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
+                    _limitSwitch3Mode =
+                            StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
+                    _limitSwitch3Source =
+                            StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
+                    _limitSwitch3LevelAndLowerBandValue =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
+                    _limitSwitch3HysteresisAndBandHeight =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
+                    _limitSwitch4Mode =
+                            StringToLimitSwitchMode(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchMode));
+                    _limitSwitch4Source =
+                            StringToLimitSwitchSource(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchSource));
+                    _limitSwitch4LevelAndLowerBandValue =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchLevel));
+                    _limitSwitch4HysteresisAndBandHeight =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LIV1LimitSwitchHysteresis));
                 }
             }
             catch (KeyNotFoundException)
@@ -141,27 +143,46 @@ namespace Hbm.Automation.Api.Data
 
         #endregion
 
+        #region ==================== constants & fields ====================
+
+        private LimitSwitchSource _limitSwitch1Source;
+        private LimitSwitchMode _limitSwitch1Mode;
+        private int _limitSwitch1LevelAndLowerBandValue;
+        private int _limitSwitch1HysteresisAndBandHeight;
+        private LimitSwitchSource _limitSwitch2Source;
+        private LimitSwitchMode _limitSwitch2Mode;
+        private int _limitSwitch2LevelAndLowerBandValue;
+        private int _limitSwitch2HysteresisAndBandHeight;
+        private LimitSwitchSource _limitSwitch3Source;
+        private LimitSwitchMode _limitSwitch3Mode;
+        private int _limitSwitch3LevelAndLowerBandValue;
+        private int _limitSwitch3HysteresisAndBandHeight;
+        private LimitSwitchSource _limitSwitch4Source;
+        private LimitSwitchMode _limitSwitch4Mode;
+        private int _limitSwitch4LevelAndLowerBandValue;
+        private int _limitSwitch4HysteresisAndBandHeight;
+        private readonly INetConnection _connection;
+
+        #endregion
+
         #region ======================== properties ========================
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool LimitStatus1 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool LimitStatus2 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool LimitStatus3 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool LimitStatus4 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchSource LimitSwitch1Source
-        { 
-            get
-            {
-                return _limitSwitch1Source;
-            }
+        {
+            get => _limitSwitch1Source;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchSource, LimitSwitchSouceToInt(value));
@@ -169,10 +190,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchMode LimitSwitch1Mode
         {
-            get { return _limitSwitch1Mode; }
+            get => _limitSwitch1Mode;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchMode, LimitSwitchModeToInt(value));
@@ -180,66 +201,78 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch1Level
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch1LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch1LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch1LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch1LowerBandValue
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch1LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch1LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch1HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch1Hysteresis
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch1HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch1HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                this._connection.WriteInteger(ModbusCommands.LIV1LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch1LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch1BandHeight
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch1HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch1HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV1LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch1HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchSource LimitSwitch2Source
         {
-            get { return _limitSwitch2Source; }
+            get => _limitSwitch2Source;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchSource, LimitSwitchSouceToInt(value));
@@ -247,10 +280,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
-        public LimitSwitchMode LimitSwitch2Mode 
+        /// <inheritdoc />
+        public LimitSwitchMode LimitSwitch2Mode
         {
-            get { return _limitSwitch2Mode; }
+            get => _limitSwitch2Mode;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchMode, LimitSwitchModeToInt(value));
@@ -258,67 +291,78 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
-        public double LimitSwitch2Level 
+        /// <inheritdoc />
+        public double LimitSwitch2Level
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch2LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch2LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch2LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch2Hysteresis
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch2HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch2HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch2HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
-        public double LimitSwitch2LowerBandValue 
+        /// <inheritdoc />
+        public double LimitSwitch2LowerBandValue
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch2LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch2LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                this._connection.WriteInteger(ModbusCommands.LIV2LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch2LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch2BandHeight
-        { 
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch2HysteresisAndBandHeight, decimals); }
+        {
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch2HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV2LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch2HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchSource LimitSwitch3Source
         {
-            get { 
-                return _limitSwitch3Source; }
+            get => _limitSwitch3Source;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchSource, LimitSwitchSouceToInt(value));
@@ -326,11 +370,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchMode LimitSwitch3Mode
         {
-            get { 
-                return _limitSwitch3Mode; }
+            get => _limitSwitch3Mode;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchMode, LimitSwitchModeToInt(value));
@@ -338,66 +381,78 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch3Level
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch3LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch3LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch3LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch3Hysteresis
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch3HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch3HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch3HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch3LowerBandValue
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch3LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch3LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch3LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch3BandHeight
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch3HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch3HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch3HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchSource LimitSwitch4Source
         {
-            get { return _limitSwitch4Source; }
+            get => _limitSwitch4Source;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchSource, LimitSwitchSouceToInt(value));
@@ -405,10 +460,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public LimitSwitchMode LimitSwitch4Mode
         {
-            get { return _limitSwitch4Mode; }
+            get => _limitSwitch4Mode;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchMode, LimitSwitchModeToInt(value));
@@ -416,144 +471,186 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
-        public double LimitSwitch4Level 
+        /// <inheritdoc />
+        public double LimitSwitch4Level
         {
             get
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch4LevelAndLowerBandValue, decimals); }
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch4LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch4LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch4Hysteresis
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch4HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch4HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch4HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch4LowerBandValue
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch4LevelAndLowerBandValue, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch4LevelAndLowerBandValue, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchLevel, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV3LimitSwitchLevel,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch4LevelAndLowerBandValue = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public double LimitSwitch4BandHeight
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_limitSwitch4HysteresisAndBandHeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_limitSwitch4HysteresisAndBandHeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchHysteresis, MeasurementUtils.DoubleToDigit(value, decimals));
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LIV4LimitSwitchHysteresis,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
                 _limitSwitch4HysteresisAndBandHeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         #endregion
 
         #region =============== protected & private methods ================
+
         /// <summary>
-        /// Convert limt switch mode from enum to int
+        ///     Convert limt switch mode from enum to int
         /// </summary>
         /// <param name="mode">Limit switch mode</param>
         /// <returns></returns>
         private int LimitSwitchModeToInt(LimitSwitchMode mode)
         {
-            int result = 0;
+            var result = 0;
             switch (mode)
             {
-                case LimitSwitchMode.AboveLevel: result = 0; break;
-                case LimitSwitchMode.BelowLevel: result = 1; break;
-                case LimitSwitchMode.InsideBand: result = 2; break;
-                case LimitSwitchMode.OutsideBand: result = 3; break;
+                case LimitSwitchMode.AboveLevel:
+                    result = 0;
+                    break;
+                case LimitSwitchMode.BelowLevel:
+                    result = 1;
+                    break;
+                case LimitSwitchMode.InsideBand:
+                    result = 2;
+                    break;
+                case LimitSwitchMode.OutsideBand:
+                    result = 3;
+                    break;
                 default:
-                    result = 0; break;
+                    result = 0;
+                    break;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Convert limt switch mode from int to enum
+        ///     Convert limt switch mode from int to enum
         /// </summary>
         /// <param name="mode">Limit switch mode from wtx device</param>
         /// <returns></returns>
         private LimitSwitchMode StringToLimitSwitchMode(string mode)
         {
-            LimitSwitchMode result = LimitSwitchMode.AboveLevel;
+            var result = LimitSwitchMode.AboveLevel;
             switch (mode)
             {
-                case "0": result = LimitSwitchMode.AboveLevel; break;
-                case "1": result = LimitSwitchMode.BelowLevel; break;
-                case "2": result = LimitSwitchMode.InsideBand; break;
-                case "3": result = LimitSwitchMode.OutsideBand; break;
+                case "0":
+                    result = LimitSwitchMode.AboveLevel;
+                    break;
+                case "1":
+                    result = LimitSwitchMode.BelowLevel;
+                    break;
+                case "2":
+                    result = LimitSwitchMode.InsideBand;
+                    break;
+                case "3":
+                    result = LimitSwitchMode.OutsideBand;
+                    break;
                 default:
-                    result = LimitSwitchMode.AboveLevel; break;
+                    result = LimitSwitchMode.AboveLevel;
+                    break;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Convert limt switch source from enum to int
+        ///     Convert limt switch source from enum to int
         /// </summary>
         /// <param name="source">Limit switch source</param>
         /// <returns></returns>
         private int LimitSwitchSouceToInt(LimitSwitchSource source)
         {
-            int result = 0;
+            var result = 0;
             switch (source)
             {
-                case LimitSwitchSource.Gross: result = 0; break;
-                case LimitSwitchSource.Net: result = 1; break;
+                case LimitSwitchSource.Gross:
+                    result = 0;
+                    break;
+                case LimitSwitchSource.Net:
+                    result = 1;
+                    break;
                 default:
                     result = 0;
                     break;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Convert limt switch source from string to enum
+        ///     Convert limt switch source from string to enum
         /// </summary>
         /// <param name="mode">Limit switch source from wtx device</param>
         /// <returns></returns>
         private LimitSwitchSource StringToLimitSwitchSource(string mode)
         {
-            LimitSwitchSource result = LimitSwitchSource.Gross;
+            var result = LimitSwitchSource.Gross;
             switch (mode)
             {
-                case "0": result = LimitSwitchSource.Gross; break;
-                case "1": result = LimitSwitchSource.Net; break;
+                case "0":
+                    result = LimitSwitchSource.Gross;
+                    break;
+                case "1":
+                    result = LimitSwitchSource.Net;
+                    break;
                 default:
                     result = LimitSwitchSource.Net;
                     break;
             }
+
             return result;
         }
 
         #endregion
-
     }
 }

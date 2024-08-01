@@ -27,167 +27,170 @@
 // SOFTWARE.
 //
 // </copyright>
+
+using System;
+
 namespace Hbm.Automation.Api.Data
 {
-    using System;
-
     /// <summary>
-    /// Interface containing the data for the standard mode of your WTX device.
-    /// (e.g. settings for limit switches and digital I/O)
+    ///     Interface containing the data for the standard mode of your WTX device.
+    ///     (e.g. settings for limit switches and digital I/O)
     /// </summary>
     public interface IDataLimitSwitch
     {
-
         #region ==================== events & delegates ====================
+
         /// <summary>
-        /// Updates the data from external
+        ///     Updates the data from external
         /// </summary>
         /// <param name="sender">Sending object</param>
         /// <param name="e">EventArgs</param>
         void UpdateDataLimitSwitch(object sender, EventArgs e);
+
         #endregion
 
         #region ======================== properties ========================
+
         /// <summary>
-        /// Gets a value indicating whether the limit switch 1 is active or not
+        ///     Gets a value indicating whether the limit switch 1 is active or not
         /// </summary>
         bool LimitStatus1 { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the limit switch 2 is active or not
+        ///     Gets a value indicating whether the limit switch 2 is active or not
         /// </summary>
         bool LimitStatus2 { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the limit switch 3 is active or not
+        ///     Gets a value indicating whether the limit switch 3 is active or not
         /// </summary>
         bool LimitStatus3 { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the limit switch 4 is active or not
+        ///     Gets a value indicating whether the limit switch 4 is active or not
         /// </summary>
         bool LimitStatus4 { get; }
 
         /// <summary>
-        /// Gets or sets the source od limit switch 1 (gross or net)
+        ///     Gets or sets the source od limit switch 1 (gross or net)
         /// </summary>
-        LimitSwitchSource LimitSwitch1Source { get;  set; }
+        LimitSwitchSource LimitSwitch1Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of limit switch 1 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
+        ///     Gets or sets the mode of limit switch 1 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
         /// </summary>
-        LimitSwitchMode LimitSwitch1Mode { get;  set; }
+        LimitSwitchMode LimitSwitch1Mode { get; set; }
 
         /// <summary>
-        /// Gets or sets the level of limit switch 1 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the level of limit switch 1 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch1Level { get;  set; }
+        double LimitSwitch1Level { get; set; }
 
         /// <summary>
-        /// Gets or sets the hysteresis of limit switch 1 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the hysteresis of limit switch 1 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch1Hysteresis { get;  set; }
+        double LimitSwitch1Hysteresis { get; set; }
 
         /// <summary>
-        /// Gets or sets the lower band value of limit switch 1 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the lower band value of limit switch 1 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch1LowerBandValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the band height of limit switch 1 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the band height of limit switch 1 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch1BandHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the source of limit switch 2 (gross or net)
+        ///     Gets or sets the source of limit switch 2 (gross or net)
         /// </summary>
-        LimitSwitchSource LimitSwitch2Source { get;  set; }
+        LimitSwitchSource LimitSwitch2Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of limit switch 2 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
+        ///     Gets or sets the mode of limit switch 2 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
         /// </summary>
-        LimitSwitchMode LimitSwitch2Mode { get;  set; }
+        LimitSwitchMode LimitSwitch2Mode { get; set; }
 
         /// <summary>
-        /// Gets or sets the level of limit switch 2 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the level of limit switch 2 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch2Level { get;  set; }
+        double LimitSwitch2Level { get; set; }
 
         /// <summary>
-        /// Gets or sets the hysteresis of limit switch 2 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the hysteresis of limit switch 2 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch2Hysteresis { get;  set; }
+        double LimitSwitch2Hysteresis { get; set; }
 
         /// <summary>
-        /// Gets or sets the lower band value of limit switch 2 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the lower band value of limit switch 2 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch2LowerBandValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the band height of limit switch 2 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the band height of limit switch 2 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch2BandHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the source of limit switch 3 (gross or net)
+        ///     Gets or sets the source of limit switch 3 (gross or net)
         /// </summary>
-        LimitSwitchSource LimitSwitch3Source { get;  set; }
+        LimitSwitchSource LimitSwitch3Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of limit switch 3 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
+        ///     Gets or sets the mode of limit switch 3 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
         /// </summary>
-        LimitSwitchMode LimitSwitch3Mode { get;  set; }
+        LimitSwitchMode LimitSwitch3Mode { get; set; }
 
         /// <summary>
-        /// Gets or sets the level of limit switch 3 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the level of limit switch 3 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch3Level { get;  set; }
+        double LimitSwitch3Level { get; set; }
 
         /// <summary>
-        /// Gets or sets the hysteresis of limit switch 3 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the hysteresis of limit switch 3 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch3Hysteresis { get;  set; }
+        double LimitSwitch3Hysteresis { get; set; }
 
         /// <summary>
-        /// Gets or sets the lower band value of limit switch 3 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the lower band value of limit switch 3 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch3LowerBandValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the band height of limit switch 3 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the band height of limit switch 3 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch3BandHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the source of limit switch 4 (gross or net)
+        ///     Gets or sets the source of limit switch 4 (gross or net)
         /// </summary>
-        LimitSwitchSource LimitSwitch4Source { get;  set; }
+        LimitSwitchSource LimitSwitch4Source { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of limit switch 4 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
+        ///     Gets or sets the mode of limit switch 4 (e.g. AboveLevel,BelowLevel, OutsideBand or InsideBand)
         /// </summary>
-        LimitSwitchMode LimitSwitch4Mode { get;  set; }
+        LimitSwitchMode LimitSwitch4Mode { get; set; }
 
         /// <summary>
-        /// Gets or sets the level of limit switch 4 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the level of limit switch 4 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch4Level { get;  set; }
+        double LimitSwitch4Level { get; set; }
 
         /// <summary>
-        /// Gets or sets the hysteresis of limit switch 4 for modes AboveLevel and BelowLevel in weight unit
+        ///     Gets or sets the hysteresis of limit switch 4 for modes AboveLevel and BelowLevel in weight unit
         /// </summary>
-        double LimitSwitch4Hysteresis { get;  set; }
+        double LimitSwitch4Hysteresis { get; set; }
 
         /// <summary>
-        /// Gets or sets the lower band value of limit switch 4 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the lower band value of limit switch 4 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch4LowerBandValue { get; set; }
 
         /// <summary>
-        /// Gets or sets the band height of limit switch 4 for modes OutsideBand and InsideBand in weight unit
+        ///     Gets or sets the band height of limit switch 4 for modes OutsideBand and InsideBand in weight unit
         /// </summary>
         double LimitSwitch4BandHeight { get; set; }
-        #endregion
 
+        #endregion
     }
 }

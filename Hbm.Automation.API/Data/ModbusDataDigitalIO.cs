@@ -28,33 +28,25 @@
 //
 // </copyright>
 
-using Hbm.Automation.Api.Utils;
-using Hbm.Automation.Api.Weighing.WTX.Modbus;
 using System;
 using System.Collections.Generic;
+using Hbm.Automation.Api.Utils;
+using Hbm.Automation.Api.Weighing.WTX.Modbus;
 
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Implementation of the interface IDataStandard for the standard mode.
-    /// The class DataStandardModbus contains the data input word and data output words for the standard mode
-    /// of WTX device 120 and 110 via Modbus.
+    ///     Implementation of the interface IDataStandard for the standard mode.
+    ///     The class DataStandardModbus contains the data input word and data output words for the standard mode
+    ///     of WTX device 120 and 110 via Modbus.
     /// </summary>
     public class ModbusDataDigitalIO : IDataDigitalIO
     {
-
-        #region ==================== constants & fields ====================
-        private bool _output1;
-        private bool _output2;
-        private bool _output3;
-        private bool _output4;              
-        private INetConnection _connection;
-        #endregion
-
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Constructor of class DataStandardModbus : Initalizes values and connects 
-        /// the eventhandler from Connection to the interal update method
+        ///     Constructor of class DataStandardModbus : Initalizes values and connects
+        ///     the eventhandler from Connection to the interal update method
         /// </summary>
         /// <param name="Connection">Target connection</param>
         public ModbusDataDigitalIO(INetConnection Connection)
@@ -68,14 +60,15 @@ namespace Hbm.Automation.Api.Data
             _output1 = false;
             _output2 = false;
             _output3 = false;
-            _output4 = false;           
+            _output4 = false;
         }
+
         #endregion
 
         #region ==================== events & delegates ====================
 
         /// <summary>
-        /// Updates and converts the values from buffer
+        ///     Updates and converts the values from buffer
         /// </summary>
         /// <param name="sender">Connection class</param>
         /// <param name="e">EventArgs, Event argument</param>
@@ -97,25 +90,37 @@ namespace Hbm.Automation.Api.Data
                 Console.WriteLine("KeyNotFoundException in class DataStandardModbus, update method");
             }
         }
+
+        #endregion
+
+        #region ==================== constants & fields ====================
+
+        private bool _output1;
+        private bool _output2;
+        private bool _output3;
+        private bool _output4;
+        private readonly INetConnection _connection;
+
         #endregion
 
         #region ======================== properties ========================
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public bool Input1 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Input2 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Input3 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Input4 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output1
         {
-            get { return _output1; }
+            get => _output1;
             set
             {
                 _connection.WriteInteger(ModbusCommands.OS1DigitalOutput1, Convert.ToInt32(value));
@@ -123,10 +128,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output2
         {
-            get { return _output2; }
+            get => _output2;
             set
             {
                 _connection.WriteInteger(ModbusCommands.OS2DigitalOutput2, Convert.ToInt32(value));
@@ -134,10 +139,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output3
         {
-            get { return _output3; }
+            get => _output3;
             set
             {
                 _connection.WriteInteger(ModbusCommands.OS3DigitalOutput3, Convert.ToInt32(value));
@@ -145,18 +150,17 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output4
         {
-            get { return _output4; }
+            get => _output4;
             set
             {
                 _connection.WriteInteger(ModbusCommands.OS4DigitalOutput4, Convert.ToInt32(value));
                 _output4 = value;
             }
         }
-                               
-        #endregion
 
+        #endregion
     }
 }

@@ -28,125 +28,149 @@
 //
 // </copyright>
 
-using Hbm.Automation.Api.Weighing.WTX.Jet;
 using Hbm.Automation.Api.Utils;
+using Hbm.Automation.Api.Weighing.WTX.Jet;
 
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Implementation of the interface IDataFillerExtended for the filler extended mode.
-    /// The class DataFillerExtended contains the data input word and data output words for the filler extended mode
-    /// of WTX device 120 and 110 via Jetbus. 
-    /// 
-    /// This is only available via a JetBus Ethernet connection as an extension to DataFillerJet, not via Modbus. 
+    ///     Implementation of the interface IDataFillerExtended for the filler extended mode.
+    ///     The class DataFillerExtended contains the data input word and data output words for the filler extended mode
+    ///     of WTX device 120 and 110 via Jetbus.
+    ///     This is only available via a JetBus Ethernet connection as an extension to DataFillerJet, not via Modbus.
     /// </summary>
     public class JetDataFillerExtended : JetDataFiller, IDataFillerExtended
     {
-        #region ==================== constants & fields ====================        
-        private INetConnection _connection;
+        #region ==================== constants & fields ====================
+
+        private readonly INetConnection _connection;
+
         #endregion
 
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Constructor of class DataFillerExtendedJet : Initalizes values and connects 
-        /// the eventhandler from Connection to the interal update method
+        ///     Constructor of class DataFillerExtendedJet : Initalizes values and connects
+        ///     the eventhandler from Connection to the interal update method
         /// </summary>
         /// <param name="Connection">Target connection</param>
-        public JetDataFillerExtended(INetConnection Connection):base(Connection)          
+        public JetDataFillerExtended(INetConnection Connection) : base(Connection)
         {
-            _connection = Connection;        
+            _connection = Connection;
         }
+
         #endregion
 
         #region ==================== events & delegates ====================
+
         #endregion
 
         #region ======================== properties ========================
-       
-        ///<inhertifdoc/>
+
+        /// <inhertifdoc />
         public double MaterialStreamLastFilling
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_connection.ReadIntegerFromBuffer(JetBusCommands.MFOMaterialFlow), decimals); }
-        }
-
-        ///<inhertifdoc/>
-        public int SpecialFillingFunctions
-        {
-            get { return _connection.ReadIntegerFromBuffer(JetBusCommands.SDFSpecialDosingFunctions); }
-            set { _connection.WriteInteger(JetBusCommands.SDFSpecialDosingFunctions , value);}
-        }
-
-        ///<inhertifdoc/>
-        public int DischargeTime
-        {
-            get { return _connection.ReadIntegerFromBuffer(JetBusCommands.EPTDischargeTime); }
-            set { _connection.WriteInteger(JetBusCommands.EPTDischargeTime , value); }
-        }
-
-        ///<inhertifdoc/>
-        public bool EmptyWeightBreak
-        {
-            get { return (_connection.ReadIntegerFromBuffer(JetBusCommands.EWBEmptyWeightBreak)==1); }
-            set 
-            { 
-                if (value) 
-                    _connection.WriteInteger(JetBusCommands.EWBEmptyWeightBreak, 1);
-                else
-                    _connection.WriteInteger(JetBusCommands.EWBEmptyWeightBreak, 0);
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_connection.ReadIntegerFromBuffer(JetBusCommands.MFOMaterialFlow),
+                                                      decimals);
             }
         }
 
-        ///<inhertifdoc/>
+        /// <inhertifdoc />
+        public int SpecialFillingFunctions
+        {
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.SDFSpecialDosingFunctions);
+            set => _connection.WriteInteger(JetBusCommands.SDFSpecialDosingFunctions, value);
+        }
+
+        /// <inhertifdoc />
+        public int DischargeTime
+        {
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.EPTDischargeTime);
+            set => _connection.WriteInteger(JetBusCommands.EPTDischargeTime, value);
+        }
+
+        /// <inhertifdoc />
+        public bool EmptyWeightBreak
+        {
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.EWBEmptyWeightBreak) == 1;
+            set
+            {
+                if (value)
+                {
+                    _connection.WriteInteger(JetBusCommands.EWBEmptyWeightBreak, 1);
+                }
+                else
+                {
+                    _connection.WriteInteger(JetBusCommands.EWBEmptyWeightBreak, 0);
+                }
+            }
+        }
+
+        /// <inhertifdoc />
         public int Delay1Dosing
         {
-            get { return _connection.ReadIntegerFromBuffer(JetBusCommands.DL1DosingDelay1); }
-            set { _connection.WriteInteger(JetBusCommands.DL1DosingDelay1 , value); }
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.DL1DosingDelay1);
+            set => _connection.WriteInteger(JetBusCommands.DL1DosingDelay1, value);
         }
 
-        ///<inhertifdoc/>
+        /// <inhertifdoc />
         public int Delay2Dosing
         {
-            get { return _connection.ReadIntegerFromBuffer(JetBusCommands.DL2DosingDelay2); }
-            set { _connection.WriteInteger(JetBusCommands.DL2DosingDelay2 , value); }
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.DL2DosingDelay2);
+            set => _connection.WriteInteger(JetBusCommands.DL2DosingDelay2, value);
         }
 
-        ///<inhertifdoc/>
+        /// <inhertifdoc />
         public double EmptyWeightTolerance
         {
-            get { 
-                int decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_connection.ReadIntegerFromBuffer(JetBusCommands.EWTEmptyWeight), decimals); }
-            set {
-                int decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
-                _connection.WriteInteger(JetBusCommands.EWTEmptyWeight , MeasurementUtils.DoubleToDigit(value, decimals)); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_connection.ReadIntegerFromBuffer(JetBusCommands.EWTEmptyWeight),
+                                                      decimals);
+            }
+            set
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
+                _connection.WriteInteger(JetBusCommands.EWTEmptyWeight,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+            }
         }
 
-        ///<inhertifdoc/>
+        /// <inhertifdoc />
         public double ResidualFlowDosingCycle
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_connection.ReadIntegerFromBuffer(JetBusCommands.RFOResidualFlow), decimals); }
-            set {
-                int decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
-                _connection.WriteInteger(JetBusCommands.RFOResidualFlow , MeasurementUtils.DoubleToDigit(value, decimals)); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_connection.ReadIntegerFromBuffer(JetBusCommands.RFOResidualFlow),
+                                                      decimals);
+            }
+            set
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(JetBusCommands.CIA461Decimals);
+                _connection.WriteInteger(JetBusCommands.RFOResidualFlow,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+            }
         }
 
-        ///<inhertifdoc/>
+        /// <inhertifdoc />
         public new int ParameterSetProduct
         {
-            get { return _connection.ReadIntegerFromBuffer(JetBusCommands.RDPActivateParameterSet); }
-            set { _connection.WriteInteger(JetBusCommands.RDPActivateParameterSet, value); }
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.RDPActivateParameterSet);
+            set => _connection.WriteInteger(JetBusCommands.RDPActivateParameterSet, value);
         }
 
-        ///<inhertifdoc/>
+        /// <inhertifdoc />
         public int WeightStorageMode
         {
-            get { return _connection.ReadIntegerFromBuffer(JetBusCommands.SMDRecordWeightMode); }
-            set { _connection.WriteInteger(JetBusCommands.SMDRecordWeightMode, value); }
+            get => _connection.ReadIntegerFromBuffer(JetBusCommands.SMDRecordWeightMode);
+            set => _connection.WriteInteger(JetBusCommands.SMDRecordWeightMode, value);
         }
+
         #endregion
     }
 }

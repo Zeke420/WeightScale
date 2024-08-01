@@ -10,19 +10,19 @@
             <view:Header />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:CourierViewModel}">
-            <view:Courier/>
+            <view:Courier />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ShipmentViewModel}">
-            <view:Shipment/>
+            <view:Shipment />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:WeightViewModel}">
-            <view:Weight/>
+            <view:Weight />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:ReportViewModel}">
-            <view:Report/>
+            <view:Report />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:FooterViewModel}">
-            <view:Footer/>
+            <view:Footer />
         </DataTemplate>
     </Application.Resources>
 </Application>

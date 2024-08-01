@@ -31,14 +31,16 @@
 namespace Hbm.Automation.Api.Weighing.WTX.Modbus
 {
     /// <summary>
-    /// Class to define the frame specifing data type, register, bit offset(for bit addressing) of the data to be read or write via the Modbus/TCP interface. 
-    /// A command consists of a datatype, register, input or output type, application mode type bit index, bit length.
+    ///     Class to define the frame specifing data type, register, bit offset(for bit addressing) of the data to be read or
+    ///     write via the Modbus/TCP interface.
+    ///     A command consists of a datatype, register, input or output type, application mode type bit index, bit length.
     /// </summary>
     public class ModbusCommand
     {
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="ModbusCommand" /> class
+        ///     Initializes a new instance of the <see cref="ModbusCommand" /> class
         /// </summary>
         /// <param name="dataType">Provide the data type</param>
         /// <param name="register">Register number of the modbus register</param>
@@ -46,59 +48,25 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
         /// <param name="appMode">Application mode</param>
         /// <param name="bitIndex">Bit index for a flag</param>
         /// <param name="bitLength">Bit length for a multi-bit flag</param>
-        public ModbusCommand(DataType dataType, ushort register, IOType io, ApplicationMode appMode, int bitIndex, int bitLength)
+        public ModbusCommand(DataType dataType, ushort register, IOType io, ApplicationMode appMode, int bitIndex,
+                             int bitLength)
         {
-            this.DataType  = dataType;
-            this.Register  = register;
-            this.IO  = io;
-            this.App = appMode;
-            this.BitIndex  = bitIndex;
-            this.BitLength = bitLength;
+            DataType = dataType;
+            Register = register;
+            IO = io;
+            App = appMode;
+            BitIndex = bitIndex;
+            BitLength = bitLength;
 
-            this.Path = register.ToString() + dataType + appMode + io + bitIndex + bitLength;
+            Path = register.ToString() + dataType + appMode + io + bitIndex + bitLength;
         }
-        #endregion
-        
-        #region ======================== properties ========================
-        /// <summary>
-        /// Gets the data type 
-        /// </summary>
-        public DataType DataType { get; private set; }
 
-        /// <summary>
-        /// Gets the bit index for flags
-        /// </summary>
-        public int BitIndex { get; private set; }
-
-        /// <summary>
-        /// Gets the bit length for multi-bit flags 
-        /// </summary>
-        public int BitLength { get; private set; }
-
-        /// <summary>
-        /// Gets the overall path for unique command identification 
-        /// </summary>
-        public string Path { get; private set; }
-
-        /// <summary>
-        /// Gets the number of the Modbus register
-        /// </summary>
-        public ushort Register { get; private set; }
-
-        /// <summary>
-        /// Gets a Input or output register
-        /// </summary>
-        public IOType IO { get; private set; }
-
-        /// <summary>
-        /// Gets the application mode
-        /// </summary>
-        public ApplicationMode App { get; private set; }
         #endregion
 
         #region ================ public & internal methods =================
+
         /// <summary>
-        /// Picks the command from all registers 
+        ///     Picks the command from all registers
         /// </summary>
         /// <param name="allRegisters">All available holding register starting from index 0</param>
         /// <returns>Value as integer</returns>
@@ -113,34 +81,34 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
                 switch (DataType)
                 {
                     case DataType.BIT:
+                    {
+                        switch (BitLength)
                         {
-                            switch (BitLength)
-                            {
-                                case 0:
-                                    _bitMask = 0xFFFF;
-                                    break;
-                                case 1:
-                                    _bitMask = 1;
-                                    break;
-                                case 2:
-                                    _bitMask = 3;
-                                    break;
-                                case 3:
-                                    _bitMask = 7;
-                                    break;
-                                default:
-                                    _bitMask = 1;
-                                    break;
-                            }
-
-                            _mask = (ushort)(_bitMask << BitIndex);
-                            _value = (allRegisters[Register] & _mask) >> BitIndex;
-                            break;
+                            case 0:
+                                _bitMask = 0xFFFF;
+                                break;
+                            case 1:
+                                _bitMask = 1;
+                                break;
+                            case 2:
+                                _bitMask = 3;
+                                break;
+                            case 3:
+                                _bitMask = 7;
+                                break;
+                            default:
+                                _bitMask = 1;
+                                break;
                         }
+
+                        _mask = (ushort)( _bitMask << BitIndex );
+                        _value = ( allRegisters[Register] & _mask ) >> BitIndex;
+                        break;
+                    }
 
                     case DataType.U32:
                     case DataType.S32:
-                        _value = (allRegisters[Register] >> 16) + allRegisters[Register + 1];
+                        _value = ( allRegisters[Register] >> 16 ) + allRegisters[Register + 1];
                         break;
 
                     case DataType.S16:
@@ -158,13 +126,15 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
 
             return _value;
         }
+
         #endregion
 
         #region =============== protected & private methods ================
+
         private int ExtractBit(int input)
         {
-            int _bitMask = 0;
-            int _mask = 0;
+            var _bitMask = 0;
+            var _mask = 0;
 
             switch (BitLength)
             {
@@ -184,9 +154,50 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
                     _bitMask = 1;
                     break;
             }
+
             _mask = _bitMask << BitIndex;
-            return (input & _mask) >> BitIndex;
+            return ( input & _mask ) >> BitIndex;
         }
+
+        #endregion
+
+        #region ======================== properties ========================
+
+        /// <summary>
+        ///     Gets the data type
+        /// </summary>
+        public DataType DataType { get; }
+
+        /// <summary>
+        ///     Gets the bit index for flags
+        /// </summary>
+        public int BitIndex { get; }
+
+        /// <summary>
+        ///     Gets the bit length for multi-bit flags
+        /// </summary>
+        public int BitLength { get; }
+
+        /// <summary>
+        ///     Gets the overall path for unique command identification
+        /// </summary>
+        public string Path { get; private set; }
+
+        /// <summary>
+        ///     Gets the number of the Modbus register
+        /// </summary>
+        public ushort Register { get; }
+
+        /// <summary>
+        ///     Gets a Input or output register
+        /// </summary>
+        public IOType IO { get; private set; }
+
+        /// <summary>
+        ///     Gets the application mode
+        /// </summary>
+        public ApplicationMode App { get; private set; }
+
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')"/>
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -36,151 +36,151 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-          <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+            <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
         </Reference>
         <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-          <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+            <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Configuration.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Configuration.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Configuration.FileExtensions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Configuration.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.Json.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Configuration.Json.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Configuration.Json.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Options, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Options.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Options.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Options.ConfigurationExtensions, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Options.ConfigurationExtensions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Options.ConfigurationExtensions.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath>
         </Reference>
         <Reference Include="Microsoft.Extensions.Primitives, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-          <HintPath>..\packages\Microsoft.Extensions.Primitives.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+            <HintPath>..\packages\Microsoft.Extensions.Primitives.9.0.0-preview.5.24306.7\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
         </Reference>
-        <Reference Include="mscorlib" />
-        <Reference Include="System" />
+        <Reference Include="mscorlib"/>
+        <Reference Include="System"/>
         <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+            <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
         </Reference>
-        <Reference Include="System.ComponentModel.DataAnnotations" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Data" />
+        <Reference Include="System.ComponentModel.DataAnnotations"/>
+        <Reference Include="System.Core"/>
+        <Reference Include="System.Data"/>
         <Reference Include="System.IO.Pipelines, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.IO.Pipelines.9.0.0-preview.5.24306.7\lib\net462\System.IO.Pipelines.dll</HintPath>
+            <HintPath>..\packages\System.IO.Pipelines.9.0.0-preview.5.24306.7\lib\net462\System.IO.Pipelines.dll</HintPath>
         </Reference>
         <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+            <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
         </Reference>
-        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics"/>
         <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+            <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
         </Reference>
         <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+            <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
         </Reference>
         <Reference Include="System.Text.Encodings.Web, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Text.Encodings.Web.9.0.0-preview.5.24306.7\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+            <HintPath>..\packages\System.Text.Encodings.Web.9.0.0-preview.5.24306.7\lib\net462\System.Text.Encodings.Web.dll</HintPath>
         </Reference>
         <Reference Include="System.Text.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Text.Json.9.0.0-preview.5.24306.7\lib\net462\System.Text.Json.dll</HintPath>
+            <HintPath>..\packages\System.Text.Json.9.0.0-preview.5.24306.7\lib\net462\System.Text.Json.dll</HintPath>
         </Reference>
         <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+            <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
         </Reference>
         <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+            <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
         </Reference>
-        <Reference Include="System.Xml" />
+        <Reference Include="System.Xml"/>
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
         </Reference>
-        <Reference Include="WindowsBase" />
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
+        <Reference Include="WindowsBase"/>
+        <Reference Include="PresentationCore"/>
+        <Reference Include="PresentationFramework"/>
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Include="App.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
-        <Compile Include="Command\DelegateCommand.cs" />
-        <Compile Include="Converters\BooleanToConnectionStatusConverter.cs" />
-        <Compile Include="Converters\EnumBindingSourceExtension.cs" />
-        <Compile Include="Converters\IndexConverter.cs" />
-        <Compile Include="Converters\InvertBoolConverter.cs" />
-        <Compile Include="Converters\ListViewHeightConverter.cs" />
-        <Compile Include="Converters\NullToBoolConverter.cs" />
-        <Compile Include="Converters\PassFailToColorConverter.cs" />
-        <Compile Include="Dialogs\ConfirmationDialog.xaml.cs" />
-        <Compile Include="Dialogs\MessageDialog.xaml.cs" />
-        <Compile Include="Enums\NavigationRegion.cs" />
-        <Compile Include="Enums\NavigationState.cs" />
-        <Compile Include="Helpers\ObservableCollectionWithItemNotify.cs" />
-        <Compile Include="Helpers\ViewModelLocator.cs" />
-        <Compile Include="Resources\Constants\DialogMessages.Designer.cs" />
-        <Compile Include="Resources\Constants\GlobalResource.Designer.cs" />
-        <Compile Include="Resources\Constants\StateValue.Designer.cs" />
-        <Compile Include="Resources\Views\TextBlockResources.Designer.cs" />
-        <Compile Include="Services\DialogService.cs" />
-        <Compile Include="Services\Interfaces\IDialogService.cs" />
-        <Compile Include="Services\Interfaces\INavigationAware.cs" />
-        <Compile Include="Services\Interfaces\INavigationService.cs" />
-        <Compile Include="Services\NavigationService.cs" />
-        <Compile Include="ValidationRules\DateTextBoxValidationRule.cs" />
-        <Compile Include="ViewModel\CourierViewModel.cs" />
-        <Compile Include="ViewModel\FooterViewModel.cs" />
-        <Compile Include="ViewModel\HeaderViewModel.cs" />
-        <Compile Include="ViewModel\MainViewModel.cs" />
-        <Compile Include="ViewModel\ReportViewModel.cs" />
-        <Compile Include="ViewModel\ShipmentViewModel.cs" />
-        <Compile Include="ViewModel\ViewModelBase.cs" />
-        <Compile Include="ViewModel\WeightViewModel.cs" />
+        <Compile Include="Command\DelegateCommand.cs"/>
+        <Compile Include="Converters\BooleanToConnectionStatusConverter.cs"/>
+        <Compile Include="Converters\EnumBindingSourceExtension.cs"/>
+        <Compile Include="Converters\IndexConverter.cs"/>
+        <Compile Include="Converters\InvertBoolConverter.cs"/>
+        <Compile Include="Converters\ListViewHeightConverter.cs"/>
+        <Compile Include="Converters\NullToBoolConverter.cs"/>
+        <Compile Include="Converters\PassFailToColorConverter.cs"/>
+        <Compile Include="Dialogs\ConfirmationDialog.xaml.cs"/>
+        <Compile Include="Dialogs\MessageDialog.xaml.cs"/>
+        <Compile Include="Enums\NavigationRegion.cs"/>
+        <Compile Include="Enums\NavigationState.cs"/>
+        <Compile Include="Helpers\ObservableCollectionWithItemNotify.cs"/>
+        <Compile Include="Helpers\ViewModelLocator.cs"/>
+        <Compile Include="Resources\Constants\DialogMessages.Designer.cs"/>
+        <Compile Include="Resources\Constants\GlobalResource.Designer.cs"/>
+        <Compile Include="Resources\Constants\StateValue.Designer.cs"/>
+        <Compile Include="Resources\Views\TextBlockResources.Designer.cs"/>
+        <Compile Include="Services\DialogService.cs"/>
+        <Compile Include="Services\Interfaces\IDialogService.cs"/>
+        <Compile Include="Services\Interfaces\INavigationAware.cs"/>
+        <Compile Include="Services\Interfaces\INavigationService.cs"/>
+        <Compile Include="Services\NavigationService.cs"/>
+        <Compile Include="ValidationRules\DateTextBoxValidationRule.cs"/>
+        <Compile Include="ViewModel\CourierViewModel.cs"/>
+        <Compile Include="ViewModel\FooterViewModel.cs"/>
+        <Compile Include="ViewModel\HeaderViewModel.cs"/>
+        <Compile Include="ViewModel\MainViewModel.cs"/>
+        <Compile Include="ViewModel\ReportViewModel.cs"/>
+        <Compile Include="ViewModel\ShipmentViewModel.cs"/>
+        <Compile Include="ViewModel\ViewModelBase.cs"/>
+        <Compile Include="ViewModel\WeightViewModel.cs"/>
         <Compile Include="View\Courier.xaml.cs">
-          <DependentUpon>Courier.xaml</DependentUpon>
+            <DependentUpon>Courier.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Footer.xaml.cs">
-          <DependentUpon>Footer.xaml</DependentUpon>
+            <DependentUpon>Footer.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Header.xaml.cs">
-          <DependentUpon>Header.xaml</DependentUpon>
+            <DependentUpon>Header.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Report.xaml.cs">
-          <DependentUpon>Report.xaml</DependentUpon>
+            <DependentUpon>Report.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Shipment.xaml.cs">
-          <DependentUpon>Shipment.xaml</DependentUpon>
+            <DependentUpon>Shipment.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Weight.xaml.cs">
-          <DependentUpon>Weight.xaml</DependentUpon>
+            <DependentUpon>Weight.xaml</DependentUpon>
         </Compile>
-        <Page Include="Dialogs\ConfirmationDialog.xaml" />
-        <Page Include="Dialogs\MessageDialog.xaml" />
+        <Page Include="Dialogs\ConfirmationDialog.xaml"/>
+        <Page Include="Dialogs\MessageDialog.xaml"/>
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -193,59 +193,59 @@
             <DependentUpon>MainWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Page Include="Resources\Brushes.xaml" />
-        <Page Include="Resources\Converters.xaml" />
-        <Page Include="Resources\Styles.xaml" />
-        <Page Include="Resources\Styles\Border\BorderColors.xaml" />
-        <Page Include="Resources\Styles\Border\BorderMain.xaml" />
-        <Page Include="Resources\Styles\Button\Base\ButtonShadowEffect.xaml" />
-        <Page Include="Resources\Styles\Button\Base\ButtonStyle.xaml" />
-        <Page Include="Resources\Styles\Button\Base\ButtonTemplate.xaml" />
-        <Page Include="Resources\Styles\Button\Base\WindowButtonTemplate.xaml" />
-        <Page Include="Resources\Styles\Button\ButtonColors.xaml" />
-        <Page Include="Resources\Styles\Button\ButtonMain.xaml" />
-        <Page Include="Resources\Styles\Button\ButtonMainSmall.xaml" />
-        <Page Include="Resources\Styles\Button\ButtonSecondary.xaml" />
-        <Page Include="Resources\Styles\Button\ButtonSecondarySmall.xaml" />
-        <Page Include="Resources\Styles\CheckBox\CheckBoxMain.xaml" />
-        <Page Include="Resources\Styles\Colors.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxEditableTemplate.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxEditableTextBoxStyle.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxItem.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxItemStyle.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxStyle.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxTemplate.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxTemplateList.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxToggleButton.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxToggleButtonInList.xaml" />
-        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxToggleButtonStyle.xaml" />
-        <Page Include="Resources\Styles\ComboBox\ComboBoxColors.xaml" />
-        <Page Include="Resources\Styles\ComboBox\ComboBoxMain.xaml" />
-        <Page Include="Resources\Styles\DataGrid\Base\DataGridBaseStyle.xaml" />
-        <Page Include="Resources\Styles\DataGrid\Base\DataGridCellStyle.xaml" />
-        <Page Include="Resources\Styles\DataGrid\Base\DataGridColumnHeaderStyle.xaml" />
-        <Page Include="Resources\Styles\DataGrid\Base\DataGridRowStyle.xaml" />
-        <Page Include="Resources\Styles\DataGrid\DataGridMain.xaml" />
-        <Page Include="Resources\Styles\ScrollView\Base\ScrollViewColors.xaml" />
-        <Page Include="Resources\Styles\ScrollView\Base\ScrollViewStyle.xaml" />
-        <Page Include="Resources\Styles\ScrollView\Base\ScrollViewTemplate.xaml" />
-        <Page Include="Resources\Styles\ScrollView\ScrollViewMain.xaml" />
-        <Page Include="Resources\Styles\TextBlock\Base\TextBlockColors.xaml" />
-        <Page Include="Resources\Styles\TextBlock\Base\TextBlockSerialNumberStyle.xaml" />
-        <Page Include="Resources\Styles\TextBlock\TextBlockMain.xaml" />
-        <Page Include="Resources\Styles\TextBox\Base\DatePickerTextBox.xaml" />
-        <Page Include="Resources\Styles\TextBox\Base\TextBox.xaml" />
-        <Page Include="Resources\Styles\TextBox\Base\TextBoxBaseStyle.xaml" />
-        <Page Include="Resources\Styles\TextBox\Base\ToolTip.xaml" />
-        <Page Include="Resources\Styles\TextBox\PasswordBox.xaml" />
-        <Page Include="Resources\Styles\TextBox\TextBoxColors.xaml" />
-        <Page Include="Resources\Styles\TextBox\TextBoxMain.xaml" />
-        <Page Include="View\Courier.xaml" />
-        <Page Include="View\Footer.xaml" />
-        <Page Include="View\Header.xaml" />
-        <Page Include="View\Report.xaml" />
-        <Page Include="View\Shipment.xaml" />
-        <Page Include="View\Weight.xaml" />
+        <Page Include="Resources\Brushes.xaml"/>
+        <Page Include="Resources\Converters.xaml"/>
+        <Page Include="Resources\Styles.xaml"/>
+        <Page Include="Resources\Styles\Border\BorderColors.xaml"/>
+        <Page Include="Resources\Styles\Border\BorderMain.xaml"/>
+        <Page Include="Resources\Styles\Button\Base\ButtonShadowEffect.xaml"/>
+        <Page Include="Resources\Styles\Button\Base\ButtonStyle.xaml"/>
+        <Page Include="Resources\Styles\Button\Base\ButtonTemplate.xaml"/>
+        <Page Include="Resources\Styles\Button\Base\WindowButtonTemplate.xaml"/>
+        <Page Include="Resources\Styles\Button\ButtonColors.xaml"/>
+        <Page Include="Resources\Styles\Button\ButtonMain.xaml"/>
+        <Page Include="Resources\Styles\Button\ButtonMainSmall.xaml"/>
+        <Page Include="Resources\Styles\Button\ButtonSecondary.xaml"/>
+        <Page Include="Resources\Styles\Button\ButtonSecondarySmall.xaml"/>
+        <Page Include="Resources\Styles\CheckBox\CheckBoxMain.xaml"/>
+        <Page Include="Resources\Styles\Colors.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxEditableTemplate.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxEditableTextBoxStyle.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxItem.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxItemStyle.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxStyle.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxTemplate.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxTemplateList.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxToggleButton.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxToggleButtonInList.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\Base\ComboBoxToggleButtonStyle.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\ComboBoxColors.xaml"/>
+        <Page Include="Resources\Styles\ComboBox\ComboBoxMain.xaml"/>
+        <Page Include="Resources\Styles\DataGrid\Base\DataGridBaseStyle.xaml"/>
+        <Page Include="Resources\Styles\DataGrid\Base\DataGridCellStyle.xaml"/>
+        <Page Include="Resources\Styles\DataGrid\Base\DataGridColumnHeaderStyle.xaml"/>
+        <Page Include="Resources\Styles\DataGrid\Base\DataGridRowStyle.xaml"/>
+        <Page Include="Resources\Styles\DataGrid\DataGridMain.xaml"/>
+        <Page Include="Resources\Styles\ScrollView\Base\ScrollViewColors.xaml"/>
+        <Page Include="Resources\Styles\ScrollView\Base\ScrollViewStyle.xaml"/>
+        <Page Include="Resources\Styles\ScrollView\Base\ScrollViewTemplate.xaml"/>
+        <Page Include="Resources\Styles\ScrollView\ScrollViewMain.xaml"/>
+        <Page Include="Resources\Styles\TextBlock\Base\TextBlockColors.xaml"/>
+        <Page Include="Resources\Styles\TextBlock\Base\TextBlockSerialNumberStyle.xaml"/>
+        <Page Include="Resources\Styles\TextBlock\TextBlockMain.xaml"/>
+        <Page Include="Resources\Styles\TextBox\Base\DatePickerTextBox.xaml"/>
+        <Page Include="Resources\Styles\TextBox\Base\TextBox.xaml"/>
+        <Page Include="Resources\Styles\TextBox\Base\TextBoxBaseStyle.xaml"/>
+        <Page Include="Resources\Styles\TextBox\Base\ToolTip.xaml"/>
+        <Page Include="Resources\Styles\TextBox\PasswordBox.xaml"/>
+        <Page Include="Resources\Styles\TextBox\TextBoxColors.xaml"/>
+        <Page Include="Resources\Styles\TextBox\TextBoxMain.xaml"/>
+        <Page Include="View\Courier.xaml"/>
+        <Page Include="View\Footer.xaml"/>
+        <Page Include="View\Header.xaml"/>
+        <Page Include="View\Report.xaml"/>
+        <Page Include="View\Shipment.xaml"/>
+        <Page Include="View\Weight.xaml"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Properties\AssemblyInfo.cs">
@@ -260,47 +260,47 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-        <EmbeddedResource Include="Resources\Constants\DialogMessages.resx" />
-        <EmbeddedResource Include="Resources\Constants\GlobalResource.resx" />
-        <EmbeddedResource Include="Resources\Constants\StateValue.resx" />
-        <EmbeddedResource Include="Resources\Views\TextBlockResources.resx" />
+        <EmbeddedResource Include="Resources\Constants\DialogMessages.resx"/>
+        <EmbeddedResource Include="Resources\Constants\GlobalResource.resx"/>
+        <EmbeddedResource Include="Resources\Constants\StateValue.resx"/>
+        <EmbeddedResource Include="Resources\Views\TextBlockResources.resx"/>
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config" />
-        <None Include="packages.config" />
+        <None Include="App.config"/>
+        <None Include="packages.config"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\WeightScale.BusinessLogicLayer\WeightScale.BusinessLogicLayer.csproj">
-        <Project>{d993f4f0-b7d9-4878-8e41-67437a9c139e}</Project>
-        <Name>WeightScale.BusinessLogicLayer</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\WeightScale.DataAccessLayer\WeightScale.DataAccessLayer.csproj">
-        <Project>{f54a2de3-7917-43e8-9571-b04f902a2be6}</Project>
-        <Name>WeightScale.DataAccessLayer</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\WeightScale.Integration\WeightScale.Integration.csproj">
-        <Project>{fff08669-5e44-49c5-b411-b6ec081c0b38}</Project>
-        <Name>WeightScale.Integration</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\WeightScale.BusinessLogicLayer\WeightScale.BusinessLogicLayer.csproj">
+            <Project>{d993f4f0-b7d9-4878-8e41-67437a9c139e}</Project>
+            <Name>WeightScale.BusinessLogicLayer</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\WeightScale.DataAccessLayer\WeightScale.DataAccessLayer.csproj">
+            <Project>{f54a2de3-7917-43e8-9571-b04f902a2be6}</Project>
+            <Name>WeightScale.DataAccessLayer</Name>
+        </ProjectReference>
+        <ProjectReference Include="..\WeightScale.Integration\WeightScale.Integration.csproj">
+            <Project>{fff08669-5e44-49c5-b411-b6ec081c0b38}</Project>
+            <Name>WeightScale.Integration</Name>
+        </ProjectReference>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Resources\Images\" />
+        <Folder Include="Resources\Images\"/>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="appsettings.Development.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+        <Content Include="appsettings.Development.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="appsettings.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
     <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-      <PropertyGroup>
-        <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
-      </PropertyGroup>
-      <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
-      <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+        <PropertyGroup>
+            <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them. For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+        </PropertyGroup>
+        <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))"/>
+        <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))"/>
     </Target>
-    <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+    <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')"/>
 </Project>

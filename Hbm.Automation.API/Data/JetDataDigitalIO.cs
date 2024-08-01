@@ -28,31 +28,23 @@
 //
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using Hbm.Automation.Api.Utils;
+using Hbm.Automation.Api.Weighing.WTX.Jet;
+
 namespace Hbm.Automation.Api.Data
 {
-    using Hbm.Automation.Api.Weighing.WTX.Jet;
-    using Hbm.Automation.Api.Utils;
-    using System;
-    using System.Collections.Generic;
-
     /// <summary>
-    /// Jetbus implementation of the interface IDataIO for the digital I/O status
+    ///     Jetbus implementation of the interface IDataIO for the digital I/O status
     /// </summary>
     public class JetDataDigitalIO : IDataDigitalIO
     {
-
-        #region ==================== constants & fields ====================
-        private bool _output1;
-        private bool _output2;
-        private bool _output3;
-        private bool _output4;
-        private INetConnection _connection;
-        #endregion
-
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Constructor of class DataStandardJet : Initalizes values and connects 
-        /// the eventhandler from Connection to the interal update method
+        ///     Constructor of class DataStandardJet : Initalizes values and connects
+        ///     the eventhandler from Connection to the interal update method
         /// </summary>
         /// <param name="Connection">Target connection</param>
         public JetDataDigitalIO(INetConnection Connection)
@@ -68,12 +60,13 @@ namespace Hbm.Automation.Api.Data
             _output3 = false;
             _output4 = false;
         }
+
         #endregion
 
         #region ==================== events & delegates ====================
 
         /// <summary>
-        /// Updates and converts the values from buffer
+        ///     Updates and converts the values from buffer
         /// </summary>
         /// <param name="sender">Connection class</param>
         /// <param name="e">EventArgs, Event argument</param>
@@ -95,25 +88,37 @@ namespace Hbm.Automation.Api.Data
                 Console.WriteLine("KeyNotFoundException in class DataStandardJet, update method");
             }
         }
+
+        #endregion
+
+        #region ==================== constants & fields ====================
+
+        private bool _output1;
+        private bool _output2;
+        private bool _output3;
+        private bool _output4;
+        private readonly INetConnection _connection;
+
         #endregion
 
         #region ======================== properties ========================
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public bool Input1 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Input2 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Input3 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Input4 { get; private set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output1
         {
-            get{ return _output1; }
+            get => _output1;
             set
             {
                 _connection.WriteInteger(JetBusCommands.OS1DigitalOutput1, Convert.ToInt32(value));
@@ -121,10 +126,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output2
         {
-            get{ return _output2; }
+            get => _output2;
             set
             {
                 _connection.WriteInteger(JetBusCommands.OS2DigitalOutput2, Convert.ToInt32(value));
@@ -132,10 +137,10 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output3
         {
-            get{ return _output3; }
+            get => _output3;
             set
             {
                 _connection.WriteInteger(JetBusCommands.OS3DigitalOutput3, Convert.ToInt32(value));
@@ -143,87 +148,116 @@ namespace Hbm.Automation.Api.Data
             }
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool Output4
         {
-            get{ return _output4; }
+            get => _output4;
             set
             {
                 _connection.WriteInteger(JetBusCommands.OS4DigitalOutput4, Convert.ToInt32(value));
                 _output4 = value;
             }
         }
+
         #endregion
 
         #region =============== protected & private methods ================
+
         /// <summary>
-        /// Convert limt switch mode from enum to int
+        ///     Convert limt switch mode from enum to int
         /// </summary>
         /// <param name="mode">Limit switch mode</param>
         /// <returns></returns>
         private int LimitSwitchModeToInt(LimitSwitchMode mode)
         {
-            int result = 0;
+            var result = 0;
             switch (mode)
             {
-                case LimitSwitchMode.AboveLevel: result = 0; break;
-                case LimitSwitchMode.BelowLevel: result = 1; break;
-                case LimitSwitchMode.InsideBand: result = 2; break;
-                case LimitSwitchMode.OutsideBand: result = 3; break;
+                case LimitSwitchMode.AboveLevel:
+                    result = 0;
+                    break;
+                case LimitSwitchMode.BelowLevel:
+                    result = 1;
+                    break;
+                case LimitSwitchMode.InsideBand:
+                    result = 2;
+                    break;
+                case LimitSwitchMode.OutsideBand:
+                    result = 3;
+                    break;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Convert limt switch mode from int to enum
+        ///     Convert limt switch mode from int to enum
         /// </summary>
         /// <param name="mode">Limit switch mode from wtx device</param>
         /// <returns></returns>
         private LimitSwitchMode StringToLimitSwitchMode(string mode)
         {
-            LimitSwitchMode result = LimitSwitchMode.AboveLevel;
+            var result = LimitSwitchMode.AboveLevel;
             switch (mode)
             {
-                case "0": result = LimitSwitchMode.AboveLevel; break;
-                case "2": result = LimitSwitchMode.BelowLevel; break;
-                case "3": result = LimitSwitchMode.InsideBand; break;
-                case "4": result = LimitSwitchMode.OutsideBand; break;
+                case "0":
+                    result = LimitSwitchMode.AboveLevel;
+                    break;
+                case "2":
+                    result = LimitSwitchMode.BelowLevel;
+                    break;
+                case "3":
+                    result = LimitSwitchMode.InsideBand;
+                    break;
+                case "4":
+                    result = LimitSwitchMode.OutsideBand;
+                    break;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Convert limt switch source from enum to int
+        ///     Convert limt switch source from enum to int
         /// </summary>
         /// <param name="source">Limit switch source</param>
         /// <returns></returns>
         private int LimitSwitchSouceToInt(LimitSwitchSource source)
         {
-            int result = 0;
+            var result = 0;
             switch (source)
             {
-                case LimitSwitchSource.Gross: result = 0; break;
-                case LimitSwitchSource.Net: result = 1; break;
+                case LimitSwitchSource.Gross:
+                    result = 0;
+                    break;
+                case LimitSwitchSource.Net:
+                    result = 1;
+                    break;
             }
+
             return result;
         }
 
         /// <summary>
-        /// Convert limt switch source from string to enum
+        ///     Convert limt switch source from string to enum
         /// </summary>
         /// <param name="mode">Limit switch source from wtx device</param>
         /// <returns></returns>
         private LimitSwitchSource StringToLimitSwitchSource(string mode)
         {
-            LimitSwitchSource result = LimitSwitchSource.Gross;
+            var result = LimitSwitchSource.Gross;
             switch (mode)
             {
-                case "0": result = LimitSwitchSource.Gross; break;
-                case "1": result = LimitSwitchSource.Net; break;
+                case "0":
+                    result = LimitSwitchSource.Gross;
+                    break;
+                case "1":
+                    result = LimitSwitchSource.Net;
+                    break;
             }
+
             return result;
         }
-
 
         #endregion
     }

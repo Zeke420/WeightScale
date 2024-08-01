@@ -7,8 +7,8 @@ namespace WeightScale.Presentation.ViewModel
     {
         private readonly IMessenger _messenger;
         private bool _isEmptyScaleConnected;
-        private bool _isFullScaleConnected;
         private bool _isEmptyWeightStable;
+        private bool _isFullScaleConnected;
         private bool _isFullWeightStable;
 
         public FooterViewModel(IMessenger messenger)
@@ -83,7 +83,7 @@ namespace WeightScale.Presentation.ViewModel
 
         private void UpdateFullWeightStable(object obj)
         {
-            if(obj is FullScaleWeightStable scaleWeightStable)
+            if (obj is FullScaleWeightStable scaleWeightStable)
             {
                 IsFullWeightStable = scaleWeightStable.IsStable;
                 OnPropertyChanged(nameof(IsFullWeightStable));

@@ -41,18 +41,19 @@ namespace WeightScale.Presentation
                                                                typeof(FrameworkElement),
                                                                new FrameworkPropertyMetadata(
                                                                 XmlLanguage.GetLanguage(CultureInfo.CurrentUICulture
-                                                                    .IetfLanguageTag)));
+                                                                        .IetfLanguageTag)));
             var buildConfiguration = BuildConfiguration();
             var serviceProvider = ConfigureServices(buildConfiguration);
 
-            serviceProvider.GetRequiredService<MainWindow>().Show();
+            serviceProvider.GetRequiredService<MainWindow>()
+                           .Show();
         }
 
         private IConfiguration BuildConfiguration()
         {
             var builder = new ConfigurationBuilder()
                           .SetBasePath(Directory.GetCurrentDirectory())
-                          .AddJsonFile(AppSettingsFileName, optional: false, reloadOnChange: true);
+                          .AddJsonFile(AppSettingsFileName, false, true);
 
             return builder.Build();
         }
@@ -60,8 +61,8 @@ namespace WeightScale.Presentation
         private IServiceProvider ConfigureServices(IConfiguration configuration)
         {
             var services = new ServiceCollection();
-            var applicationSettings = configuration.Get<ApplicationSettings>()
-                                      ?? throw new ArgumentNullException(nameof(ApplicationSettings));
+            var applicationSettings = configuration.Get<ApplicationSettings>() ??
+                                      throw new ArgumentNullException(nameof(ApplicationSettings));
 
             var resourceManager = new ResourceManager("WeightScale.BusinessLogicLayer.Resources",
                                                       Assembly.GetExecutingAssembly());
@@ -82,9 +83,9 @@ namespace WeightScale.Presentation
             services.AddSingleton<FooterViewModel>();
 
             services.AddSingleton<Func<Type, ViewModelBase>>(serviceProvider =>
-                                                                 viewModelType =>
-                                                                     (ViewModelBase)serviceProvider
-                                                                         .GetRequiredService(viewModelType));
+                                                                     viewModelType =>
+                                                                             (ViewModelBase)serviceProvider
+                                                                                     .GetRequiredService(viewModelType));
 
             services.AddTransient<IPackageRepository, PackageRepository>();
             services.AddTransient<ICouriersRepository, CouriersRepository>();

@@ -18,9 +18,9 @@ namespace WeightScale.Presentation.Services
         private ViewModelBase _mainRegion;
 
         public NavigationService(
-            IDialogService dialogService,
-            IMessenger messenger,
-            Func<Type, ViewModelBase> viewModelFactory)
+                IDialogService dialogService,
+                IMessenger messenger,
+                Func<Type, ViewModelBase> viewModelFactory)
         {
             _dialogService = dialogService;
             _messenger = messenger;
@@ -58,7 +58,7 @@ namespace WeightScale.Presentation.Services
         }
 
         public void NavigateTo<TViewModel>(NavigationRegion region, object parameter = null)
-            where TViewModel : ViewModelBase
+                where TViewModel : ViewModelBase
         {
             if (!CanNavigate())
             {
@@ -68,7 +68,7 @@ namespace WeightScale.Presentation.Services
             UpdateRegion<TViewModel>(region, parameter);
         }
 
-        public bool CanNavigate(string  message = null)
+        public bool CanNavigate(string message = null)
         {
             if (MainRegion is null)
             {
@@ -101,7 +101,8 @@ namespace WeightScale.Presentation.Services
             await _dialogService.ShowMessageDialogAsync(DialogMessages.ForbiddenMessage);
         }
 
-        private void UpdateRegion<TViewModel>(NavigationRegion region, object parameter) where TViewModel : ViewModelBase
+        private void UpdateRegion<TViewModel>(NavigationRegion region, object parameter)
+                where TViewModel : ViewModelBase
         {
             var viewModel = CreateViewModel<TViewModel>();
 
@@ -129,9 +130,9 @@ namespace WeightScale.Presentation.Services
         }
 
         private ViewModelBase OnNavigate(
-            ViewModelBase oldViewModel,
-            ViewModelBase newViewModel,
-            object parameter)
+                ViewModelBase oldViewModel,
+                ViewModelBase newViewModel,
+                object parameter)
         {
             if (oldViewModel is null)
             {

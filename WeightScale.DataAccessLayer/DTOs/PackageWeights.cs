@@ -4,6 +4,8 @@
     {
         public double? FullWeight { get; set; }
         public double? EmptyWeight { get; set; }
-        public bool IsFilledOut => FullWeight > 0 && EmptyWeight > 0;
+
+        public bool IsFilledOut =>
+                FullWeight > 0 && EmptyWeight > 0;
     }
 }

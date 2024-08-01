@@ -15,8 +15,10 @@ namespace WeightScale.BusinessLogicLayer.Utils
 
     public class Messenger : IMessenger
     {
-        private ConcurrentDictionary<Type, object> _currentState = new ConcurrentDictionary<Type, object>();
-        private ConcurrentDictionary<Type, List<Subscription>> _subscriptions = new ConcurrentDictionary<Type, List<Subscription>>();
+        private readonly ConcurrentDictionary<Type, object> _currentState = new ConcurrentDictionary<Type, object>();
+
+        private readonly ConcurrentDictionary<Type, List<Subscription>> _subscriptions =
+                new ConcurrentDictionary<Type, List<Subscription>>();
 
         public void Send<TMessage>(TMessage message)
         {
@@ -45,8 +47,8 @@ namespace WeightScale.BusinessLogicLayer.Utils
             }
 
             var newSubscriber = new Subscription(subscriber, action);
-            _subscriptions[typeof(TMessage)].Add(newSubscriber);
-
+            _subscriptions[typeof(TMessage)]
+                    .Add(newSubscriber);
         }
 
         public void Unsubscribe<TMessage>(object subscriber)
@@ -56,10 +58,12 @@ namespace WeightScale.BusinessLogicLayer.Utils
                 return;
             }
 
-            var subscription = _subscriptions[typeof(TMessage)].FirstOrDefault(x => x.Subscriber.Equals(subscriber));
+            var subscription = _subscriptions[typeof(TMessage)]
+                    .FirstOrDefault(x => x.Subscriber.Equals(subscriber));
             if (subscription != null)
             {
-                _subscriptions[typeof(TMessage)].Remove(subscription);
+                _subscriptions[typeof(TMessage)]
+                        .Remove(subscription);
             }
         }
     }

@@ -31,38 +31,37 @@
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Class containing extended data and functionality to BaseWtDevice.
-    /// It inherits from BaseWtdevice. Used by a Jetbus connection and application.
+    ///     Class containing extended data and functionality to BaseWtDevice.
+    ///     It inherits from BaseWtdevice. Used by a Jetbus connection and application.
     /// </summary>
     public interface IDataDigitalFilter
     {
-
         #region ==================== events & delegates ====================
+
         #endregion
 
         #region ======================== properties ========================
 
         /// <summary>
-        /// Gets or sets the data rate in Hz
+        ///     Gets or sets the data rate in Hz
         /// </summary>
         int DataRate { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of the low-pass filter
+        ///     Gets or sets the mode of the low-pass filter
         /// </summary>
         LowPassFilter LowPassFilterMode { get; set; }
 
         /// <summary>
-        /// Gets or sets the order of the low-pass filter
+        ///     Gets or sets the order of the low-pass filter
         /// </summary>
         int LowPassFilterOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets the cut-off frequency of the low-pass filter
+        ///     Gets or sets the cut-off frequency of the low-pass filter
         /// </summary>
         int LowPasCutOffFrequency { get; set; }
 
         #endregion
-
     }
 }

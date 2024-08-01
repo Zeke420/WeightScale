@@ -16,16 +16,14 @@ namespace WeightScale.BusinessLogicLayer.Services
 
     public class PackageService : IPackageService
     {
-        private readonly IShipmentRepository _shipmentRepository;
-        private readonly IPackageRepository _packageRepository;
         private readonly IDeviceManager _deviceManager;
-
-        public event Action<Package> PackageAdded;
+        private readonly IPackageRepository _packageRepository;
+        private readonly IShipmentRepository _shipmentRepository;
 
         public PackageService(
-            IDeviceManager deviceManager,
-            IShipmentRepository shipmentRepository,
-            IPackageRepository packageRepository)
+                IDeviceManager deviceManager,
+                IShipmentRepository shipmentRepository,
+                IPackageRepository packageRepository)
         {
             _shipmentRepository = shipmentRepository;
             _packageRepository = packageRepository;
@@ -34,17 +32,25 @@ namespace WeightScale.BusinessLogicLayer.Services
             _deviceManager.PackageWeightsFilledOut += OnPackageWeightsFilledOut;
         }
 
+        public event Action<Package> PackageAdded;
+
         public void ConnectDevices(string fullWeightDeviceIp, string emptyWeightDeviceIp)
         {
             _deviceManager.ConnectDevicesAsync(fullWeightDeviceIp, emptyWeightDeviceIp);
+        }
+
+        public void MovePackage(PackageModel package, ShipmentModel newShipment)
+        {
+            var packageEntity = PackageMapper.MapToEntity(package);
+            packageEntity.ShipmentId = newShipment.Id;
+            _packageRepository.Update(packageEntity);
         }
 
         private void OnPackageWeightsFilledOut(PackageWeights obj)
         {
             var shipment = _shipmentRepository.GetFirstUnFinishedShipment();
 
-            if (obj.FullWeight == null
-                && obj.EmptyWeight.HasValue)
+            if (obj.FullWeight == null && obj.EmptyWeight.HasValue)
             {
                 var updatePackage = shipment.Packages.Find(x => x.EmptyWeight == null);
                 if (updatePackage == null)
@@ -61,20 +67,13 @@ namespace WeightScale.BusinessLogicLayer.Services
 
             var package = new Package
                           {
-                              FullWeight = obj.FullWeight,
-                              EmptyWeight = obj.EmptyWeight,
-                              ShipmentId = shipment.Id
+                                  FullWeight = obj.FullWeight,
+                                  EmptyWeight = obj.EmptyWeight,
+                                  ShipmentId = shipment.Id
                           };
 
             _packageRepository.Add(package);
             PackageAdded?.Invoke(package);
-        }
-
-        public void MovePackage(PackageModel package, ShipmentModel newShipment)
-        {
-            var packageEntity = PackageMapper.MapToEntity(package);
-            packageEntity.ShipmentId = newShipment.Id;
-            _packageRepository.Update(packageEntity);
         }
     }
 }

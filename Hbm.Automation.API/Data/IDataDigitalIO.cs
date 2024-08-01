@@ -27,67 +27,70 @@
 // SOFTWARE.
 //
 // </copyright>
+
+using System;
+
 namespace Hbm.Automation.Api.Data
 {
-    using System;
-
     /// <summary>
-    /// Interface containing the data for the standard mode of your WTX device.
-    /// (e.g. settings for limit switches and digital I/O)
+    ///     Interface containing the data for the standard mode of your WTX device.
+    ///     (e.g. settings for limit switches and digital I/O)
     /// </summary>
     public interface IDataDigitalIO
     {
-
         #region ==================== events & delegates ====================
+
         /// <summary>
-        /// Updates the data from external
+        ///     Updates the data from external
         /// </summary>
         /// <param name="sender">Sending object</param>
         /// <param name="e">EventArgs</param>
         void UpdateDataIO(object sender, EventArgs e);
+
         #endregion
 
         #region ======================== properties ========================
+
         /// <summary>
-        /// Gets a value indicating whether the digital input 1 is active or not
+        ///     Gets a value indicating whether the digital input 1 is active or not
         /// </summary>
         bool Input1 { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the digital input 2 is active or not
+        ///     Gets a value indicating whether the digital input 2 is active or not
         /// </summary>
         bool Input2 { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the digital input 3 is active or not
+        ///     Gets a value indicating whether the digital input 3 is active or not
         /// </summary>
         bool Input3 { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the digital input 4 is active or not
+        ///     Gets a value indicating whether the digital input 4 is active or not
         /// </summary>
         bool Input4 { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the digital output 1 is active or not
+        ///     Gets or sets a value indicating whether the digital output 1 is active or not
         /// </summary>
         bool Output1 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the digital output 2 is active or not
+        ///     Gets or sets a value indicating whether the digital output 2 is active or not
         /// </summary>
         bool Output2 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the digital output 3 is active or not
+        ///     Gets or sets a value indicating whether the digital output 3 is active or not
         /// </summary>
         bool Output3 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the digital output 4 is active or not
+        ///     Gets or sets a value indicating whether the digital output 4 is active or not
         /// </summary>
-        bool Output4 { get; set; }      
-        #endregion
+        bool Output4 { get; set; }
 
+        #endregion
     }
 }

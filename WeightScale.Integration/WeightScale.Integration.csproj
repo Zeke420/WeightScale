@@ -39,17 +39,17 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Fixtures\Scale\ScaleDevice.cs" />
+        <Compile Include="Fixtures\Scale\ScaleDevice.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Hbm.Automation.Api\Hbm.Automation.Api.csproj">
-        <Project>{f8fb1d85-0fba-4905-a559-a1c654675662}</Project>
-        <Name>Hbm.Automation.Api</Name>
-      </ProjectReference>
+        <ProjectReference Include="..\Hbm.Automation.Api\Hbm.Automation.Api.csproj">
+            <Project>{f8fb1d85-0fba-4905-a559-a1c654675662}</Project>
+            <Name>Hbm.Automation.Api</Name>
+        </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
          Other similar extension points exist, see Microsoft.Common.targets.
     <Target Name="BeforeBuild">
     </Target>

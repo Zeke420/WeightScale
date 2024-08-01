@@ -28,31 +28,35 @@
 //
 // </copyright>
 
+using System;
+
 namespace Hbm.Automation.Api
 {
-    using System;
-
     /// <summary>
-    /// Log event for status and error information
+    ///     Log event for status and error information
     /// </summary>
     public class LogEventArgs : EventArgs
     {
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Initializes a log event with status and error information
+        ///     Initializes a log event with status and error information
         /// </summary>
         /// <param name="args">Log/Error message</param>
         public LogEventArgs(string args)
         {
             Args = args;
         }
+
         #endregion
 
         #region ======================== properties ========================
+
         /// <summary>
-        /// Gets the string to describe the data transfer
+        ///     Gets the string to describe the data transfer
         /// </summary>
         public string Args { get; set; }
+
         #endregion
     }
 }

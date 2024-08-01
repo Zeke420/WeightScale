@@ -11,10 +11,11 @@ namespace WeightScale.Presentation.Converters
             {
                 throw new Exception("EnumType must not be null and of type Enum");
             }
+
             EnumType = enumType;
         }
 
-        private Type EnumType { get; set; }
+        private Type EnumType { get; }
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {

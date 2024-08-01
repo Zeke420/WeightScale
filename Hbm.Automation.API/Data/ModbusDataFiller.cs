@@ -28,57 +28,28 @@
 //
 // </copyright>
 
+using System;
+using System.Collections.Generic;
+using Hbm.Automation.Api.Utils;
+using Hbm.Automation.Api.Weighing.WTX.Modbus;
+
 namespace Hbm.Automation.Api.Data
 {
-    using Hbm.Automation.Api.Utils;
-    using Hbm.Automation.Api.Weighing.WTX.Modbus;
-    using System;
-    using System.Collections.Generic;
     /// <summary>
-    /// Implementation of the interface IDataFiller for the filler mode.
-    /// The class DataFillerModbus contains the data input word and data output words for the filler mode
-    /// of WTX device 120 and 110 via Modbus.
+    ///     Implementation of the interface IDataFiller for the filler mode.
+    ///     The class DataFillerModbus contains the data input word and data output words for the filler mode
+    ///     of WTX device 120 and 110 via Modbus.
     /// </summary>
     public class ModbusDataFiller : IDataFiller
     {
-
-        #region ==================== constants & fields ====================
-        private int _residualFlowTime;
-        private int _targetFillingWeight;
-        private int _coarseFlowCutOffPointSet;
-        private int _fineFlowCutOffPointSet;
-        private int _minimumFineFlow;
-        private int _optimizationOfCutOffPoints;
-        private int _maximumDosingTime;
-        private int _startWithFineFlow;
-        private int _coarseLockoutTime;
-        private int _fineLockoutTime;
-        private int _tareMode;
-        private int _upperToleranceLimit;
-        private int _lowerToleranceLimit;
-        private int _minimumStartWeight;
-        private int _emptyWeight;
-        private int _tareDelay;
-        private int _coarseFlowMonitoringTime;
-        private int _coarseFlowMonitoring;
-        private int _fineFlowMonitoring;
-        private int _fineFlowMonitoringTime;
-        private int _delayTimeAfterFineFlow;
-        private int _activationTimeAfterFineFlow;
-        private int _systematicDifference;
-        private int _downwardsDosing;
-        private int _valveControl;
-        private int _emptyingMode;
-        private INetConnection _connection;
-        #endregion
-
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Constructor of class DataFillerModbus : Initalizes values and connects 
-        /// the eventhandler from Connection to the interal update method
+        ///     Constructor of class DataFillerModbus : Initalizes values and connects
+        ///     the eventhandler from Connection to the interal update method
         /// </summary>
         /// <param name="Connection">Target connection</param>
-        public ModbusDataFiller(INetConnection Connection) : base()
+        public ModbusDataFiller(INetConnection Connection)
         {
             _connection = Connection;
 
@@ -136,12 +107,13 @@ namespace Hbm.Automation.Api.Data
             _valveControl = 0;
             _emptyingMode = 0;
         }
+
         #endregion
 
         #region ==================== events & delegates ====================
 
         /// <summary>
-        /// Updates and converts the values from buffer
+        ///     Updates and converts the values from buffer
         /// </summary>
         /// <param name="sender">Connection class</param>
         /// <param name="e">EventArgs, Event argument</param>
@@ -149,42 +121,62 @@ namespace Hbm.Automation.Api.Data
         {
             try
             {
-                if (Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.IMDApplicationMode)) == 2 || Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.IMDApplicationMode)) == 3)  // If application mode = filler
+                if (Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.IMDApplicationMode)) == 2 ||
+                    Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.IMDApplicationMode)) ==
+                    3) // If application mode = filler
                 {
                     // Via Modbus and Jetbus IDs: 
                     MaxDosingTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.MDTMaximalFillingTime));
-                    FineFlowCutOffPoint = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFDFineFlowDisconnect));
-                    CoarseFlowCutOffPoint = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFDCoarseFlowDisconnect));
+                    FineFlowCutOffPoint =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFDFineFlowDisconnect));
+                    CoarseFlowCutOffPoint =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFDCoarseFlowDisconnect));
 
                     _residualFlowTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.RFTResidualFlowTime));
                     _minimumFineFlow = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFMMinimumFineFlow));
-                    _optimizationOfCutOffPoints = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.OSNOptimization));
-                    _maximumDosingTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.MDTMaximalFillingTime));
+                    _optimizationOfCutOffPoints =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.OSNOptimization));
+                    _maximumDosingTime =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.MDTMaximalFillingTime));
                     _coarseLockoutTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFTCoarseFlowTime));
                     _fineLockoutTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFTFineFlowTime));
                     _tareMode = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.TMDTareMode));
-                    
-                    _upperToleranceLimit = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.UTLUpperToleranceLimit));
-                    _lowerToleranceLimit = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LTLLowerToleranceLimit));
-                    _minimumStartWeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.MSWMinimumStartWeight));
+
+                    _upperToleranceLimit =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.UTLUpperToleranceLimit));
+                    _lowerToleranceLimit =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.LTLLowerToleranceLimit));
+                    _minimumStartWeight =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.MSWMinimumStartWeight));
                     _emptyWeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.EWTEmptyWeight));
                     _tareDelay = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.TADTareDelay));
-                    
-                    _coarseFlowMonitoringTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CBTCoarseFlowMonitoringTime));
-                    _coarseFlowMonitoring = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CBKCoarseFlowMonitoring));
-                    _fineFlowMonitoring = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FBKFineFlowMonitoring));
 
-                    _fineFlowMonitoringTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FBTFineFlowMonitoringTime));                 
-                    _systematicDifference = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.SYDSystematicDifference));               
+                    _coarseFlowMonitoringTime =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CBTCoarseFlowMonitoringTime));
+                    _coarseFlowMonitoring =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CBKCoarseFlowMonitoring));
+                    _fineFlowMonitoring =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FBKFineFlowMonitoring));
+
+                    _fineFlowMonitoringTime =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FBTFineFlowMonitoringTime));
+                    _systematicDifference =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.SYDSystematicDifference));
                     _valveControl = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.VCTValveControl));
                     _emptyingMode = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.EMDEmptyingMode));
-                    _delayTimeAfterFineFlow = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.DL1DosingDelay1));
-                    _activationTimeAfterFineFlow = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.DL2DosingDelay2));
+                    _delayTimeAfterFineFlow =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.DL1DosingDelay1));
+                    _activationTimeAfterFineFlow =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.DL2DosingDelay2));
 
-                    AdcOverUnderload = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateAdcOverUnderload));
-                    LegalForTradeOperation = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateLegalForTradeOperation));
+                    AdcOverUnderload =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateAdcOverUnderload));
+                    LegalForTradeOperation =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands
+                                                                               .FillingStateLegalForTradeOperation));
                     StatusInput1 = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateStatusInput1));
-                    GeneralScaleError = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateGeneralScaleError));
+                    GeneralScaleError =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateGeneralScaleError));
 
                     CoarseFlow = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateCoarseFlow));
                     FineFlow = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateFineFlow));
@@ -194,26 +186,37 @@ namespace Hbm.Automation.Api.Data
                     Emptying = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateEmptying));
                     FlowError = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateFlowError));
                     Alarm = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateAlarm));
-                    ToleranceErrorPlus = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateToleranceErrorPlus));
+                    ToleranceErrorPlus =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateToleranceErrorPlus));
 
-                    ToleranceErrorMinus = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateToleranceErrorMinus));
+                    ToleranceErrorMinus =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FillingStateToleranceErrorMinus));
                     CurrentDosingTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.DSTDosingTime));
-                    CurrentCoarseFlowTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFTCoarseFlowTime));
+                    CurrentCoarseFlowTime =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFTCoarseFlowTime));
                     CurrentFineFlowTime = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFTFineFlowTime));
-                    
-                    ParameterSetProduct = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CurrentProductParameterSet));
+
+                    ParameterSetProduct =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CurrentProductParameterSet));
                     _downwardsDosing = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.DMDDosingMode));
-                    FillingResultTotalSum = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.SUMFillingResultSum));
-                    
-                    _targetFillingWeight = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FWTFillingTargetWeight));
-                    _coarseFlowCutOffPointSet = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFDCoarseFlowDisconnect));
-                    _fineFlowCutOffPointSet = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFDFineFlowDisconnect));
-                    _startWithFineFlow = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFLFirstFineFlow));  // Command 'Run_start_dosing' right
+                    FillingResultTotalSum =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.SUMFillingResultSum));
+
+                    _targetFillingWeight =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FWTFillingTargetWeight));
+                    _coarseFlowCutOffPointSet =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.CFDCoarseFlowDisconnect));
+                    _fineFlowCutOffPointSet =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.FFDFineFlowDisconnect));
+                    _startWithFineFlow =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands
+                                                                               .FFLFirstFineFlow)); // Command 'Run_start_dosing' right
 
                     WeightMemDay = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemDayStandard));
                     WeightMemMonth = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemMonthStandard));
                     WeightMemYear = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemYearStandard));
-                    WeightMemSeqNumber = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemSeqNumberStandard));
+                    WeightMemSeqNumber =
+                            Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemSeqNumberStandard));
                     WeightMemGross = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemGrossStandard));
                     WeightMemNet = Convert.ToInt32(_connection.ReadFromBuffer(ModbusCommands.WeightMemNetStandard));
                 }
@@ -223,6 +226,39 @@ namespace Hbm.Automation.Api.Data
                 Console.WriteLine("KeyNotFoundException in class DataFillerModbus, update method");
             }
         }
+
+        #endregion
+
+        #region ==================== constants & fields ====================
+
+        private int _residualFlowTime;
+        private int _targetFillingWeight;
+        private int _coarseFlowCutOffPointSet;
+        private int _fineFlowCutOffPointSet;
+        private int _minimumFineFlow;
+        private int _optimizationOfCutOffPoints;
+        private int _maximumDosingTime;
+        private int _startWithFineFlow;
+        private int _coarseLockoutTime;
+        private int _fineLockoutTime;
+        private int _tareMode;
+        private int _upperToleranceLimit;
+        private int _lowerToleranceLimit;
+        private int _minimumStartWeight;
+        private int _emptyWeight;
+        private int _tareDelay;
+        private int _coarseFlowMonitoringTime;
+        private int _coarseFlowMonitoring;
+        private int _fineFlowMonitoring;
+        private int _fineFlowMonitoringTime;
+        private int _delayTimeAfterFineFlow;
+        private int _activationTimeAfterFineFlow;
+        private int _systematicDifference;
+        private int _downwardsDosing;
+        private int _valveControl;
+        private int _emptyingMode;
+        private readonly INetConnection _connection;
+
         #endregion
 
         #region ======================== properties ========================
@@ -237,11 +273,11 @@ namespace Hbm.Automation.Api.Data
         public int FlowError { get; private set; }
         public int Alarm { get; private set; }
         public int AdcOverUnderload { get; private set; }
-        public int FillingProcessStatus { get; private set; }
-        public int FillingResultCount { get; private set; }
-        public double FillingResult { get; private set; }
-        public double FillingResultMeanValue { get; private set; }
-        public double FillingResultStandardDeviation { get; private set; }
+        public int FillingProcessStatus { get; }
+        public int FillingResultCount { get; }
+        public double FillingResult { get; }
+        public double FillingResultMeanValue { get; }
+        public double FillingResultStandardDeviation { get; }
         public double FillingResultTotalSum { get; private set; }
         public int CurrentDosingTime { get; private set; }
         public int CurrentCoarseFlowTime { get; private set; }
@@ -266,275 +302,334 @@ namespace Hbm.Automation.Api.Data
 
         public int ResidualFlowTime // Type : unsigned integer 16 Bit
         {
-            get { return _residualFlowTime; }
+            get => _residualFlowTime;
             set
             {
                 _connection.WriteInteger(ModbusCommands.RFTResidualFlowTime, value);
-                this._residualFlowTime = value;
+                _residualFlowTime = value;
             }
         }
+
         public double TargetFillingWeight // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_targetFillingWeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_targetFillingWeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.FWTFillingTargetWeight, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._targetFillingWeight = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.FWTFillingTargetWeight,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _targetFillingWeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public double CoarseFlowCutOffLevel // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_coarseFlowCutOffPointSet, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_coarseFlowCutOffPointSet, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.CFDCoarseFlowDisconnect, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._coarseFlowCutOffPointSet = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.CFDCoarseFlowDisconnect,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _coarseFlowCutOffPointSet = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public double FineFlowCutOffLevel // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_fineFlowCutOffPointSet, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_fineFlowCutOffPointSet, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.FFDFineFlowDisconnect, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._fineFlowCutOffPointSet = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.FFDFineFlowDisconnect,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _fineFlowCutOffPointSet = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public double MinimumFineFlow // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_minimumFineFlow, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_minimumFineFlow, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.FFMMinimumFineFlow, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._minimumFineFlow = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.FFMMinimumFineFlow,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _minimumFineFlow = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public int OptimizationMode // Type : unsigned integer 8 Bit
         {
-            get { return _optimizationOfCutOffPoints; }
+            get => _optimizationOfCutOffPoints;
             set
             {
                 _connection.WriteInteger(ModbusCommands.OSNOptimization, value);
-                this._optimizationOfCutOffPoints = value;
+                _optimizationOfCutOffPoints = value;
             }
         }
+
         public int MaxFillingTime // Type : unsigned integer 16 Bit
         {
-            get { return _maximumDosingTime; }
+            get => _maximumDosingTime;
             set
             {
                 _connection.WriteInteger(ModbusCommands.MDTMaximalFillingTime, value);
-                this._maximumDosingTime = value;
+                _maximumDosingTime = value;
             }
         }
+
         public int StartWithFineFlow // Type : unsigned integer 16 Bit
         {
-            get { return _startWithFineFlow; }
+            get => _startWithFineFlow;
             set
             {
                 _connection.WriteInteger(ModbusCommands.FFLFirstFineFlow, value);
-                this._startWithFineFlow = value;
+                _startWithFineFlow = value;
             }
         }
+
         public int CoarseLockoutTime // Type : unsigned integer 16 Bit
         {
-            get { return _coarseLockoutTime; }
+            get => _coarseLockoutTime;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LTCLockoutTimeCoarseFlow, value);
-                this._coarseLockoutTime = value;
+                _coarseLockoutTime = value;
             }
         }
+
         public int FineLockoutTime // Type : unsigned integer 16 Bit
         {
-            get { return _fineLockoutTime; }
+            get => _fineLockoutTime;
             set
             {
                 _connection.WriteInteger(ModbusCommands.LTFLockoutTimeFineFlow, value);
-                this._fineLockoutTime = value;
+                _fineLockoutTime = value;
             }
         }
+
         public int TareMode // Type : unsigned integer 8 Bit
         {
-            get { return _tareMode; }
+            get => _tareMode;
             set
             {
                 _connection.WriteInteger(ModbusCommands.TMDTareMode, value);
-                this._tareMode = value;
+                _tareMode = value;
             }
         }
+
         public double UpperToleranceLimit // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_upperToleranceLimit, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_upperToleranceLimit, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.UTLUpperToleranceLimit, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._upperToleranceLimit = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.UTLUpperToleranceLimit,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _upperToleranceLimit = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public double LowerToleranceLimit // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_lowerToleranceLimit, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_lowerToleranceLimit, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.LTLLowerToleranceLimit, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._lowerToleranceLimit = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.LTLLowerToleranceLimit,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _lowerToleranceLimit = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public double MinimumStartWeight // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_minimumStartWeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_minimumStartWeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.MSWMinimumStartWeight, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._minimumStartWeight = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.MSWMinimumStartWeight,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _minimumStartWeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public double EmptyWeight // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_emptyWeight, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_emptyWeight, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.EWTEmptyWeight, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._emptyWeight = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.EWTEmptyWeight,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _emptyWeight = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public int TareDelay // Type : unsigned integer 16 Bit
         {
-            get { return _tareDelay; }
+            get => _tareDelay;
             set
             {
                 _connection.WriteInteger(ModbusCommands.TADTareDelay, value);
-                this._tareDelay = value;
+                _tareDelay = value;
             }
         }
+
         public int CoarseFlowMonitoringTime // Type : unsigned integer 16 Bit
         {
-            get { return _coarseFlowMonitoringTime; }
+            get => _coarseFlowMonitoringTime;
             set
             {
                 _connection.WriteInteger(ModbusCommands.CBTCoarseFlowMonitoringTime, value);
-                this._coarseFlowMonitoringTime = value;
+                _coarseFlowMonitoringTime = value;
             }
         }
-        public double CoarseFlowMonitoring  // Type : double value in weight unit
+
+        public double CoarseFlowMonitoring // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_coarseFlowMonitoring, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_coarseFlowMonitoring, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.CBKCoarseFlowMonitoring, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._coarseFlowMonitoring = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.CBKCoarseFlowMonitoring,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _coarseFlowMonitoring = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
-        public double FineFlowMonitoring  // Type : double value in weight unit
+
+        public double FineFlowMonitoring // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_fineFlowMonitoring, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_fineFlowMonitoring, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.FBKFineFlowMonitoring, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._fineFlowMonitoring = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.FBKFineFlowMonitoring,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _fineFlowMonitoring = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public int FineFlowMonitoringTime // Type : unsigned integer 16 Bit
         {
-            get { return _fineFlowMonitoringTime; }
+            get => _fineFlowMonitoringTime;
             set
             {
                 _connection.WriteInteger(ModbusCommands.FBTFineFlowMonitoringTime, value);
-                this._fineFlowMonitoringTime = value;
+                _fineFlowMonitoringTime = value;
             }
         }
-        public int DelayTimeAfterFilling  // Type : unsigned integer 8 Bit
+
+        public int DelayTimeAfterFilling // Type : unsigned integer 8 Bit
         {
-            get { return _delayTimeAfterFineFlow; }
+            get => _delayTimeAfterFineFlow;
             set
             {
                 _connection.WriteInteger(ModbusCommands.DL1DosingDelay1, value);
-                this._delayTimeAfterFineFlow = value;
+                _delayTimeAfterFineFlow = value;
             }
         }
-        public int ActivationTimeAfterFilling  // Type : unsigned integer 8 Bit
+
+        public int ActivationTimeAfterFilling // Type : unsigned integer 8 Bit
         {
-            get { return _activationTimeAfterFineFlow; }
+            get => _activationTimeAfterFineFlow;
             set
             {
                 _connection.WriteInteger(ModbusCommands.DL2DosingDelay2, value);
-                this._activationTimeAfterFineFlow = value;
+                _activationTimeAfterFineFlow = value;
             }
         }
+
         public double SystematicDifference // Type : double value in weight unit
         {
-            get {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                return MeasurementUtils.DigitToDouble(_systematicDifference, decimals); }
+            get
+            {
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                return MeasurementUtils.DigitToDouble(_systematicDifference, decimals);
+            }
             set
             {
-                int decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
-                _connection.WriteInteger(ModbusCommands.SYDSystematicDifference, MeasurementUtils.DoubleToDigit(value, decimals));
-                this._systematicDifference = MeasurementUtils.DoubleToDigit(value, decimals);
+                var decimals = _connection.ReadIntegerFromBuffer(ModbusCommands.CIA461Decimals);
+                _connection.WriteInteger(ModbusCommands.SYDSystematicDifference,
+                                         MeasurementUtils.DoubleToDigit(value, decimals));
+                _systematicDifference = MeasurementUtils.DoubleToDigit(value, decimals);
             }
         }
+
         public int FillingMode
         {
-            get { return _downwardsDosing; }
+            get => _downwardsDosing;
             set
             {
                 _connection.WriteInteger(ModbusCommands.DMDDosingMode, value);
-                this._downwardsDosing = value;
+                _downwardsDosing = value;
             }
         }
-        public int ValveControl  // Type : unsigned integer 8 Bit
+
+        public int ValveControl // Type : unsigned integer 8 Bit
         {
-            get { return _valveControl; }
+            get => _valveControl;
             set
             {
                 _connection.WriteInteger(ModbusCommands.VCTValveControl, value);
-                this._valveControl = value;
+                _valveControl = value;
             }
         }
 
-        public int EmptyingMode  // Type : unsigned integer 8 Bit
+        public int EmptyingMode // Type : unsigned integer 8 Bit
         {
-            get { return _emptyingMode; }
+            get => _emptyingMode;
             set
             {
                 _connection.WriteInteger(ModbusCommands.EMDEmptyingMode, value);
-                this._emptyingMode = value;
+                _emptyingMode = value;
             }
         }
+
         #endregion
 
-        #region ================ public & internal methods ================= 
+        #region ================ public & internal methods =================
+
         public void StartFilling()
         {
         }
@@ -547,6 +642,7 @@ namespace Hbm.Automation.Api.Data
         public void ClearFillingResult()
         {
         }
+
         #endregion
     }
 }

@@ -10,6 +10,6 @@
     <SolidColorBrush x:Key="Border.Header.Background"
                      Color="{StaticResource Primary300}" />
     <SolidColorBrush x:Key="Border.BorderStroke"
-                     Color="{StaticResource PrimaryText}"/>
+                     Color="{StaticResource PrimaryText}" />
 
 </ResourceDictionary>

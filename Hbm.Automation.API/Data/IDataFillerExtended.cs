@@ -31,61 +31,60 @@
 namespace Hbm.Automation.Api.Data
 {
     /// <summary>
-    /// Interface containing the data for the filler extended mode of your WTX device.
-    /// A class inheriting from interface IDataFillerExtended contains the input word 
-    /// and output words for the extended filler mode of WTX device 120 and 110.
-    /// 
-    /// This is only available via a JetBus Ethernet connection, not via Modbus. 
+    ///     Interface containing the data for the filler extended mode of your WTX device.
+    ///     A class inheriting from interface IDataFillerExtended contains the input word
+    ///     and output words for the extended filler mode of WTX device 120 and 110.
+    ///     This is only available via a JetBus Ethernet connection, not via Modbus.
     /// </summary>
     public interface IDataFillerExtended : IDataFiller
     {
-        #region ======================== properties ========================    
+        #region ======================== properties ========================
 
         /// <summary>
-        /// Gets the material stream of the last filling cycle
-        /// </summary>                 
+        ///     Gets the material stream of the last filling cycle
+        /// </summary>
         double MaterialStreamLastFilling { get; }
 
         /// <summary>
-        /// Gets or sets the special filling functions
+        ///     Gets or sets the special filling functions
         /// </summary>
         int SpecialFillingFunctions { get; set; }
 
         /// <summary>
-        /// Gets or sets the discharge time in ma
+        ///     Gets or sets the discharge time in ma
         /// </summary>
         int DischargeTime { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode empty weight underflow
+        ///     Gets or sets the mode empty weight underflow
         /// </summary>
         bool EmptyWeightBreak { get; set; }
 
         /// <summary>
-        /// Gets or sets the delay 1 after filling complete in ms
+        ///     Gets or sets the delay 1 after filling complete in ms
         /// </summary>
         int Delay1Dosing { get; set; }
 
         /// <summary>
-        /// Gets or sets the delay 2 after filling complete in ms
+        ///     Gets or sets the delay 2 after filling complete in ms
         /// </summary>
         int Delay2Dosing { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum emtpy weight in weight unit
+        ///     Gets or sets the minimum emtpy weight in weight unit
         /// </summary>
         double EmptyWeightTolerance { get; set; }
 
         /// <summary>
-        /// Gets or sets the residual flow from last filling in weight unit
+        ///     Gets or sets the residual flow from last filling in weight unit
         /// </summary>
         double ResidualFlowDosingCycle { get; set; }
 
         /// <summary>
-        /// Gets or sets the current product (= parameter set) 
+        ///     Gets or sets the current product (= parameter set)
         /// </summary>
         new int ParameterSetProduct { get; set; }
-        #endregion
 
+        #endregion
     }
 }

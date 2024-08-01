@@ -4,10 +4,10 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style x:Key="DataGridRowStyle" TargetType="DataGridRow">
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
 
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">

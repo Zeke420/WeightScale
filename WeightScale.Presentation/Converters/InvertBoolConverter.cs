@@ -9,12 +9,16 @@ namespace WeightScale.Presentation.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is null)
+            {
                 return false;
+            }
 
-            if (!(value is bool))
+            if (!( value is bool ))
+            {
                 throw new InvalidCastException("value has to be bool");
+            }
 
-            return !((bool)value);
+            return !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

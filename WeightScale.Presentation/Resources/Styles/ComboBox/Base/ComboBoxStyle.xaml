@@ -57,8 +57,6 @@
            TargetType="{x:Type ComboBox}">
         <Setter Property="BorderThickness"
                 Value="0" />
-        <Setter Property="Template"
-                Value="{StaticResource ComboBoxTemplate}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled"
                      Value="False">

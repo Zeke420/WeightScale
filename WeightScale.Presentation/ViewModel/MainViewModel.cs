@@ -11,9 +11,9 @@ namespace WeightScale.Presentation.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly ApplicationSettings _applicationSettings;
         private readonly IDialogService _dialogService;
         private INavigationService _navigationService;
-        private readonly ApplicationSettings _applicationSettings;
 
         public MainViewModel(INavigationService navigationService,
                              IDialogService dialogService,
@@ -34,10 +34,12 @@ namespace WeightScale.Presentation.ViewModel
         {
             get
             {
-                var version = Assembly.GetExecutingAssembly().GetName().Version;
+                var version = Assembly.GetExecutingAssembly()
+                                      .GetName()
+                                      .Version;
                 return version != null
-                    ? $"{GlobalResource.ApplicationName} {version.Major}.{version.Minor}.{version.Revision}"
-                    : GlobalResource.ApplicationName;
+                        ? $"{GlobalResource.ApplicationName} {version.Major}.{version.Minor}.{version.Revision}"
+                        : GlobalResource.ApplicationName;
             }
         }
 

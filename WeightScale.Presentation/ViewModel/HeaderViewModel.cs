@@ -46,7 +46,7 @@ namespace WeightScale.Presentation.ViewModel
         {
             _navigationService.NavigateTo<WeightViewModel>(NavigationRegion.Main);
         }
-        
+
         private void NavigateToReport(object obj)
         {
             _navigationService.NavigateTo<ReportViewModel>(NavigationRegion.Main);

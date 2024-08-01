@@ -9,7 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
             <StackPanel Orientation="Vertical">
@@ -21,17 +21,17 @@
                                        TextAlignment="Center"
                                        HorizontalAlignment="Center"
                                        Padding="10,5"
-                                       FontWeight="SemiBold"/>
+                                       FontWeight="SemiBold" />
                         </Border>
                         <Border>
                             <StackPanel Orientation="Vertical">
                                 <Label Content="Courier Name"
-                                       Margin="10,0"/>
+                                       Margin="10,0" />
                                 <TextBox Text="{Binding CourierName, UpdateSourceTrigger=PropertyChanged}"
-                                         Margin="10,0"/>
+                                         Margin="10,0" />
                                 <Button Content="Create Courier"
                                         Command="{Binding CreateCourierCommand}"
-                                        Margin="10"/>
+                                        Margin="10" />
                             </StackPanel>
                         </Border>
                     </StackPanel>
@@ -45,7 +45,7 @@
                                    TextAlignment="Center"
                                    HorizontalAlignment="Center"
                                    Padding="10,5"
-                                   FontWeight="SemiBold"/>
+                                   FontWeight="SemiBold" />
                     </Border>
                     <ListView ItemsSource="{Binding Couriers}"
                               Margin="0,0,0,10">

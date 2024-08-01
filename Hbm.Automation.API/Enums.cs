@@ -31,7 +31,7 @@
 namespace Hbm.Automation.Api
 {
     /// <summary>
-    /// Identify a connection
+    ///     Identify a connection
     /// </summary>
     public enum ConnectionType
     {
@@ -41,7 +41,7 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// IO type
+    ///     IO type
     /// </summary>
     public enum IOType
     {
@@ -50,7 +50,7 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// Data types for the device data
+    ///     Data types for the device data
     /// </summary>
     public enum DataType
     {
@@ -66,47 +66,47 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// Digital input functions
+    ///     Digital input functions
     /// </summary>
     public enum InputFunction
     {
         Off,
         Tare,
-        Trigger,        // Only ApplicationMode.Checkweigher
-        BreakFilling,   // Only ApplicationMode.Filler
-        RunFilling,     // Only ApplicationMode.Filler
-        Redosing,       // Only ApplicationMode.Filler
+        Trigger, // Only ApplicationMode.Checkweigher
+        BreakFilling, // Only ApplicationMode.Filler
+        RunFilling, // Only ApplicationMode.Filler
+        Redosing, // Only ApplicationMode.Filler
         RecordWeight,
         Zero,
-        Sum             // Only ApplicationMode.Count
+        Sum // Only ApplicationMode.Count
     }
 
     /// <summary>
-    /// Digital output functions
+    ///     Digital output functions
     /// </summary>
     public enum OutputFunction
     {
         Off,
-        Manually,     
-        LimitSwitch1,               // Only ApplicationMode.Standard
-        LimitSwitch2,               // Only ApplicationMode.Standard
-        LimitSwitch3,               // Only ApplicationMode.Standard
-        LimitSwitch4,               // Only ApplicationMode.Standard
-        StopMaterial,               // Only ApplicationMode.Filler
-        CoarseFlow,                 // Only ApplicationMode.Filler
-        FineFlow,                   // Only ApplicationMode.Filler
-        Ready,                      // Only ApplicationMode.Filler
-        ToleranceExceeded,          // Only ApplicationMode.Filler
-        ToleranceUnderrun,          // Only ApplicationMode.Filler
-        ToleranceExceededUnderrun,  // Only ApplicationMode.Filler
-        Alert,                      // Only ApplicationMode.Filler
-        DL1DL2,                     // Only ApplicationMode.Filler
+        Manually,
+        LimitSwitch1, // Only ApplicationMode.Standard
+        LimitSwitch2, // Only ApplicationMode.Standard
+        LimitSwitch3, // Only ApplicationMode.Standard
+        LimitSwitch4, // Only ApplicationMode.Standard
+        StopMaterial, // Only ApplicationMode.Filler
+        CoarseFlow, // Only ApplicationMode.Filler
+        FineFlow, // Only ApplicationMode.Filler
+        Ready, // Only ApplicationMode.Filler
+        ToleranceExceeded, // Only ApplicationMode.Filler
+        ToleranceUnderrun, // Only ApplicationMode.Filler
+        ToleranceExceededUnderrun, // Only ApplicationMode.Filler
+        Alert, // Only ApplicationMode.Filler
+        DL1DL2, // Only ApplicationMode.Filler
         Empty,
         DeviceStatus
     }
 
     /// <summary>
-    /// Application mode
+    ///     Application mode
     /// </summary>
     public enum ApplicationMode
     {
@@ -116,7 +116,7 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// Modes for limit switches
+    ///     Modes for limit switches
     /// </summary>
     public enum LimitSwitchMode
     {
@@ -127,7 +127,7 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// Sources for limit switches
+    ///     Sources for limit switches
     /// </summary>
     public enum LimitSwitchSource
     {
@@ -136,7 +136,7 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// Tare mode
+    ///     Tare mode
     /// </summary>
     public enum TareMode
     {
@@ -146,7 +146,7 @@ namespace Hbm.Automation.Api
     }
 
     /// <summary>
-    /// Multi range/interval scale type
+    ///     Multi range/interval scale type
     /// </summary>
     public enum ScaleRangeMode
     {
@@ -159,7 +159,7 @@ namespace Hbm.Automation.Api
     {
         No_Filter,
         IIR_Filter,
-        FIR_Filter,     
+        FIR_Filter,
         Standard,
         Critically_damped,
         Bessel,
@@ -172,5 +172,4 @@ namespace Hbm.Automation.Api
         FIR_Comb_Filter = 13089,
         FIR_Moving_Average = 13105
     }
-
 }

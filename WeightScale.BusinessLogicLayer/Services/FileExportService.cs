@@ -12,7 +12,7 @@ namespace WeightScale.BusinessLogicLayer.Services
     {
         void ExportToCsv(List<Shipment> shipments);
     }
-    
+
     public class FileExportService : IFileExportService
     {
         private readonly ApplicationSettings _applicationSettings;
@@ -44,8 +44,12 @@ namespace WeightScale.BusinessLogicLayer.Services
                 }
             }
 
-            var startDateFormat = shipments.First().ShipmentDate.ToUniversalTime().ToString("yyyyMMdd");
-            var endDateFormat = shipments.Last().ShipmentDate.ToUniversalTime().ToString("yyyyMMdd");
+            var startDateFormat = shipments.First()
+                                           .ShipmentDate.ToUniversalTime()
+                                           .ToString("yyyyMMdd");
+            var endDateFormat = shipments.Last()
+                                         .ShipmentDate.ToUniversalTime()
+                                         .ToString("yyyyMMdd");
             var fileName = $"Report_{startDateFormat}_{endDateFormat}.csv";
             var filePath = Path.Combine(_applicationSettings.ReportFilePath, fileName); // Use Path.Combine for safety
 

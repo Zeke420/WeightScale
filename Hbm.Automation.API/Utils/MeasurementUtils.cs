@@ -28,43 +28,43 @@
 //
 // </copyright>
 
+using System;
+
 namespace Hbm.Automation.Api.Utils
 {
-    using System;
-
     /// <summary>
-    /// Some basic utilities for conversion of measurement values.
+    ///     Some basic utilities for conversion of measurement values.
     /// </summary>
     public static class MeasurementUtils
     {
         #region ====================== public methods =======================
 
         /// <summary>
-        /// Converts value from int to double, taking the relevant number of decimals into account.
-        /// (e.g. 12340 with 2 decimals => returns 123,4)
+        ///     Converts value from int to double, taking the relevant number of decimals into account.
+        ///     (e.g. 12340 with 2 decimals => returns 123,4)
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <param name="decimals">Number of relevant decimals in value</param>
         /// <returns>Converted value</returns>
         public static double DigitToDouble(int value, int decimals)
         {
-            return (double)value / Math.Pow(10, decimals);
+            return value / Math.Pow(10, decimals);
         }
 
         /// <summary>
-        /// Converts value from double to int, taking the relevant number of decimals into account.
-        /// (e.g. 123,4 with 2 decimals => returns 12340)
+        ///     Converts value from double to int, taking the relevant number of decimals into account.
+        ///     (e.g. 123,4 with 2 decimals => returns 12340)
         /// </summary>
         /// <param name="value">Value to be converted</param>
         /// <param name="decimals">Number of relevant decimals in value</param>
         /// <returns>Converted value</returns>
         public static int DoubleToDigit(double value, int decimals)
         {
-            return (int)(value * Math.Pow(10, decimals));
+            return (int)( value * Math.Pow(10, decimals) );
         }
 
         /// <summary>
-        /// Convert string to bool ("0"=False, "1"=True)
+        ///     Convert string to bool ("0"=False, "1"=True)
         /// </summary>
         /// <param name="boolAsString">Sring representing a boolean</param>
         /// <returns></returns>

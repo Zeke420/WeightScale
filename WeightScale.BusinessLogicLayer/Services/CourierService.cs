@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.DataAccessLayer.Repository;
 
@@ -15,12 +14,12 @@ namespace WeightScale.BusinessLogicLayer.Services
     public class CourierService : ICourierService
     {
         private readonly ICouriersRepository _couriersRepository;
-        
+
         public CourierService(ICouriersRepository couriersRepository)
         {
             _couriersRepository = couriersRepository;
         }
-        
+
         public void CreateCourier(string courierName)
         {
             var courier = new Courier(courierName);

@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace WeightScale.Presentation.Helpers
 {
-    public class ObservableCollectionWithItemNotify<T> : ObservableCollection<T> where T: INotifyPropertyChanged
+    public class ObservableCollectionWithItemNotify<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
         public ObservableCollectionWithItemNotify()
         {

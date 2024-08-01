@@ -5,7 +5,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="TextBlock"
-           x:Name="TextBlockSerialNumberStyle"
            x:Key="TextBlockSerialNumberStyle">
         <Setter Property="Foreground"
                 Value="{StaticResource TextBlock.BasicColorText}" />

@@ -10,7 +10,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="ComboBoxToggleButtonTemplateList"
-                     x:Name="ComboBoxButtonMain"
                      TargetType="{x:Type ToggleButton}">
         <Border x:Name="templateRoot"
                 Background="{TemplateBinding Background}"

@@ -12,6 +12,7 @@ namespace WeightScale.Presentation.Converters
             {
                 return index + 1;
             }
+
             return Binding.DoNothing;
         }
 

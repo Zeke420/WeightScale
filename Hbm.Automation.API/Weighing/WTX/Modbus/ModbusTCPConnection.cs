@@ -27,21 +27,33 @@
 // SOFTWARE.
 //
 // </copyright>
+
+using System;
+using System.Linq;
+using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
+using NModbus;
+
 namespace Hbm.Automation.Api.Weighing.WTX.Modbus
 {
-    using NModbus;
-    using System;
-    using System.Linq;
-    using System.Net.Sockets;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     /// <summary>
-    /// This class holds a connection via Modbus/TCP,  starts/ends the connection, reads/writes and buffers data.
+    ///     This class holds a connection via Modbus/TCP,  starts/ends the connection, reads/writes and buffers data.
     /// </summary>
     public class ModbusTCPConnection : INetConnection
     {
+        #region =============== constructors & destructors =================
+
+        public ModbusTCPConnection(string ipAddress)
+        {
+            IpAddress = ipAddress;
+            CreateDictionary();
+        }
+
+        #endregion
+
         #region ==================== constants & fields ====================
+
         private const int MODBUS_TCP_PORT = 502;
         private const int WTX_SLAVE_ADDRESS = 0;
         private const int WTX_REGISTER_START_ADDRESS = 0;
@@ -49,43 +61,38 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
         private const int WTX_REGISTER_EXECUTION_COMMANDS = 0;
 
         private IModbusMaster _master;
-        private TcpClient _client;   
+        private TcpClient _client;
+
         #endregion
 
         #region ==================== events & delegates ====================
+
         public event EventHandler<LogEventArgs> CommunicationLog;
         public event EventHandler<EventArgs> UpdateData;
-        #endregion
-                     
-        #region =============== constructors & destructors =================
-        public ModbusTCPConnection(string ipAddress)
-        {
-            IpAddress = ipAddress;            
-            CreateDictionary();
-        }
+
         #endregion
 
         #region ======================== properties ========================
-        ///<inheritdoc/>
+
+        /// <inheritdoc />
         public bool IsConnected { get; private set; }
 
-        ///<inheritdoc/>
-        public ConnectionType ConnectionType
-        {
-            get { return ConnectionType.Modbus; }
-        }
+        /// <inheritdoc />
+        public ConnectionType ConnectionType =>
+                ConnectionType.Modbus;
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public string IpAddress { get; set; }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public ushort[] AllData { get; private set; }
+
         #endregion
 
         #region ================ public & internal methods =================
-        
+
         /// <summary>
-        /// Connect a Modbus/TCP device
+        ///     Connect a Modbus/TCP device
         /// </summary>
         public void Connect(int timeoutMs = 20000)
         {
@@ -103,92 +110,96 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
                 CommunicationLog?.Invoke(this, new LogEventArgs("Connection failed"));
             }
         }
-     
+
         /// <summary>
-        /// Closes the Modbus/TCP connection
+        ///     Closes the Modbus/TCP connection
         /// </summary>
         public void Disconnect()
         {
-            if (_client!=null)
+            if (_client != null)
+            {
                 _client.Close();
+            }
+
             IsConnected = false;
             CommunicationLog?.Invoke(this, new LogEventArgs("Disconnected"));
         }
 
         /// <summary>
-        /// Synchronizes the Modbus data 
+        ///     Synchronizes the Modbus data
         /// </summary>
         /// <returns>Synchronized Modbus registers</returns>
         public ushort[] SyncData()
         {
-            ushort[] _data = ReadModbusRegisters();
-            this.UpdateData?.Invoke(this, new EventArgs());
+            var _data = ReadModbusRegisters();
+            UpdateData?.Invoke(this, new EventArgs());
             return _data;
         }
 
         /// <summary>
-        /// Reads a single Modbus/TCP register 
+        ///     Reads a single Modbus/TCP register
         /// </summary>
         /// <param name="command">Modbus/TCP register index for holding register</param>
         /// <returns>Register content</returns>
         public string Read(object command)
         {
-            int _value = 0;
-            ModbusCommand _command = (ModbusCommand)command;
-            ushort[]_data = ReadModbusRegisters();
+            var _value = 0;
+            var _command = (ModbusCommand)command;
+            var _data = ReadModbusRegisters();
             _value = _command.ToValue(_data);
             return _value.ToString();
         }
 
         /// <summary>
-        /// Reads a single Modbus/TCP register 
+        ///     Reads a single Modbus/TCP register
         /// </summary>
         /// <param name="command">Modbus/TCP register index for holding register</param>
         /// <returns>Register content</returns>
         public int ReadInteger(object command)
         {
-            int _value = 0;
-            ModbusCommand _command = (ModbusCommand)command;
-            ushort[] _data = ReadModbusRegisters();
+            var _value = 0;
+            var _command = (ModbusCommand)command;
+            var _data = ReadModbusRegisters();
             _value = _command.ToValue(_data);
             return _value;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public async Task<string> ReadAsync(object command)
         {
-            int _value = 0;
-            ModbusCommand _command = (ModbusCommand)command;
-            ushort[] _data = await ReadModbusRegistersAsync();
+            var _value = 0;
+            var _command = (ModbusCommand)command;
+            var _data = await ReadModbusRegistersAsync();
             _value = _command.ToValue(_data);
-            this.UpdateData?.Invoke(this, new EventArgs());
+            UpdateData?.Invoke(this, new EventArgs());
             return _value.ToString();
         }
 
         public bool Write(object command, string value)
         {
-            return this.WriteInteger(command, Convert.ToInt32(value));
+            return WriteInteger(command, Convert.ToInt32(value));
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public bool WriteInteger(object command, int value)
         {
-            bool result = true;
+            var result = true;
 
-            ModbusCommand _command = (ModbusCommand)command;
-            ushort[] _dataToWrite = new ushort[2];
+            var _command = (ModbusCommand)command;
+            var _dataToWrite = new ushort[2];
 
             switch (_command.DataType)
             {
                 case DataType.U32:
                 case DataType.S32:
-                    _dataToWrite[0] = (ushort)((value & 0xffff0000) >> 16);
-                    _dataToWrite[1] = (ushort)(value & 0x0000ffff);
+                    _dataToWrite[0] = (ushort)( ( value & 0xffff0000 ) >> 16 );
+                    _dataToWrite[1] = (ushort)( value & 0x0000ffff );
                     _master.WriteMultipleRegisters(WTX_SLAVE_ADDRESS, _command.Register, _dataToWrite);
                     break;
 
                 case DataType.BIT:
-                    _master.WriteSingleRegister(WTX_SLAVE_ADDRESS, _command.Register, (ushort)(value << _command.BitIndex));
+                    _master.WriteSingleRegister(WTX_SLAVE_ADDRESS, _command.Register,
+                                                (ushort)( value << _command.BitIndex ));
                     break;
                 case DataType.U08:
                 case DataType.S16:
@@ -202,56 +213,66 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
             {
                 if (DoHandshake())
                 {
-                    CommunicationLog?.Invoke(this, new LogEventArgs("Write register " + _command.Register + " to " + value.ToString() + "successful"));
+                    CommunicationLog?.Invoke(this,
+                                             new LogEventArgs("Write register " +
+                                                              _command.Register +
+                                                              " to " +
+                                                              value +
+                                                              "successful"));
                 }
                 else
                 {
-                    CommunicationLog?.Invoke(this, new LogEventArgs("Write register " + _command.Register + " to " + value.ToString() + "error"));
+                    CommunicationLog?.Invoke(this,
+                                             new LogEventArgs("Write register " +
+                                                              _command.Register +
+                                                              " to " +
+                                                              value +
+                                                              "error"));
                     result = false;
                 }
             }
             else
-                CommunicationLog?.Invoke(this, new LogEventArgs("Write register " + _command.Register + " to " + value.ToString()));
+            {
+                CommunicationLog?.Invoke(this,
+                                         new LogEventArgs("Write register " + _command.Register + " to " + value));
+            }
 
             return result;
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public async Task<int> WriteAsync(object command, int value)
         {
-            ModbusCommand _command = (ModbusCommand)command;
+            var _command = (ModbusCommand)command;
 
-            ushort registerAddress = (ushort)Convert.ToInt16(_command.Register);
+            var registerAddress = (ushort)Convert.ToInt16(_command.Register);
 
-            await _master.WriteSingleRegisterAsync(0, registerAddress, (ushort)(value << _command.BitIndex));
+            await _master.WriteSingleRegisterAsync(0, registerAddress, (ushort)( value << _command.BitIndex ));
 
-            CommunicationLog?.Invoke(this, new LogEventArgs("Write register " + _command.Register + " to " + value.ToString()));
+            CommunicationLog?.Invoke(this, new LogEventArgs("Write register " + _command.Register + " to " + value));
 
             return value;
         }
+
         #endregion
 
         #region =============== protected & private methods ================
-        /// This method writes a data word to the WTX120 device synchronously. 
+
+        /// This method writes a data word to the WTX120 device synchronously.
         private bool DoHandshake()
         {
-            while (ReadInteger(ModbusCommands.PLCComHandshake) == 0)
-            {
-                Thread.Sleep(50);
-            }
-           _master.WriteSingleRegister(WTX_SLAVE_ADDRESS, WTX_REGISTER_EXECUTION_COMMANDS, 0x00);
+            while (ReadInteger(ModbusCommands.PLCComHandshake) == 0) Thread.Sleep(50);
+            _master.WriteSingleRegister(WTX_SLAVE_ADDRESS, WTX_REGISTER_EXECUTION_COMMANDS, 0x00);
 
-            while (ReadInteger(ModbusCommands.PLCComHandshake) == 1) 
-            {
-                Thread.Sleep(50);
-            }
-            return (ReadInteger(ModbusCommands.PLCComStatus) == 1);
+            while (ReadInteger(ModbusCommands.PLCComHandshake) == 1) Thread.Sleep(50);
+            return ReadInteger(ModbusCommands.PLCComStatus) == 1;
         }
-                
+
         public string ReadFromBuffer(object command)
         {
-            ModbusCommand modBusCommand = (ModbusCommand)command;
-            return (modBusCommand.ToValue(AllData)).ToString();
+            var modBusCommand = (ModbusCommand)command;
+            return modBusCommand.ToValue(AllData)
+                                .ToString();
         }
 
         public string ReadFromDevice(object command)
@@ -259,10 +280,10 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
             return "";
         }
 
-        ///<inheritdoc/>
+        /// <inheritdoc />
         public int ReadIntegerFromBuffer(object command)
         {
-            ModbusCommand modbuscommand = (ModbusCommand)command;
+            var modbuscommand = (ModbusCommand)command;
             return modbuscommand.ToValue(AllData);
         }
 
@@ -270,22 +291,27 @@ namespace Hbm.Automation.Api.Weighing.WTX.Modbus
         {
             AllData = new ushort[WTX_REGISTER_DATAWORD_COUNT];
         }
-        
+
         private async Task<ushort[]> ReadModbusRegistersAsync()
         {
-            AllData = await _master.ReadHoldingRegistersAsync(WTX_SLAVE_ADDRESS, WTX_REGISTER_START_ADDRESS, WTX_REGISTER_DATAWORD_COUNT);
-            CommunicationLog?.Invoke(this, new LogEventArgs("Read all: " + string.Join(",", AllData.Select(x => x.ToString("X")).ToArray())));
+            AllData = await _master.ReadHoldingRegistersAsync(WTX_SLAVE_ADDRESS, WTX_REGISTER_START_ADDRESS,
+                                                              WTX_REGISTER_DATAWORD_COUNT);
+            CommunicationLog?.Invoke(this, new LogEventArgs("Read all: " +
+                                                            string.Join(",", AllData.Select(x => x.ToString("X"))
+                                                                                .ToArray())));
             return AllData;
         }
 
         private ushort[] ReadModbusRegisters()
         {
-            AllData = _master.ReadHoldingRegisters(WTX_SLAVE_ADDRESS, WTX_REGISTER_START_ADDRESS, WTX_REGISTER_DATAWORD_COUNT);
-            CommunicationLog?.Invoke(this, new LogEventArgs("Read all: " + string.Join(",", AllData.Select(x => x.ToString("X")).ToArray())));
+            AllData = _master.ReadHoldingRegisters(WTX_SLAVE_ADDRESS, WTX_REGISTER_START_ADDRESS,
+                                                   WTX_REGISTER_DATAWORD_COUNT);
+            CommunicationLog?.Invoke(this, new LogEventArgs("Read all: " +
+                                                            string.Join(",", AllData.Select(x => x.ToString("X"))
+                                                                                .ToArray())));
             return AllData;
         }
+
         #endregion
     }
 }
-
-   

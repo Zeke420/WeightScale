@@ -29,7 +29,6 @@
                    Panel.ZIndex="1"
                    x:Name="PART_Track"
                    Grid.Row="1"
-                   Grid.RowSpan="1"
                    ViewportSize="100">
                 <Track.Thumb>
                     <Thumb IsHitTestVisible="True"

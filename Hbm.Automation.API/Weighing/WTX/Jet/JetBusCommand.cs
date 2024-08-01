@@ -28,19 +28,21 @@
 //
 // </copyright>
 
+using System;
+
 namespace Hbm.Automation.Api.Weighing.WTX.Jet
 {
-    using System;
-
     /// <summary>
-    /// Class to define the frame specifing data type, path, bit offset(for bit addressing) of the data to be read or write via the jet ethernet interface.
-    /// A frame consists of a datatype, path, bit index, bit length.
+    ///     Class to define the frame specifing data type, path, bit offset(for bit addressing) of the data to be read or write
+    ///     via the jet ethernet interface.
+    ///     A frame consists of a datatype, path, bit index, bit length.
     /// </summary>
     public class JetBusCommand
     {
         #region =============== constructors & destructors =================
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="JetBusCommand" /> class
+        ///     Initializes a new instance of the <see cref="JetBusCommand" /> class
         /// </summary>
         /// <param name="dataType">Provide the data type</param>
         /// <param name="path">Register number of the modbus register</param>
@@ -49,114 +51,25 @@ namespace Hbm.Automation.Api.Weighing.WTX.Jet
         /// public ModbusCommand(DataType dataTy
         public JetBusCommand(DataType dataType, string path, int bitIndex, int bitLength)
         {
-            this.DataType  = dataType;
-            this.Path = path;
-            this.BitIndex  = bitIndex;
-            this.BitLength = bitLength;
-        }
-        #endregion
-
-        #region ======================== properties ========================
-        /// <summary>
-        /// Gets the data type 
-        /// </summary>
-        public DataType DataType { get; private set; }
-
-        /// <summary>
-        /// Gets the bit index for flags
-        /// </summary>
-        public int BitIndex { get; private set; }
-
-        /// <summary>
-        /// Gets the bit length for multi-bit flags 
-        /// </summary>
-        public int BitLength { get; private set; }
-
-        /// <summary>
-        /// Gets the overall path for unique command identification 
-        /// </summary>
-        public string Path { get; private set; }
-        #endregion
-
-        #region ================ public & internal methods =================
-        /// <summary>
-        /// Picks the command from all registers 
-        /// </summary>
-        /// <param name="input">All available holding register starting from index 0</param>
-        /// <returns>Value as integer</returns>
-        public string ToString(string input)
-        {
-            string _value;
-
-            try
-            {               
-                switch (DataType)
-                {
-                    case DataType.BIT:
-                    {
-                            _value = ExtractBit(Convert.ToInt32(input)).ToString();
-                            break;
-                    }
-
-                    default:
-                    {
-                        _value = input;
-                        break;
-                    }
-                }
-            }
-            catch
-            {
-                _value = "0";
-            }
-
-            return _value;
+            DataType = dataType;
+            Path = path;
+            BitIndex = bitIndex;
+            BitLength = bitLength;
         }
 
-        /// <summary>
-        /// Picks the command from all registers 
-        /// </summary>
-        /// <param name="input">All available holding register starting from index 0</param>
-        /// <returns>Value as integer</returns>
-        public int ToSValue(string input)
-        {
-            int _value;
-
-            try
-            {
-                switch (DataType)
-                {
-                    case DataType.BIT:
-                        {
-                            _value = ExtractBit(Convert.ToInt32(input));
-                            break;
-                        }
-                    default:
-                        {
-                            _value = Convert.ToInt32(input);
-                            break;
-                        }
-                }
-            }
-            catch
-            {
-                _value = 0;
-            }
-
-            return _value;
-        }
         #endregion
 
         #region =============== protected & private methods ================
+
         /// <summary>
-        /// Masks and shifts the integer value to get a specific bit according to bit length and bit index
+        ///     Masks and shifts the integer value to get a specific bit according to bit length and bit index
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         private int ExtractBit(int input)
         {
-            int _bitMask = 0;
-            int _mask = 0;
+            var _bitMask = 0;
+            var _mask = 0;
 
             switch (BitLength)
             {
@@ -176,9 +89,107 @@ namespace Hbm.Automation.Api.Weighing.WTX.Jet
                     _bitMask = 1;
                     break;
             }
+
             _mask = _bitMask << BitIndex;
-            return (input & _mask) >> BitIndex;
+            return ( input & _mask ) >> BitIndex;
         }
+
+        #endregion
+
+        #region ======================== properties ========================
+
+        /// <summary>
+        ///     Gets the data type
+        /// </summary>
+        public DataType DataType { get; }
+
+        /// <summary>
+        ///     Gets the bit index for flags
+        /// </summary>
+        public int BitIndex { get; }
+
+        /// <summary>
+        ///     Gets the bit length for multi-bit flags
+        /// </summary>
+        public int BitLength { get; }
+
+        /// <summary>
+        ///     Gets the overall path for unique command identification
+        /// </summary>
+        public string Path { get; private set; }
+
+        #endregion
+
+        #region ================ public & internal methods =================
+
+        /// <summary>
+        ///     Picks the command from all registers
+        /// </summary>
+        /// <param name="input">All available holding register starting from index 0</param>
+        /// <returns>Value as integer</returns>
+        public string ToString(string input)
+        {
+            string _value;
+
+            try
+            {
+                switch (DataType)
+                {
+                    case DataType.BIT:
+                    {
+                        _value = ExtractBit(Convert.ToInt32(input))
+                                .ToString();
+                        break;
+                    }
+
+                    default:
+                    {
+                        _value = input;
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+                _value = "0";
+            }
+
+            return _value;
+        }
+
+        /// <summary>
+        ///     Picks the command from all registers
+        /// </summary>
+        /// <param name="input">All available holding register starting from index 0</param>
+        /// <returns>Value as integer</returns>
+        public int ToSValue(string input)
+        {
+            int _value;
+
+            try
+            {
+                switch (DataType)
+                {
+                    case DataType.BIT:
+                    {
+                        _value = ExtractBit(Convert.ToInt32(input));
+                        break;
+                    }
+                    default:
+                    {
+                        _value = Convert.ToInt32(input);
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+                _value = 0;
+            }
+
+            return _value;
+        }
+
         #endregion
     }
 }
