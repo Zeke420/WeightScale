@@ -82,6 +82,7 @@
         <Compile Include="Models\Messages\FullConnectionStatus.cs"/>
         <Compile Include="Models\Messages\FullScaleWeightStable.cs"/>
         <Compile Include="Models\PackageModel.cs"/>
+        <Compile Include="Models\PackageMoveModel.cs" />
         <Compile Include="Models\ShipmentModel.cs"/>
         <Compile Include="Models\Subscription.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>

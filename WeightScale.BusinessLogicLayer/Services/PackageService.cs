@@ -11,7 +11,7 @@ namespace WeightScale.BusinessLogicLayer.Services
     {
         void ConnectDevices(string fullWeightDeviceIp, string emptyWeightDeviceIp);
         event Action<Package> PackageAdded;
-        void MovePackage(PackageModel package, ShipmentModel newShipment);
+        void MovePackage(PackageModel package, int newShipmentId);
         void ManualMeasure(PackageModel packageModel);
     }
 
@@ -40,10 +40,10 @@ namespace WeightScale.BusinessLogicLayer.Services
             _deviceManager.ConnectDevicesAsync(fullWeightDeviceIp, emptyWeightDeviceIp);
         }
 
-        public void MovePackage(PackageModel package, ShipmentModel newShipment)
+        public void MovePackage(PackageModel package, int newShipmentId)
         {
             var packageEntity = PackageMapper.MapToEntity(package);
-            packageEntity.ShipmentId = newShipment.Id;
+            packageEntity.ShipmentId = newShipmentId;
             _packageRepository.Update(packageEntity);
         }
 

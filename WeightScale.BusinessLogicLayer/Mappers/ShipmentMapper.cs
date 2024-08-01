@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.DataAccessLayer.Entities;
 
@@ -16,7 +17,14 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                                                     CourierId = shipment.CourierId,
                                                     Courier = shipment.Courier,
                                                     IsFinished = shipment.IsFinished,
-                                                    Packages = PackageMapper.Map(shipment.Packages)
+                                                    Packages = PackageMapper.Map(shipment.Packages,
+                                                    shipments.Where(x => x != shipment)
+                                                                            .Select(x => new PackageMoveModel
+                                                                                {
+                                                                                        CourierName = x.Courier.Name,
+                                                                                        ShipmentId = x.Id
+                                                                                })
+                                                                            .ToList()),
                                             });
         }
 

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace WeightScale.BusinessLogicLayer.Models
 {
     public class PackageModel
@@ -11,5 +13,6 @@ namespace WeightScale.BusinessLogicLayer.Models
                 FullWeight - EmptyWeight;
 
         public bool CanManualMeasure => EmptyWeight.HasValue;
+        public List<PackageMoveModel> PackageMoves { get; set; }
     }
 }

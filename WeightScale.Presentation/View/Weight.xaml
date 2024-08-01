@@ -104,13 +104,14 @@
                                                                         </Style>
                                                                     </Button.Style>
                                                                 </Button>
-                                                                <Button Content="↑"
-                                                                        Command="{Binding DataContext.MovePackageUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                        CommandParameter="{Binding}"
-                                                                        Margin="0,0,5,0" />
-                                                                <Button Content="↓"
-                                                                        Command="{Binding DataContext.MovePackageDownCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                                        CommandParameter="{Binding}" />
+
+                                                                <ComboBox ItemsSource="{Binding PackageMoves}"
+                                                                          DisplayMemberPath="CourierName"
+                                                                          SelectedValue="{Binding DataContext.SelectedPackageMoveModel, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                                                                <Button Content="Move"
+                                                                        Command="{Binding DataContext.PackageMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        CommandParameter="{Binding}"/>
                                                             </StackPanel>
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>

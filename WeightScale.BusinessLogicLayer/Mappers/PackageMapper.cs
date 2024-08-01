@@ -6,7 +6,7 @@ namespace WeightScale.BusinessLogicLayer.Mappers
 {
     public static class PackageMapper
     {
-        public static List<PackageModel> Map(List<Package> packages)
+        public static List<PackageModel> Map(List<Package> packages, List<PackageMoveModel> packageMoveModels)
         {
             if (packages == null)
             {
@@ -19,7 +19,8 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                                                    Id = package.Id,
                                                    EmptyWeight = package.EmptyWeight,
                                                    FullWeight = package.FullWeight,
-                                                   ShipmentId = package.ShipmentId
+                                                   ShipmentId = package.ShipmentId,
+                                                   PackageMoves = packageMoveModels
                                            });
         }
 
