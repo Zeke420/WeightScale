@@ -81,18 +81,21 @@ namespace WeightScale.Integration.Fixtures.Scale
             {
                 Console.WriteLine($"IOException in Update: {ioException.Message}");
                 IsConnected = false;
+                _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
             catch (SocketException socketException)
             {
                 Console.WriteLine($"SocketException in Update: {socketException.Message}");
                 IsConnected = false;
+                _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
             catch (Exception exception)
             {
                 Console.WriteLine($"Exception in Update: {exception.Message}");
                 IsConnected = false;
+                _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
             finally
