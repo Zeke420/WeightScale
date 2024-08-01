@@ -84,6 +84,26 @@
                                                         <DataTemplate>
                                                             <StackPanel Orientation="Horizontal"
                                                                         HorizontalAlignment="Center">
+                                                                <Button Content="Manual"
+                                                                        Command="{Binding DataContext.ManualMeasureCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        CommandParameter="{Binding}">
+                                                                    <Button.Style>
+                                                                        <Style TargetType="Button"
+                                                                               BasedOn="{StaticResource ButtonStyle}">
+                                                                            <Setter Property="Visibility"
+                                                                                Value="Collapsed" />
+                                                                            <Setter Property="Margin" Value="5" />
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger
+                                                                                    Binding="{Binding CanManualMeasure}"
+                                                                                    Value="False">
+                                                                                    <Setter Property="Visibility"
+                                                                                        Value="Visible" />
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Button.Style>
+                                                                </Button>
                                                                 <Button Content="↑"
                                                                         Command="{Binding DataContext.MovePackageUpCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                         CommandParameter="{Binding}"

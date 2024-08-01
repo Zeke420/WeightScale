@@ -9,5 +9,7 @@ namespace WeightScale.BusinessLogicLayer.Models
 
         public double? WeightDifference =>
                 FullWeight - EmptyWeight;
+
+        public bool CanManualMeasure => EmptyWeight.HasValue;
     }
 }

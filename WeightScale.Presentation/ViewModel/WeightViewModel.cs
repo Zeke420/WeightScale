@@ -24,10 +24,11 @@ namespace WeightScale.Presentation.ViewModel
             _packageService = packageService;
             _shipmentService.PackageAdded += OnPackageAdded;
 
-            CompleteShipmentCommand = new DelegateCommand(CompleteShipment);
+            CompleteShipmentCommand = new DelegateCommand(CompleteShipment, CanCompleteShipment);
             MovePackageUpCommand = new DelegateCommand(MovePackageUp);
             MovePackageDownCommand = new DelegateCommand(MovePackageDown);
             LoadShipmentsCommand = new DelegateCommand(LoadShipments);
+            ManualMeasureCommand = new DelegateCommand(ManualMeasure);
             Shipments = new ObservableCollection<ShipmentModel>();
             SelectedDate = DateTime.Today;
             LoadShipmentsCommand.Execute(null);
@@ -38,6 +39,7 @@ namespace WeightScale.Presentation.ViewModel
         public DelegateCommand MovePackageUpCommand { get; set; }
         public DelegateCommand MovePackageDownCommand { get; set; }
         public DelegateCommand LoadShipmentsCommand { get; set; }
+        public DelegateCommand ManualMeasureCommand { get; set; }
 
         public DateTime SelectedDate
         {
@@ -71,6 +73,16 @@ namespace WeightScale.Presentation.ViewModel
             _weightService.CompleteShipment(shipmentModel);
             OnPropertyChanged(nameof(Shipments));
             GetShipmentWeightByDate(_selectedDate);
+        }
+
+        private bool CanCompleteShipment(object arg)
+        {
+            if(!( arg is ShipmentModel shipmentModel ))
+            {
+                return false;
+            }
+
+            return shipmentModel.Packages.All(p => p.EmptyWeight.HasValue);
         }
 
         private void GetShipmentWeightByDate(DateTime date)
@@ -120,6 +132,17 @@ namespace WeightScale.Presentation.ViewModel
             }
 
             _packageService.MovePackage(packageModel, nextShipmentModel);
+            GetShipmentWeightByDate(_selectedDate);
+        }
+
+        private void ManualMeasure(object obj)
+        {
+            if (!( obj is PackageModel packageModel ))
+            {
+                return;
+            }
+
+            _packageService.ManualMeasure(packageModel);
             GetShipmentWeightByDate(_selectedDate);
         }
     }
