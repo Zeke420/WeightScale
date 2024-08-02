@@ -6,6 +6,7 @@ namespace WeightScale.Presentation.Dialogs
     {
         public ConfirmationDialog(string title, string message)
         {
+            InitializeComponent();
             Title = title;
             Message.Text = message;
         }

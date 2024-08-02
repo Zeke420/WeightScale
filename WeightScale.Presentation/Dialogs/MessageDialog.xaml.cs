@@ -7,6 +7,7 @@ namespace WeightScale.Presentation.Dialogs
     {
         public MessageDialog(string title, string message)
         {
+            InitializeComponent();
             Title = title;
             Message.Text = message;
         }

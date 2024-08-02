@@ -20,6 +20,18 @@ namespace WeightScale.Presentation.Services
                     : MessageBoxResult.No;
         }
 
+        public MessageBoxResult SuccessMessage(string message)
+        {
+            return new ConfirmationDialog("Success", message)
+                    {
+                            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                            Owner = Application.Current.MainWindow
+                    }.ShowDialog()
+                     .GetValueOrDefault()
+                    ? MessageBoxResult.Yes
+                    : MessageBoxResult.No;
+        }
+
         public async Task<MessageBoxResult> ShowMessageDialogAsync(string message)
         {
             var dialogResult = await new MessageDialog(DialogMessages.DialogTitle, message)

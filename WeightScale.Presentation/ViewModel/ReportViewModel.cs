@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WeightScale.BusinessLogicLayer.Mappers;
 using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.Presentation.Command;
+using WeightScale.Presentation.Services.Interfaces;
 
 namespace WeightScale.Presentation.ViewModel
 {
@@ -14,6 +16,7 @@ namespace WeightScale.Presentation.ViewModel
         private readonly ICourierService _courierService;
         private readonly IFileExportService _fileExportService;
         private readonly IShipmentService _shipmentService;
+        private readonly IDialogService _dialogService;
         private List<Courier> _couriers;
         private DateTime _endDate;
         private List<Shipment> _shipments;
@@ -22,11 +25,13 @@ namespace WeightScale.Presentation.ViewModel
 
         public ReportViewModel(IShipmentService shipmentService,
                                ICourierService courierService,
-                               IFileExportService fileExportService)
+                               IFileExportService fileExportService,
+                               IDialogService dialogService)
         {
             _shipmentService = shipmentService;
             _courierService = courierService;
             _fileExportService = fileExportService;
+            _dialogService = dialogService;
 
             StartDate = DateTime.Now;
             EndDate = DateTime.Now;
@@ -107,7 +112,23 @@ namespace WeightScale.Presentation.ViewModel
         private void ExportData(object obj)
         {
             var shipments = Shipments.ToList();
-            _fileExportService.ExportToCsv(shipments);
+            if (shipments.Count == 0)
+            {
+                _dialogService.ShowMessageDialogAsync("No data to export.");
+                return;
+            }
+
+            try
+            {
+                var exportModels = ExportFileMapper.Map(shipments);
+                _fileExportService.ExportToCsv(exportModels);
+                _dialogService.SuccessMessage("Data exported successfully.");
+            }
+            catch (Exception e)
+            {
+                _dialogService.ShowMessageDialogAsync("An error occurred while exporting data.");
+            }
+
         }
     }
 }

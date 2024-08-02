@@ -73,10 +73,12 @@
         <Reference Include="WindowsBase"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Mappers\ExportFileMapper.cs" />
         <Compile Include="Mappers\PackageMapper.cs"/>
         <Compile Include="Mappers\ShipmentMapper.cs"/>
         <Compile Include="Models\ApplicationSettings.cs"/>
         <Compile Include="Models\CouriersSelectionModel.cs"/>
+        <Compile Include="Models\CSV\ExportModel.cs" />
         <Compile Include="Models\Messages\EmptyConnectionStatus.cs"/>
         <Compile Include="Models\Messages\EmptyScaleWeightStable.cs"/>
         <Compile Include="Models\Messages\FullConnectionStatus.cs"/>
