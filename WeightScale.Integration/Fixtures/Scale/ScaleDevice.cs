@@ -114,7 +114,7 @@ namespace WeightScale.Integration.Fixtures.Scale
                 }
                 else if (( DateTime.Now - _weightStableSince.Value ).TotalMilliseconds >= StabilityDurationRequired)
                 {
-                    _wtxDevice.DigitalIO.Output1 = true;
+                    _wtxDevice.Connection.WriteInteger(JetBusCommands.OM1DigitalOutput1Mode, 1);
                     OnWeightStable(true);
                     CheckDigitalInput1ActiveState(weight);
                 }
@@ -122,7 +122,7 @@ namespace WeightScale.Integration.Fixtures.Scale
             else
             {
                 _weightStableSince = null;
-                _wtxDevice.DigitalIO.Output1 = false;
+                _wtxDevice.Connection.WriteInteger(JetBusCommands.OM1DigitalOutput1Mode, 0);
                 OnWeightStable(false);
             }
         }
