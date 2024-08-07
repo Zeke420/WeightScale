@@ -19,7 +19,7 @@ namespace WeightScale.Integration.Fixtures.Scale
 
     public class ScaleDevice : IScaleDevice
     {
-        private const int StabilityDurationRequired = 3000;
+        private const int StabilityDurationRequired = 500;
 
         private bool _is1DigitalInput1ActiveLastState;
         private bool _isConnected;

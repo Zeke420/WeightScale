@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30611.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hbm.Automation.Api", "Hbm.Automation.Api\Hbm.Automation.Api.csproj", "{F8FB1D85-0FBA-4905-A559-A1C654675662}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightScale.BusinessLogicLayer", "WeightScale.BusinessLogicLayer\WeightScale.BusinessLogicLayer.csproj", "{D993F4F0-B7D9-4878-8E41-67437A9C139E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeightScale.Integration", "WeightScale.Integration\WeightScale.Integration.csproj", "{FFF08669-5E44-49C5-B411-B6EC081C0B38}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WeightScale.Setup", "WeightScale.Setup\WeightScale.Setup.vdproj", "{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,12 @@ Global
 		{FFF08669-5E44-49C5-B411-B6EC081C0B38}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FFF08669-5E44-49C5-B411-B6EC081C0B38}.Release|x86.ActiveCfg = Release|Any CPU
 		{FFF08669-5E44-49C5-B411-B6EC081C0B38}.Release|x86.Build.0 = Release|Any CPU
+		{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}.Debug|Any CPU.ActiveCfg = Debug
+		{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}.Debug|x86.ActiveCfg = Debug
+		{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}.Release|Any CPU.ActiveCfg = Release
+		{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}.Release|Mixed Platforms.ActiveCfg = Release
+		{EB5EDE6F-F4E9-4F84-83F8-A5444F195883}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
