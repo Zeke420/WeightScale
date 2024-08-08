@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
+using WeightScale.DataAccessLayer.Entities;
 
 namespace WeightScale.BusinessLogicLayer.Models.CSV
 {
     public class ExportModel
     {
-        public string ShipmentInfo { get; set; }
-        public string PackageHeader { get; set; }
-        public List<string> Packages { get; set; }
-        public string PackageTotals { get; set; }
-        public DateTime ShipmentDate { get; set; }
+        public Shipment Shipment { get; set; }
+        public string PackageFullTotals { get; set; }
+        public string PackageEmptyTotals { get; set; }
+        public string PackageNetTotals { get; set; }
     }
 }

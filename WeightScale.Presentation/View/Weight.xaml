@@ -73,11 +73,11 @@
                                                   CellStyle="{DynamicResource CellStyle}"
                                                   AlternationCount="2">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Full Weight"
+                                                <DataGridTextColumn Header="Full Weight (kg)"
                                                                     Binding="{Binding FullWeight}" />
-                                                <DataGridTextColumn Header="Empty Weight"
+                                                <DataGridTextColumn Header="Empty Weight (kg)"
                                                                     Binding="{Binding EmptyWeight}" />
-                                                <DataGridTextColumn Header="Net Weight"
+                                                <DataGridTextColumn Header="Net Weight (kg)"
                                                                     Binding="{Binding WeightDifference}" />
                                                 <DataGridTemplateColumn Header="Actions">
                                                     <DataGridTemplateColumn.CellTemplate>

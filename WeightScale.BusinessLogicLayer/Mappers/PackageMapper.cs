@@ -17,8 +17,9 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                     .ConvertAll(package => new PackageModel
                                            {
                                                    Id = package.Id,
-                                                   EmptyWeight = package.EmptyWeight,
-                                                   FullWeight = package.FullWeight,
+                                                   EmptyWeight = package.EmptyWeight?.ToString("F1"),
+                                                   FullWeight = package.FullWeight?.ToString("F1"),
+                                                   WeightDifference = (package.FullWeight- package.EmptyWeight)?.ToString("F1"),
                                                    ShipmentId = package.ShipmentId,
                                                    PackageMoves = packageMoveModels
                                            });
@@ -30,8 +31,8 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                     .ConvertAll(packageModel => new Package
                                                 {
                                                         Id = packageModel.Id,
-                                                        EmptyWeight = packageModel.EmptyWeight,
-                                                        FullWeight = packageModel.FullWeight,
+                                                        EmptyWeight = double.Parse(packageModel.EmptyWeight),
+                                                        FullWeight = double.Parse(packageModel.FullWeight),
                                                         ShipmentId = packageModel.ShipmentId
                                                 });
         }
@@ -41,8 +42,8 @@ namespace WeightScale.BusinessLogicLayer.Mappers
             return new Package
                    {
                            Id = packageModel.Id,
-                           EmptyWeight = packageModel.EmptyWeight,
-                           FullWeight = packageModel.FullWeight,
+                           EmptyWeight = double.Parse(packageModel.EmptyWeight),
+                           FullWeight = double.Parse(packageModel.FullWeight),
                            ShipmentId = packageModel.ShipmentId
                    };
         }

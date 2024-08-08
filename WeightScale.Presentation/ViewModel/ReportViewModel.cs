@@ -121,7 +121,7 @@ namespace WeightScale.Presentation.ViewModel
             try
             {
                 var exportModels = ExportFileMapper.Map(shipments);
-                _fileExportService.ExportToCsv(exportModels);
+                _fileExportService.ExportToExcel(exportModels);
                 _dialogService.SuccessMessage("Data exported successfully.");
             }
             catch (Exception e)

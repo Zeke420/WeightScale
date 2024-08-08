@@ -91,7 +91,7 @@ namespace WeightScale.Presentation.ViewModel
                 return false;
             }
 
-            return shipmentModel.Packages.All(p => p.EmptyWeight.HasValue);
+            return shipmentModel.Packages.All(p => !string.IsNullOrEmpty(p.EmptyWeight));
         }
 
         private void GetShipmentWeightByDate(DateTime date)

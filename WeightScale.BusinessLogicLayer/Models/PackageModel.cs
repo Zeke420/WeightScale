@@ -5,14 +5,13 @@ namespace WeightScale.BusinessLogicLayer.Models
     public class PackageModel
     {
         public int Id { get; set; }
-        public double? FullWeight { get; set; }
-        public double? EmptyWeight { get; set; }
+        public string FullWeight { get; set; }
+        public string EmptyWeight { get; set; }
         public int ShipmentId { get; set; }
+        public string WeightDifference { get; set; }
 
-        public double? WeightDifference =>
-                FullWeight - EmptyWeight;
-
-        public bool CanManualMeasure => EmptyWeight.HasValue;
+        public bool CanManualMeasure =>
+            !string.IsNullOrEmpty(EmptyWeight);
         public List<PackageMoveModel> PackageMoves { get; set; }
     }
 }

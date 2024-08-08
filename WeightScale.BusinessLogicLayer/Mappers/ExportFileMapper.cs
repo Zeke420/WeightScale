@@ -10,35 +10,19 @@ namespace WeightScale.BusinessLogicLayer.Mappers
         public static List<ExportModel> Map(List<Shipment> shipments)
         {
             var exportModels = new List<ExportModel>();
-            const string packageHeader =
-                    "Container,Date,Weight with Birds (kg),Weight without Birds (kg),Weight of Birds (kg)";
 
             foreach (var shipment in shipments)
             {
-                var packages = new List<string>();
+                var packageFullTotals = shipment.Packages.Sum(p => p.FullWeight);
+                var packageEmptyTotals = shipment.Packages.Sum(p => p.EmptyWeight);
+                var packageNetTotals = shipment.Packages.Sum(p => p.FullWeight - p.EmptyWeight);
                 var exportModel = new ExportModel
                                   {
-                                          ShipmentInfo = $"Shipment ID,{shipment.Id},Courier Name,{shipment.Courier.Name}",
-                                          ShipmentDate = shipment.ShipmentDate
+                                      Shipment = shipment,
+                                      PackageFullTotals = packageFullTotals?.ToString("F1"),
+                                      PackageEmptyTotals = packageEmptyTotals?.ToString("F1"),
+                                      PackageNetTotals = packageNetTotals?.ToString("F1")
                                   };
-
-                if (shipment.Packages == null || !shipment.Packages.Any())
-                {
-                    continue;
-                }
-
-                exportModel.PackageHeader = packageHeader;
-                var index = 1;
-                foreach (var package in shipment.Packages)
-                {
-                    packages.Add($"{index},{shipment.ShipmentDate:dd-MM-yy},{package.FullWeight},{package.EmptyWeight},{package.FullWeight - package.EmptyWeight}");
-                    index++;
-                }
-
-                exportModel.Packages = packages;
-                exportModel.PackageTotals =
-                        $",Total Weight,{shipment.Packages.Sum(p => p.FullWeight)},{shipment.Packages.Sum(p => p.EmptyWeight)},{shipment.Packages.Sum(p => p.FullWeight - p.EmptyWeight)}";
-
                 exportModels.Add(exportModel);
             }
 
