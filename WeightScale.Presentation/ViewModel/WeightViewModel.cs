@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using WeightScale.BusinessLogicLayer.Mappers;
 using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.Presentation.Command;
+using WeightScale.Presentation.Services.Interfaces;
 
 namespace WeightScale.Presentation.ViewModel
 {
@@ -13,16 +15,19 @@ namespace WeightScale.Presentation.ViewModel
         private readonly IPackageService _packageService;
         private readonly IShipmentService _shipmentService;
         private readonly IWeightService _weightService;
+        private readonly IDialogService _dialogService;
         private DateTime _selectedDate;
-        private PackageMoveModel _selectedPackageMoveModel;
+        private ObservableCollection<ShipmentModel> _shipmentModels;
 
         public WeightViewModel(IWeightService weightService,
                                IShipmentService shipmentService,
-                               IPackageService packageService)
+                               IPackageService packageService,
+                               IDialogService dialogService)
         {
             _weightService = weightService;
             _shipmentService = shipmentService;
             _packageService = packageService;
+            _dialogService = dialogService;
             _shipmentService.PackageAdded += OnPackageAdded;
 
             CompleteShipmentCommand = new DelegateCommand(CompleteShipment, CanCompleteShipment);
@@ -34,7 +39,16 @@ namespace WeightScale.Presentation.ViewModel
             LoadShipmentsCommand.Execute(null);
         }
 
-        public ObservableCollection<ShipmentModel> Shipments { get; set; }
+        public ObservableCollection<ShipmentModel> Shipments
+        {
+            get => _shipmentModels;
+            set
+            {
+                _shipmentModels = value;
+                OnPropertyChanged();
+            }
+        }
+
         public DelegateCommand CompleteShipmentCommand { get; set; }
         public DelegateCommand LoadShipmentsCommand { get; set; }
         public DelegateCommand ManualMeasureCommand { get; set; }
@@ -51,19 +65,18 @@ namespace WeightScale.Presentation.ViewModel
             }
         }
 
-        public PackageMoveModel SelectedPackageMoveModel
-        {
-            get => _selectedPackageMoveModel;
-            set
-            {
-                _selectedPackageMoveModel = value;
-                OnPropertyChanged();
-            }
-        }
-
         private void OnPackageAdded(Package obj)
         {
-            GetShipmentWeightByDate(SelectedDate);
+            var shipment = Shipments.FirstOrDefault(s => s.Id == obj.ShipmentId);
+            if (shipment == null)
+            {
+                return;
+            }
+
+            var shipmentModels = Shipments.ToList();
+            var packageModel = PackageMapper.Map(obj,shipmentModels);
+            shipment.Packages.Add(packageModel);
+            OnPropertyChanged(nameof(Shipments));
         }
 
         private void LoadShipments(object obj)
@@ -81,7 +94,6 @@ namespace WeightScale.Presentation.ViewModel
             shipmentModel.IsFinished = true;
             _weightService.CompleteShipment(shipmentModel);
             OnPropertyChanged(nameof(Shipments));
-            GetShipmentWeightByDate(_selectedDate);
         }
 
         private bool CanCompleteShipment(object arg)
@@ -111,19 +123,55 @@ namespace WeightScale.Presentation.ViewModel
                 return;
             }
 
-            _packageService.ManualMeasure(packageModel);
-            GetShipmentWeightByDate(_selectedDate);
+            try
+            {
+                _packageService.ManualMeasure(packageModel);
+                var shipment = Shipments.FirstOrDefault(s => s.Id == packageModel.ShipmentId);
+                if (shipment == null)
+                {
+                    return;
+                }
+
+                var oldPackageModel = shipment.Packages.FirstOrDefault(p => p.Id == packageModel.Id);
+                var package = PackageMapper.MapToEntity(packageModel);
+                packageModel = PackageMapper.Map(package, Shipments.ToList());
+                shipment.Packages.Remove(oldPackageModel);
+                shipment.Packages.Add(packageModel);
+
+                OnPropertyChanged(nameof(Shipments));
+                CompleteShipmentCommand.RaiseCanExecuteChanged();
+            }
+            catch (Exception e)
+            {
+                _dialogService.ShowMessageDialogAsync(e.Message);
+            }
         }
 
         private void PackageMove(object obj)
         {
-            if (!( obj is PackageModel packageModel ))
+            if (!(obj is PackageModel packageModel))
             {
                 return;
             }
 
-            _packageService.MovePackage(packageModel, SelectedPackageMoveModel.ShipmentId);
-            GetShipmentWeightByDate(_selectedDate);
+            try
+            {
+                _packageService.MovePackage(packageModel);
+                var currentShipment = Shipments.FirstOrDefault(s => s.Id == packageModel.ShipmentId);
+                var targetShipment = Shipments.FirstOrDefault(x => x.Id == packageModel.SelectedPackageMoveModel.ShipmentId);
+
+                currentShipment?.Packages.Remove(packageModel);
+                packageModel.ShipmentId = packageModel.SelectedPackageMoveModel.ShipmentId;
+                var package = PackageMapper.MapToEntity(packageModel);
+                packageModel = PackageMapper.Map(package, Shipments.ToList());
+                targetShipment?.Packages.Add(packageModel);
+
+                OnPropertyChanged(nameof(Shipments));
+            }
+            catch (Exception e)
+            {
+                _dialogService.ShowMessageDialogAsync(e.Message);
+            }
         }
     }
 }

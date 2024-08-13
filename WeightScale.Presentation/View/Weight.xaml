@@ -28,7 +28,7 @@
 
         <ScrollViewer Grid.Row="1"
                       CanContentScroll="True">
-            <ItemsControl ItemsSource="{Binding Shipments}">
+            <ItemsControl ItemsSource="{Binding Shipments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Style="{DynamicResource TableCard}"
@@ -66,7 +66,7 @@
                                             BorderBrush="Black"
                                             BorderThickness="1"
                                             Padding="0,0,0,10">
-                                        <DataGrid ItemsSource="{Binding Packages}"
+                                        <DataGrid ItemsSource="{Binding Packages, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   AutoGenerateColumns="False"
                                                   Style="{DynamicResource DataGridBaseStyle}"
                                                   RowStyle="{DynamicResource DataGridRowStyle}"
@@ -107,7 +107,7 @@
 
                                                                 <ComboBox ItemsSource="{Binding PackageMoves}"
                                                                           DisplayMemberPath="CourierName"
-                                                                          SelectedValue="{Binding DataContext.SelectedPackageMoveModel, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                                                          SelectedValue="{Binding SelectedPackageMoveModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                                                 <Button Content="Move"
                                                                         Command="{Binding DataContext.PackageMoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"

@@ -31,7 +31,7 @@ namespace WeightScale.Presentation
 #endif
 
         public IServiceProvider ServiceProvider { get; private set; }
-        private const string CurrentCultureInfo = "en-GB";
+        private const string CurrentCultureInfo = "en-US";
 
         protected override void OnStartup(StartupEventArgs e)
         {
