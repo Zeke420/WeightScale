@@ -137,7 +137,7 @@ namespace Hbm.Automation.Api.Data
             }
             catch (KeyNotFoundException)
             {
-                Console.WriteLine("KeyNotFoundException in class DataStandardModbus, update method");
+                Console.WriteLine(@"KeyNotFoundException in class DataStandardModbus, update method");
             }
         }
 

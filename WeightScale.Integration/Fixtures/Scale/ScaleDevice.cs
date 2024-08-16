@@ -12,6 +12,7 @@ namespace WeightScale.Integration.Fixtures.Scale
     {
         bool IsConnected { get; }
         void Connect(string ipAddress);
+        void SwitchOutput2(bool state);
         event Action<double> WeightDataReceived;
         event Action<bool> WeightStable;
         event Action<bool> ConnectionStatusChanged;
@@ -27,6 +28,7 @@ namespace WeightScale.Integration.Fixtures.Scale
         private bool _isWeightDataProcessed;
         private DateTime? _weightStableSince;
         private WTXJet _wtxDevice;
+
         public event Action<double> WeightDataReceived;
         public event Action<bool> WeightStable;
         public event Action<bool> ConnectionStatusChanged;
@@ -57,6 +59,11 @@ namespace WeightScale.Integration.Fixtures.Scale
             }
         }
 
+        public void SwitchOutput2(bool state)
+        {
+            _wtxDevice.Connection.WriteInteger(JetBusCommands.OM2DigitalOutput2Mode, state ? 1 : 0);
+        }
+
         private void Update(object sender, ProcessDataReceivedEventArgs e)
         {
             if (_isUpdating)
@@ -79,21 +86,21 @@ namespace WeightScale.Integration.Fixtures.Scale
             }
             catch (IOException ioException)
             {
-                Console.WriteLine($"IOException in Update: {ioException.Message}");
+                Console.WriteLine($@"IOException in Update: {ioException.Message}");
                 IsConnected = false;
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
             catch (SocketException socketException)
             {
-                Console.WriteLine($"SocketException in Update: {socketException.Message}");
+                Console.WriteLine($@"SocketException in Update: {socketException.Message}");
                 IsConnected = false;
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"Exception in Update: {exception.Message}");
+                Console.WriteLine($@"Exception in Update: {exception.Message}");
                 IsConnected = false;
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
@@ -168,7 +175,7 @@ namespace WeightScale.Integration.Fixtures.Scale
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in OnWeightStable: {ex.Message}");
+                Console.WriteLine($@"Error in OnWeightStable: {ex.Message}");
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿// <copyright file="ModbusDataDigitalIO.cs" company="Hottinger Baldwin Messtechnik GmbH">
 //
-// Hbm.Automation.Api, a library to communicate with HBM weighing technology devices  
+// Hbm.Automation.Api, a library to communicate with HBM weighing technology devices
 //
 // The MIT License (MIT)
 //

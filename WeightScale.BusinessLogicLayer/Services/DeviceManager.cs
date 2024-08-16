@@ -54,7 +54,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new FullConnectionStatus
                           {
-                                  IsConnected = isConnected
+                              IsConnected = isConnected
                           };
 
             _messenger.Send(message);
@@ -64,7 +64,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new EmptyConnectionStatus
                           {
-                                  IsConnected = isConnected
+                              IsConnected = isConnected
                           };
 
             _messenger.Send(message);
@@ -74,7 +74,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new FullScaleWeightStable
                           {
-                                  IsStable = isStable
+                              IsStable = isStable
                           };
 
             _messenger.Send(message);
@@ -84,7 +84,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             var message = new EmptyScaleWeightStable
                           {
-                                  IsStable = isStable
+                              IsStable = isStable
                           };
 
             _messenger.Send(message);
@@ -113,7 +113,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                          {
                              var packageWeight = new PackageWeights
                                                  {
-                                                         FullWeight = fullWeight
+                                                     FullWeight = fullWeight
                                                  };
 
                              _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
@@ -126,6 +126,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                          finally
                          {
                              _isUpdating = false;
+                             _ = SignalWeightDataReceived(true);
                          }
                      });
         }
@@ -146,7 +147,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                              // Use the captured UI dispatcher
                              var packageWeight = new PackageWeights
                                                  {
-                                                         EmptyWeight = emptyWeight
+                                                     EmptyWeight = emptyWeight
                                                  };
 
                              _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
@@ -159,8 +160,32 @@ namespace WeightScale.BusinessLogicLayer.Services
                          finally
                          {
                              _isUpdating = false;
+                             _ = SignalWeightDataReceived(false);
                          }
                      });
+        }
+
+        private async Task SignalWeightDataReceived(bool isFull)
+        {
+            try
+            {
+                if (isFull)
+                {
+                    _fullWeightDevice.SwitchOutput2(true);
+                    await Task.Delay(1000);
+                    _fullWeightDevice.SwitchOutput2(false);
+                }
+                else
+                {
+                    _emptyWeightDevice.SwitchOutput2(true);
+                    await Task.Delay(1000);
+                    _emptyWeightDevice.SwitchOutput2(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($@"Error in SignalWeightDataReceived: {ex.Message}");
+            }
         }
     }
 }
