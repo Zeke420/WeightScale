@@ -19,9 +19,9 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                 var exportModel = new ExportModel
                                   {
                                       Shipment = shipment,
-                                      PackageFullTotals = packageFullTotals?.ToString("F1"),
-                                      PackageEmptyTotals = packageEmptyTotals?.ToString("F1"),
-                                      PackageNetTotals = packageNetTotals?.ToString("F1")
+                                      PackageFullTotals = packageFullTotals ?? 0,
+                                      PackageEmptyTotals = packageEmptyTotals ?? 0,
+                                      PackageNetTotals = packageNetTotals ?? 0
                                   };
                 exportModels.Add(exportModel);
             }

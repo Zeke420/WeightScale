@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,6 +51,9 @@ namespace WeightScale.BusinessLogicLayer.Services
                 IWorkbook workbook = new XSSFWorkbook();
                 var sheet = workbook.CreateSheet("Report");
 
+                var numericCellStyle = CreateNumericCellStyle(workbook);
+                var dateCellStyle = CreateDateCellStyle(workbook);
+
                 var row = 0;
                 foreach (var exportModel in exportModels)
                 {
@@ -87,14 +91,11 @@ namespace WeightScale.BusinessLogicLayer.Services
                         dataRow = sheet.CreateRow(row++);
                         dataRow.CreateCell(0)
                                .SetCellValue(containerCount);
-                        dataRow.CreateCell(1)
-                               .SetCellValue(exportModel.Shipment.ShipmentDate.ToString("dd-MM-yy"));
-                        dataRow.CreateCell(2)
-                               .SetCellValue(package.FullWeight?.ToString("F1"));
-                        dataRow.CreateCell(3)
-                               .SetCellValue(package.EmptyWeight?.ToString("F1"));
-                        dataRow.CreateCell(4)
-                               .SetCellValue((package.FullWeight - package.EmptyWeight)?.ToString("F1"));
+
+                        CreateDateCell(dataRow, 1, exportModel.Shipment.ShipmentDate, dateCellStyle);
+                        CreateNumericCell(dataRow, 2, package.FullWeight, numericCellStyle);
+                        CreateNumericCell(dataRow, 3, package.EmptyWeight, numericCellStyle);
+                        CreateNumericCell(dataRow, 4, package.FullWeight - package.EmptyWeight, numericCellStyle);
 
                         containerCount++;
                     }
@@ -104,18 +105,44 @@ namespace WeightScale.BusinessLogicLayer.Services
                            .SetCellValue(string.Empty);
                     dataRow.CreateCell(1)
                            .SetCellValue(string.Empty);
-                    dataRow.CreateCell(2)
-                           .SetCellValue(exportModel.PackageFullTotals);
-                    dataRow.CreateCell(3)
-                           .SetCellValue(exportModel.PackageEmptyTotals);
-                    dataRow.CreateCell(4)
-                           .SetCellValue(exportModel.PackageNetTotals);
+                    CreateNumericCell(dataRow, 2, exportModel.PackageFullTotals, numericCellStyle);
+                    CreateNumericCell(dataRow, 3, exportModel.PackageEmptyTotals, numericCellStyle);
+                    CreateNumericCell(dataRow, 4, exportModel.PackageNetTotals, numericCellStyle);
 
                     sheet.CreateRow(row++);
                 }
 
                 workbook.Write(fs);
             }
+        }
+
+        private static ICellStyle CreateNumericCellStyle(IWorkbook workbook)
+        {
+            var cellStyle = workbook.CreateCellStyle();
+            cellStyle.DataFormat = workbook.CreateDataFormat().GetFormat("0.00");
+            return cellStyle;
+        }
+
+        private static void CreateNumericCell(IRow dataRow, int rowIndex, double? value, ICellStyle cellStyle)
+        {
+            var cell = dataRow.CreateCell(rowIndex);
+            cell.SetCellType(CellType.Numeric);
+            cell.SetCellValue(value ?? 0);
+            cell.CellStyle = cellStyle;
+        }
+
+        private static ICellStyle CreateDateCellStyle(IWorkbook workbook)
+        {
+            var cellStyle = workbook.CreateCellStyle();
+            cellStyle.DataFormat = workbook.CreateDataFormat().GetFormat("dd-MM-yy");
+            return cellStyle;
+        }
+
+        private static void CreateDateCell(IRow dataRow, int rowIndex, DateTime value, ICellStyle cellStyle)
+        {
+            var cell = dataRow.CreateCell(rowIndex);
+            cell.SetCellValue(value);
+            cell.CellStyle = cellStyle;
         }
     }
 }
