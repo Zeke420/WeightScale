@@ -61,7 +61,9 @@ namespace WeightScale.Integration.Fixtures.Scale
 
         public void SwitchOutput2(bool state)
         {
-            _wtxDevice.Connection.WriteInteger(JetBusCommands.OM2DigitalOutput2Mode, state ? 1 : 0);
+            var output2Mode = state ? 1 : 0;
+            _wtxDevice.Connection.WriteInteger(JetBusCommands.OM2DigitalOutput2Mode, output2Mode);
+            _wtxDevice.Connection.WriteInteger(JetBusCommands.OS2DigitalOutput2, output2Mode);
         }
 
         private void Update(object sender, ProcessDataReceivedEventArgs e)
@@ -93,14 +95,14 @@ namespace WeightScale.Integration.Fixtures.Scale
             }
             catch (SocketException socketException)
             {
-                Console.WriteLine($@"SocketException in Update: {socketException.Message}");
+                Console.WriteLine($"SocketException in Update: {socketException.Message}");
                 IsConnected = false;
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
             catch (Exception exception)
             {
-                Console.WriteLine($@"Exception in Update: {exception.Message}");
+                Console.WriteLine($"Exception in Update: {exception.Message}");
                 IsConnected = false;
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
@@ -119,9 +121,11 @@ namespace WeightScale.Integration.Fixtures.Scale
                 {
                     _weightStableSince = DateTime.Now;
                 }
-                else if (( DateTime.Now - _weightStableSince.Value ).TotalMilliseconds >= StabilityDurationRequired)
+                else if ((DateTime.Now - _weightStableSince.Value).TotalMilliseconds
+                         >= StabilityDurationRequired)
                 {
                     _wtxDevice.Connection.WriteInteger(JetBusCommands.OM1DigitalOutput1Mode, 1);
+                    _wtxDevice.Connection.WriteInteger(JetBusCommands.OS1DigitalOutput1, 1);
                     OnWeightStable(true);
                     CheckDigitalInput1ActiveState(weight);
                 }
@@ -130,6 +134,7 @@ namespace WeightScale.Integration.Fixtures.Scale
             {
                 _weightStableSince = null;
                 _wtxDevice.Connection.WriteInteger(JetBusCommands.OM1DigitalOutput1Mode, 0);
+                _wtxDevice.Connection.WriteInteger(JetBusCommands.OS1DigitalOutput1, 0);
                 OnWeightStable(false);
             }
         }
@@ -162,21 +167,7 @@ namespace WeightScale.Integration.Fixtures.Scale
 
         private void OnWeightStable(bool isStable)
         {
-            try
-            {
-                WeightStable?.Invoke(isStable);
-
-                if (!isStable)
-                {
-                    return;
-                }
-
-                _wtxDevice.DigitalIO.Output1 = true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($@"Error in OnWeightStable: {ex.Message}");
-            }
+            WeightStable?.Invoke(isStable);
         }
     }
 }

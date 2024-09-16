@@ -73,9 +73,19 @@ namespace WeightScale.Presentation.ViewModel
                 return;
             }
 
-            var shipmentModels = Shipments.ToList();
-            var packageModel = PackageMapper.Map(obj,shipmentModels);
-            shipment.Packages.Add(packageModel);
+            var packageModel = PackageMapper.Map(obj, Shipments.ToList());
+
+            var existingPackage = shipment.Packages.FirstOrDefault(p => p.Id == obj.Id);
+            if (existingPackage != null)
+            {
+                existingPackage.FullWeight = packageModel.FullWeight;
+                existingPackage.EmptyWeight = packageModel.EmptyWeight;
+            }
+            else
+            {
+                shipment.Packages.Add(packageModel);
+            }
+
             OnPropertyChanged(nameof(Shipments));
         }
 
@@ -132,11 +142,14 @@ namespace WeightScale.Presentation.ViewModel
                     return;
                 }
 
-                var oldPackageModel = shipment.Packages.FirstOrDefault(p => p.Id == packageModel.Id);
+                var existingPackage = shipment.Packages.FirstOrDefault(p => p.Id == packageModel.Id);
                 var package = PackageMapper.MapToEntity(packageModel);
                 packageModel = PackageMapper.Map(package, Shipments.ToList());
-                shipment.Packages.Remove(oldPackageModel);
-                shipment.Packages.Add(packageModel);
+                if (existingPackage != null)
+                {
+                    existingPackage.EmptyWeight = packageModel.EmptyWeight;
+                    existingPackage.FullWeight = packageModel.FullWeight;
+                }
 
                 OnPropertyChanged(nameof(Shipments));
                 CompleteShipmentCommand.RaiseCanExecuteChanged();
