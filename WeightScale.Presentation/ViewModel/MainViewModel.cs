@@ -37,8 +37,9 @@ namespace WeightScale.Presentation.ViewModel
                 var version = Assembly.GetExecutingAssembly()
                                       .GetName()
                                       .Version;
+
                 return version != null
-                        ? $"{GlobalResource.ApplicationName} {version.Major}.{version.Minor}.{version.Revision}"
+                        ? $"{GlobalResource.ApplicationName} {version}"
                         : GlobalResource.ApplicationName;
             }
         }
