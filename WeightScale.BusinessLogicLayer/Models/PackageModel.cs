@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,6 +11,7 @@ namespace WeightScale.BusinessLogicLayer.Models
         private string _emptyWeight;
         private int _shipmentId;
         private string _weightDifference;
+        private bool _canManualMeasure;
         private ObservableCollection<PackageMoveModel> _packageMoves;
         private PackageMoveModel _selectedPackageMoveModel;
 
@@ -36,6 +36,7 @@ namespace WeightScale.BusinessLogicLayer.Models
                 if (_fullWeight != value)
                 {
                     _fullWeight = value;
+                    CanManualMeasure = true;
                     OnPropertyChanged();
                 }
             }
@@ -75,6 +76,7 @@ namespace WeightScale.BusinessLogicLayer.Models
                 if (_weightDifference != value)
                 {
                     _weightDifference = value;
+                    CanManualMeasure = false;
                     OnPropertyChanged();
                 }
             }
@@ -103,7 +105,15 @@ namespace WeightScale.BusinessLogicLayer.Models
             }
         }
 
-        public bool CanManualMeasure => !string.IsNullOrEmpty(EmptyWeight);
+        public bool CanManualMeasure
+        {
+            get => _canManualMeasure;
+            set
+            {
+                _canManualMeasure = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

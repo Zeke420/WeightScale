@@ -96,7 +96,7 @@
                                                                             <Style.Triggers>
                                                                                 <DataTrigger
                                                                                     Binding="{Binding CanManualMeasure}"
-                                                                                    Value="False">
+                                                                                    Value="True">
                                                                                     <Setter Property="Visibility"
                                                                                         Value="Visible" />
                                                                                 </DataTrigger>

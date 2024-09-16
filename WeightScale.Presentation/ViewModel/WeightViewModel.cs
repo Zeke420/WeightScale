@@ -80,6 +80,7 @@ namespace WeightScale.Presentation.ViewModel
             {
                 existingPackage.FullWeight = packageModel.FullWeight;
                 existingPackage.EmptyWeight = packageModel.EmptyWeight;
+                existingPackage.WeightDifference = packageModel.WeightDifference;
             }
             else
             {
@@ -149,6 +150,7 @@ namespace WeightScale.Presentation.ViewModel
                 {
                     existingPackage.EmptyWeight = packageModel.EmptyWeight;
                     existingPackage.FullWeight = packageModel.FullWeight;
+                    existingPackage.WeightDifference = packageModel.WeightDifference;
                 }
 
                 OnPropertyChanged(nameof(Shipments));
