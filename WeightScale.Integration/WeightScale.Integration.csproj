@@ -39,6 +39,7 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Fixtures\Scale\MockScaleDevice.cs" />
         <Compile Include="Fixtures\Scale\ScaleDevice.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>

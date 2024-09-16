@@ -99,7 +99,12 @@ namespace WeightScale.Presentation
             services.AddSingleton<IDeviceManager, DeviceManager>();
             services.AddSingleton<IPackageService, PackageService>();
 
-            services.AddTransient<IScaleDevice, ScaleDevice>();
+            #if DEBUG
+                services.AddTransient<IScaleDevice, MockScaleDevice>();
+            #else
+                services.AddTransient<IScaleDevice, ScaleDevice>();
+            #endif
+
             services.AddTransient<ICourierService, CourierService>();
             services.AddTransient<IShipmentService, ShipmentService>();
             services.AddTransient<IWeightService, WeightService>();
