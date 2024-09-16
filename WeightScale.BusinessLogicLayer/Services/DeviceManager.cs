@@ -5,6 +5,7 @@ using WeightScale.BusinessLogicLayer.Models.Messages;
 using WeightScale.BusinessLogicLayer.Utils;
 using WeightScale.DataAccessLayer.DTOs;
 using WeightScale.Integration.Fixtures.Scale;
+using WeightScale.Integration.Services;
 
 namespace WeightScale.BusinessLogicLayer.Services
 {
@@ -19,16 +20,19 @@ namespace WeightScale.BusinessLogicLayer.Services
         private readonly IScaleDevice _emptyWeightDevice;
         private readonly IScaleDevice _fullWeightDevice;
         private readonly IMessenger _messenger;
+        private readonly ILogger _logger;
         private readonly Dispatcher _uiDispatcher;
         private bool _isUpdating;
 
         public DeviceManager(IScaleDevice fullWeightDevice,
                              IScaleDevice emptyWeightDevice,
-                             IMessenger messenger)
+                             IMessenger messenger,
+                             ILogger logger)
         {
             _fullWeightDevice = fullWeightDevice;
             _emptyWeightDevice = emptyWeightDevice;
             _messenger = messenger;
+            _logger = logger;
             _uiDispatcher = Dispatcher.CurrentDispatcher;
 
             _fullWeightDevice.WeightDataReceived += OnFullWeightDataReceived;
@@ -116,11 +120,15 @@ namespace WeightScale.BusinessLogicLayer.Services
                                                      FullWeight = fullWeight
                                                  };
 
+                             _logger.LogInfo("Full weight received: " + fullWeight);
+                             _logger.LogInfo("Updating UI with full weight");
                              _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
+                             _logger.LogInfo("UI updated with full weight");
                          }
                          catch (Exception e)
                          {
                              Console.WriteLine(e);
+                             _logger.LogError("Error creating new package", e);
                              throw;
                          }
                          finally
@@ -155,6 +163,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                          catch (Exception e)
                          {
                              Console.WriteLine(e);
+                             _logger.LogError("Error updating package weight", e);
                              throw;
                          }
                          finally
@@ -171,12 +180,14 @@ namespace WeightScale.BusinessLogicLayer.Services
             {
                 if (isFull)
                 {
+                    _logger.LogInfo("Device Manager Signaling full weight data received");
                     _fullWeightDevice.SwitchOutput2(true);
                     await Task.Delay(1000);
                     _fullWeightDevice.SwitchOutput2(false);
                 }
                 else
                 {
+                    _logger.LogInfo("Device Manager Signaling empty weight data received");
                     _emptyWeightDevice.SwitchOutput2(true);
                     await Task.Delay(1000);
                     _emptyWeightDevice.SwitchOutput2(false);
@@ -185,6 +196,7 @@ namespace WeightScale.BusinessLogicLayer.Services
             catch (Exception ex)
             {
                 Console.WriteLine($@"Error in SignalWeightDataReceived: {ex.Message}");
+                _logger.LogError("Error in SignalWeightDataReceived", ex);
             }
         }
     }

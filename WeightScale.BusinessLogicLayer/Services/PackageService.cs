@@ -4,6 +4,7 @@ using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.DataAccessLayer.DTOs;
 using WeightScale.DataAccessLayer.Entities;
 using WeightScale.DataAccessLayer.Repository;
+using WeightScale.Integration.Services;
 
 namespace WeightScale.BusinessLogicLayer.Services
 {
@@ -20,14 +21,17 @@ namespace WeightScale.BusinessLogicLayer.Services
         private readonly IDeviceManager _deviceManager;
         private readonly IPackageRepository _packageRepository;
         private readonly IShipmentRepository _shipmentRepository;
+        private readonly ILogger _logger;
 
         public PackageService(
                 IDeviceManager deviceManager,
                 IShipmentRepository shipmentRepository,
-                IPackageRepository packageRepository)
+                IPackageRepository packageRepository,
+                ILogger logger)
         {
             _shipmentRepository = shipmentRepository;
             _packageRepository = packageRepository;
+            _logger = logger;
             _deviceManager = deviceManager;
 
             _deviceManager.PackageWeightsFilledOut += OnPackageWeightsFilledOut;
@@ -57,6 +61,11 @@ namespace WeightScale.BusinessLogicLayer.Services
         private void OnPackageWeightsFilledOut(PackageWeights obj)
         {
             var shipment = _shipmentRepository.GetFirstUnFinishedShipment();
+            if (shipment == null)
+            {
+                _logger.LogWarning("No shipment found for package weights.");
+                return;
+            }
 
             if (obj.FullWeight == null && obj.EmptyWeight.HasValue)
             {
@@ -68,6 +77,7 @@ namespace WeightScale.BusinessLogicLayer.Services
 
                 updatePackage.EmptyWeight = obj.EmptyWeight;
                 _packageRepository.Update(updatePackage);
+                _logger.LogInfo($"Db: Empty weight for package {updatePackage.Id} updated to {obj.EmptyWeight}");
                 PackageAdded?.Invoke(updatePackage);
 
                 return;
@@ -81,6 +91,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                           };
 
             _packageRepository.Add(package);
+            _logger.LogInfo("Db: New package added to shipment " + shipment.Id);
             PackageAdded?.Invoke(package);
         }
     }

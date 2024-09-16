@@ -5,6 +5,7 @@ using WeightScale.BusinessLogicLayer.Mappers;
 using WeightScale.BusinessLogicLayer.Models;
 using WeightScale.BusinessLogicLayer.Services;
 using WeightScale.DataAccessLayer.Entities;
+using WeightScale.Integration.Services;
 using WeightScale.Presentation.Command;
 using WeightScale.Presentation.Services.Interfaces;
 
@@ -16,18 +17,22 @@ namespace WeightScale.Presentation.ViewModel
         private readonly IShipmentService _shipmentService;
         private readonly IWeightService _weightService;
         private readonly IDialogService _dialogService;
+        private readonly ILogger _logger;
+
         private DateTime _selectedDate;
         private ObservableCollection<ShipmentModel> _shipmentModels;
 
         public WeightViewModel(IWeightService weightService,
                                IShipmentService shipmentService,
                                IPackageService packageService,
-                               IDialogService dialogService)
+                               IDialogService dialogService,
+                               ILogger logger)
         {
             _weightService = weightService;
             _shipmentService = shipmentService;
             _packageService = packageService;
             _dialogService = dialogService;
+            _logger = logger;
             _shipmentService.PackageAdded += OnPackageAdded;
 
             CompleteShipmentCommand = new DelegateCommand(CompleteShipment, CanCompleteShipment);
@@ -67,6 +72,7 @@ namespace WeightScale.Presentation.ViewModel
 
         private void OnPackageAdded(Package obj)
         {
+            _logger.LogInfo("UI: Package received.");
             var shipment = Shipments.FirstOrDefault(s => s.Id == obj.ShipmentId);
             if (shipment == null)
             {

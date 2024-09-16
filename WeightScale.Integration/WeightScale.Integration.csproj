@@ -42,6 +42,8 @@
         <Compile Include="Fixtures\Scale\MockScaleDevice.cs" />
         <Compile Include="Fixtures\Scale\ScaleDevice.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Services\ILogger.cs" />
+        <Compile Include="Services\Logger.cs" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Hbm.Automation.Api\Hbm.Automation.Api.csproj">

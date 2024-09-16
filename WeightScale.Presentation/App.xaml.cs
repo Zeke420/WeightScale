@@ -14,6 +14,7 @@ using WeightScale.DataAccessLayer.Contexts;
 using WeightScale.DataAccessLayer.Repository;
 using WeightScale.DataAccessLayer.Repository.Implementation;
 using WeightScale.Integration.Fixtures.Scale;
+using WeightScale.Integration.Services;
 using WeightScale.Presentation.Helpers;
 using WeightScale.Presentation.Resources.Constants;
 using WeightScale.Presentation.Services;
@@ -98,6 +99,8 @@ namespace WeightScale.Presentation
 
             services.AddSingleton<IDeviceManager, DeviceManager>();
             services.AddSingleton<IPackageService, PackageService>();
+
+            services.AddSingleton<ILogger, Logger>();
 
             #if DEBUG
                 services.AddTransient<IScaleDevice, MockScaleDevice>();
