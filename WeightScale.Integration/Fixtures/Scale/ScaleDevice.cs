@@ -21,7 +21,7 @@ namespace WeightScale.Integration.Fixtures.Scale
 
     public class ScaleDevice : IScaleDevice
     {
-        private const int StabilityDurationRequired = 500;
+        private const int StabilityDurationRequired = 300;
 
         private bool _is1DigitalInput1ActiveLastState;
         private bool _isConnected;
@@ -79,14 +79,8 @@ namespace WeightScale.Integration.Fixtures.Scale
 
         private void Update(object sender, ProcessDataReceivedEventArgs e)
         {
-            if (_isUpdating)
-            {
-                return;
-            }
-
             try
             {
-                _isUpdating = true;
                 if (e.ProcessData.Is1DigitalInput1Active == null || e.ProcessData.Weight == null)
                 {
                     _logger.LogWarning("Received null data from WTX device");
@@ -96,11 +90,19 @@ namespace WeightScale.Integration.Fixtures.Scale
                 var isWeightStable = e.ProcessData.WeightStable;
                 var netWeight = e.ProcessData.Weight.Net;
 
-                HandleWeightStability(isWeightStable, netWeight);
+                var isInput1Active = IsInput1Active();
+                if (isInput1Active)
+                {
+                    HandleWeightStability(isWeightStable, netWeight);
+                }
+                else
+                {
+                    _weightStableSince = null;
+                }
             }
             catch (IOException ioException)
             {
-                Console.WriteLine($@"IOException in Update: {ioException.Message}");
+                Console.WriteLine($"IOException in Update: {ioException.Message}");
                 IsConnected = false;
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
@@ -141,7 +143,8 @@ namespace WeightScale.Integration.Fixtures.Scale
                     _wtxDevice.Connection.WriteInteger(JetBusCommands.OS1DigitalOutput1, 1);
                     _logger.LogInfo("Output 1 is switched on");
                     OnWeightStable(true);
-                    CheckDigitalInput1ActiveState(weight);
+                    _logger.LogInfo("Stable Weight: " + weight);
+                    OnWeightDataReceived(weight);
                 }
             }
             else
@@ -154,23 +157,24 @@ namespace WeightScale.Integration.Fixtures.Scale
             }
         }
 
-        private void CheckDigitalInput1ActiveState(double weight)
+        private bool IsInput1Active()
         {
             var isInput1 = _wtxDevice.DigitalIO.Input1;
             _logger.LogInfo("Input 1 is active: " + isInput1);
-            if (isInput1 && !_is1DigitalInput1ActiveLastState && !_isWeightDataProcessed)
+            switch (isInput1)
             {
-                OnWeightDataReceived(weight);
-                _logger.LogInfo("Weight data received: " + weight);
-                _is1DigitalInput1ActiveLastState = true;
-                _isWeightDataProcessed = true;
-                _wtxDevice.DigitalIO.Output1 = false;
+                case true when !_is1DigitalInput1ActiveLastState && !_isWeightDataProcessed:
+                    _is1DigitalInput1ActiveLastState = true;
+                    _isWeightDataProcessed = true;
+                    _wtxDevice.DigitalIO.Output1 = false;
+                    break;
+                case false:
+                    _is1DigitalInput1ActiveLastState = false;
+                    _isWeightDataProcessed = false;
+                    break;
             }
-            else if (!isInput1)
-            {
-                _is1DigitalInput1ActiveLastState = false;
-                _isWeightDataProcessed = false;
-            }
+
+            return isInput1;
         }
 
         private void OnWeightDataReceived(double weight)
