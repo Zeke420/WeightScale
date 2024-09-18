@@ -100,7 +100,7 @@ namespace WeightScale.Presentation
             services.AddSingleton<IDeviceManager, DeviceManager>();
             services.AddSingleton<IPackageService, PackageService>();
 
-            services.AddSingleton<ILogger, Logger>();
+            services.AddSingleton<ILogger>(new Logger(applicationSettings.LogFilePath));
 
             #if DEBUG
                 services.AddTransient<IScaleDevice, MockScaleDevice>();

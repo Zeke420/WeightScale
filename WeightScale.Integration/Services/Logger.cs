@@ -8,9 +8,9 @@ namespace WeightScale.Integration.Services
         private readonly string _logFilePath;
         private static readonly object _lock = new object();
 
-        public Logger()
+        public Logger(string logFilePath)
         {
-            _logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+            _logFilePath = Path.Combine(logFilePath, "log.txt");
         }
 
         public void LogInfo(string message)

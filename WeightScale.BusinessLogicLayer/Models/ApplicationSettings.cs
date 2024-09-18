@@ -6,5 +6,6 @@
         public string IpAddressFullWeight { get; set; }
         public string IpAddressEmptyWeight { get; set; }
         public string ReportFilePath { get; set; }
+        public string LogFilePath { get; set; }
     }
 }
