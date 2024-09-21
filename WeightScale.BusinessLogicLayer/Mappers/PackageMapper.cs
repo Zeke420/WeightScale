@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,7 +21,9 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                                       {
                                           Id = package.Id,
                                           EmptyWeight = package.EmptyWeight?.ToString("F1"),
+                                          EmptyPackageDate = package.EmptyPackageDate,
                                           FullWeight = package.FullWeight?.ToString("F1"),
+                                          FullPackageDate = package.FullPackageDate,
                                           WeightDifference = (package.FullWeight - package.EmptyWeight)?.ToString("F1"),
                                           ShipmentId = package.ShipmentId,
                                           PackageMoves = new ObservableCollection<PackageMoveModel>(packageMoveModels)
@@ -35,7 +38,9 @@ namespace WeightScale.BusinessLogicLayer.Mappers
                    {
                        Id = package.Id,
                        EmptyWeight = package.EmptyWeight?.ToString("F1"),
+                       EmptyPackageDate = package.EmptyPackageDate,
                        FullWeight = package.FullWeight?.ToString("F1"),
+                       FullPackageDate = package.FullPackageDate,
                        WeightDifference = (package.FullWeight - package.EmptyWeight)?.ToString("F1"),
                        ShipmentId = package.ShipmentId,
                        PackageMoves = new ObservableCollection<PackageMoveModel>(shipmentModels.Where(x => x != shipment)

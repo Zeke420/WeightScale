@@ -76,6 +76,8 @@ namespace WeightScale.BusinessLogicLayer.Services
                 }
 
                 updatePackage.EmptyWeight = obj.EmptyWeight;
+                updatePackage.EmptyPackageDate = DateTime.Now;
+
                 _packageRepository.Update(updatePackage);
                 _logger.LogInfo($"Db: Empty weight for package {updatePackage.Id} updated to {obj.EmptyWeight}");
                 PackageAdded?.Invoke(updatePackage);
@@ -87,7 +89,8 @@ namespace WeightScale.BusinessLogicLayer.Services
                           {
                                   FullWeight = obj.FullWeight,
                                   EmptyWeight = obj.EmptyWeight,
-                                  ShipmentId = shipment.Id
+                                  ShipmentId = shipment.Id,
+                                  FullPackageDate = DateTime.Now
                           };
 
             _packageRepository.Add(package);

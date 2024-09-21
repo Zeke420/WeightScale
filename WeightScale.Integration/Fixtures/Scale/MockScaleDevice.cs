@@ -51,7 +51,7 @@ namespace WeightScale.Integration.Fixtures.Scale
                 WeightDataReceived?.Invoke(weight);
                 WeightStable?.Invoke(isStable);
 
-                var delay = _random.Next(2000, 5001);
+                var delay = _random.Next(40000, 50001);
                 await Task.Delay(delay, cancellationToken);
             }
         }

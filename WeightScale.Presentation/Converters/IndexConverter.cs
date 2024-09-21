@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace WeightScale.Presentation.Converters
@@ -8,8 +9,9 @@ namespace WeightScale.Presentation.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int index)
+            if (value is DataGridRow row)
             {
+                var index = row.GetIndex();
                 return index + 1;
             }
 

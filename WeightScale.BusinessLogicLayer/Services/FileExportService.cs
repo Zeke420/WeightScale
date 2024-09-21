@@ -52,7 +52,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                 var sheet = workbook.CreateSheet("Report");
 
                 var numericCellStyle = CreateNumericCellStyle(workbook);
-                var dateCellStyle = CreateDateCellStyle(workbook);
+                var dateCellStyle = CreateDateTimeCellStyle(workbook);
 
                 var row = 0;
                 foreach (var exportModel in exportModels)
@@ -78,12 +78,14 @@ namespace WeightScale.BusinessLogicLayer.Services
                     dataRow.CreateCell(0)
                            .SetCellValue("Container");
                     dataRow.CreateCell(1)
-                           .SetCellValue("Date");
+                           .SetCellValue("Full Date");
                     dataRow.CreateCell(2)
                            .SetCellValue("Weight with Birds (kg)");
                     dataRow.CreateCell(3)
-                           .SetCellValue("Weight without Birds (kg)");
+                           .SetCellValue("Empty Date");
                     dataRow.CreateCell(4)
+                           .SetCellValue("Weight without Birds (kg)");
+                    dataRow.CreateCell(5)
                            .SetCellValue("Weight of Birds (kg)");
 
                     foreach (var package in exportModel.Shipment.Packages)
@@ -92,10 +94,11 @@ namespace WeightScale.BusinessLogicLayer.Services
                         dataRow.CreateCell(0)
                                .SetCellValue(containerCount);
 
-                        CreateDateCell(dataRow, 1, exportModel.Shipment.ShipmentDate, dateCellStyle);
+                        CreateDateCell(dataRow, 1, package.FullPackageDate, dateCellStyle);
                         CreateNumericCell(dataRow, 2, package.FullWeight, numericCellStyle);
-                        CreateNumericCell(dataRow, 3, package.EmptyWeight, numericCellStyle);
-                        CreateNumericCell(dataRow, 4, package.FullWeight - package.EmptyWeight, numericCellStyle);
+                        CreateDateCell(dataRow, 3, package.EmptyPackageDate, dateCellStyle);
+                        CreateNumericCell(dataRow, 4, package.EmptyWeight, numericCellStyle);
+                        CreateNumericCell(dataRow, 5, package.FullWeight - package.EmptyWeight, numericCellStyle);
 
                         containerCount++;
                     }
@@ -131,17 +134,23 @@ namespace WeightScale.BusinessLogicLayer.Services
             cell.CellStyle = cellStyle;
         }
 
-        private static ICellStyle CreateDateCellStyle(IWorkbook workbook)
+        private static ICellStyle CreateDateTimeCellStyle(IWorkbook workbook)
         {
             var cellStyle = workbook.CreateCellStyle();
-            cellStyle.DataFormat = workbook.CreateDataFormat().GetFormat("dd-MM-yy");
+            cellStyle.DataFormat = workbook.CreateDataFormat().GetFormat("dd-MM-yy HH:mm:ss");
             return cellStyle;
         }
 
-        private static void CreateDateCell(IRow dataRow, int rowIndex, DateTime value, ICellStyle cellStyle)
+        private static void CreateDateCell(IRow dataRow, int rowIndex, DateTime? value, ICellStyle cellStyle)
         {
             var cell = dataRow.CreateCell(rowIndex);
-            cell.SetCellValue(value);
+            if (value is null)
+            {
+                cell.SetCellValue(string.Empty);
+                return;
+            }
+
+            cell.SetCellValue((DateTime)value);
             cell.CellStyle = cellStyle;
         }
     }

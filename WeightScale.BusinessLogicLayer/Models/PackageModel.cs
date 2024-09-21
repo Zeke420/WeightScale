@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,8 @@ namespace WeightScale.BusinessLogicLayer.Models
         private int _shipmentId;
         private string _weightDifference;
         private bool _canManualMeasure;
+        private DateTime? _fullPackageDate;
+        private DateTime? _emptyPackageDate;
         private ObservableCollection<PackageMoveModel> _packageMoves;
         private PackageMoveModel _selectedPackageMoveModel;
 
@@ -112,6 +115,32 @@ namespace WeightScale.BusinessLogicLayer.Models
             {
                 _canManualMeasure = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public DateTime? FullPackageDate
+        {
+            get => _fullPackageDate;
+            set
+            {
+                if (_fullPackageDate != value)
+                {
+                    _fullPackageDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public DateTime? EmptyPackageDate
+        {
+            get => _emptyPackageDate;
+            set
+            {
+                if (_emptyPackageDate != value)
+                {
+                    _emptyPackageDate = value;
+                    OnPropertyChanged();
+                }
             }
         }
 

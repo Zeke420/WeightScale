@@ -87,6 +87,8 @@ namespace WeightScale.Presentation.ViewModel
                 existingPackage.FullWeight = packageModel.FullWeight;
                 existingPackage.EmptyWeight = packageModel.EmptyWeight;
                 existingPackage.WeightDifference = packageModel.WeightDifference;
+                existingPackage.FullPackageDate = packageModel.FullPackageDate;
+                existingPackage.EmptyPackageDate = packageModel.EmptyPackageDate;
             }
             else
             {
@@ -157,6 +159,8 @@ namespace WeightScale.Presentation.ViewModel
                     existingPackage.EmptyWeight = packageModel.EmptyWeight;
                     existingPackage.FullWeight = packageModel.FullWeight;
                     existingPackage.WeightDifference = packageModel.WeightDifference;
+                    existingPackage.EmptyPackageDate = packageModel.EmptyPackageDate;
+                    existingPackage.FullPackageDate = packageModel.FullPackageDate;
                 }
 
                 OnPropertyChanged(nameof(Shipments));
