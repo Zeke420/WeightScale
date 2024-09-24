@@ -75,7 +75,11 @@ namespace WeightScale.Integration.Fixtures.Scale
             _wtxDevice.Connection.WriteInteger(JetBusCommands.OM2DigitalOutput2Mode, output2Mode);
             _wtxDevice.Connection.WriteInteger(JetBusCommands.OS2DigitalOutput2, output2Mode);
 
-            _isUpdating = false;
+            if(!state)
+            {
+                _isUpdating = false;
+            }
+
             _logger.LogInfo($"Switched output 2 to {(state ? "On" : "Off")}");
         }
 

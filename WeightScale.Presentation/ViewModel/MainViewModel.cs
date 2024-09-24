@@ -17,7 +17,7 @@ namespace WeightScale.Presentation.ViewModel
 
         public MainViewModel(INavigationService navigationService,
                              IDialogService dialogService,
-                             IPackageService packageService,
+                             IDeviceManager deviceManager,
                              IOptions<ApplicationSettings> applicationSettings)
         {
             _navigationService = navigationService;
@@ -26,8 +26,8 @@ namespace WeightScale.Presentation.ViewModel
             _navigationService.NavigateTo<HeaderViewModel>(NavigationRegion.Header);
             _navigationService.NavigateTo<WeightViewModel>(NavigationRegion.Main);
             _navigationService.NavigateTo<FooterViewModel>(NavigationRegion.Footer);
-            packageService.ConnectDevices(_applicationSettings.IpAddressFullWeight,
-                                          _applicationSettings.IpAddressEmptyWeight);
+            deviceManager.ConnectDevices(_applicationSettings.IpAddressFullWeight,
+                                         _applicationSettings.IpAddressEmptyWeight);
         }
 
         public string TitleWithVersion

@@ -11,8 +11,7 @@ namespace WeightScale.BusinessLogicLayer.Services
 {
     public interface IDeviceManager
     {
-        event Action<PackageWeights> PackageWeightsFilledOut;
-        void ConnectDevicesAsync(string fullWeightDeviceIp, string emptyWeightDeviceIp);
+        void ConnectDevices(string fullWeightDeviceIp, string emptyWeightDeviceIp);
     }
 
     public class DeviceManager : IDeviceManager
@@ -22,18 +21,21 @@ namespace WeightScale.BusinessLogicLayer.Services
         private readonly IMessenger _messenger;
         private readonly ILogger _logger;
         private readonly Dispatcher _uiDispatcher;
+        private readonly IPackageService _packageService;
         private bool _isFullUpdating;
         private bool _isEmptyUpdating;
 
         public DeviceManager(IScaleDevice fullWeightDevice,
                              IScaleDevice emptyWeightDevice,
                              IMessenger messenger,
-                             ILogger logger)
+                             ILogger logger,
+                             IPackageService packageService)
         {
             _fullWeightDevice = fullWeightDevice;
             _emptyWeightDevice = emptyWeightDevice;
             _messenger = messenger;
             _logger = logger;
+            _packageService = packageService;
             _uiDispatcher = Dispatcher.CurrentDispatcher;
 
             _fullWeightDevice.WeightDataReceived += OnFullWeightDataReceived;
@@ -48,9 +50,8 @@ namespace WeightScale.BusinessLogicLayer.Services
             _isEmptyUpdating = false;
         }
 
-        public event Action<PackageWeights> PackageWeightsFilledOut;
-
-        public void ConnectDevicesAsync(string fullWeightDeviceIp, string emptyWeightDeviceIp)
+        public void ConnectDevices(string fullWeightDeviceIp,
+                                   string emptyWeightDeviceIp)
         {
             _fullWeightDevice.Connect(fullWeightDeviceIp);
             _emptyWeightDevice.Connect(emptyWeightDeviceIp);
@@ -125,7 +126,7 @@ namespace WeightScale.BusinessLogicLayer.Services
 
                              _logger.LogInfo("Full weight received: " + fullWeight);
                              _logger.LogInfo("Updating UI with full weight");
-                             _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
+                             _uiDispatcher.Invoke(() => { _packageService.SaveFullWeight(packageWeight); });
                              _logger.LogInfo("UI updated with full weight");
                          }
                          catch (Exception e)
@@ -161,7 +162,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                                                      EmptyWeight = emptyWeight
                                                  };
 
-                             _uiDispatcher.Invoke(() => { PackageWeightsFilledOut?.Invoke(packageWeight); });
+                             _uiDispatcher.Invoke(() => { _packageService.SaveEmptyWeight(packageWeight); });
                          }
                          catch (Exception e)
                          {
