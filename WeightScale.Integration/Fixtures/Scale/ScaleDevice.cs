@@ -74,6 +74,8 @@ namespace WeightScale.Integration.Fixtures.Scale
             var output2Mode = state ? 1 : 0;
             _wtxDevice.Connection.WriteInteger(JetBusCommands.OM2DigitalOutput2Mode, output2Mode);
             _wtxDevice.Connection.WriteInteger(JetBusCommands.OS2DigitalOutput2, output2Mode);
+
+            _isUpdating = false;
             _logger.LogInfo($"Switched output 2 to {(state ? "On" : "Off")}");
         }
 
@@ -121,10 +123,6 @@ namespace WeightScale.Integration.Fixtures.Scale
                 _wtxDevice.Disconnect();
                 Connect(_wtxDevice.Connection.IpAddress);
             }
-            finally
-            {
-                _isUpdating = false;
-            }
         }
 
         private void HandleWeightStability(bool isStable, double weight)
@@ -144,6 +142,13 @@ namespace WeightScale.Integration.Fixtures.Scale
                     _logger.LogInfo("Output 1 is switched on");
                     OnWeightStable(true);
                     _logger.LogInfo("Stable Weight: " + weight);
+
+                    if(_isUpdating)
+                    {
+                        return;
+                    }
+
+                    _isUpdating = true;
                     OnWeightDataReceived(weight);
                 }
             }

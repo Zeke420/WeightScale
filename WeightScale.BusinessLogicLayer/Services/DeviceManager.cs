@@ -22,7 +22,8 @@ namespace WeightScale.BusinessLogicLayer.Services
         private readonly IMessenger _messenger;
         private readonly ILogger _logger;
         private readonly Dispatcher _uiDispatcher;
-        private bool _isUpdating;
+        private bool _isFullUpdating;
+        private bool _isEmptyUpdating;
 
         public DeviceManager(IScaleDevice fullWeightDevice,
                              IScaleDevice emptyWeightDevice,
@@ -43,7 +44,8 @@ namespace WeightScale.BusinessLogicLayer.Services
             _emptyWeightDevice.WeightStable += OnEmptyWeightStabilized;
             _emptyWeightDevice.ConnectionStatusChanged += OnEmptyScaleConnectionStatusChange;
 
-            _isUpdating = false;
+            _isFullUpdating = false;
+            _isEmptyUpdating = false;
         }
 
         public event Action<PackageWeights> PackageWeightsFilledOut;
@@ -108,13 +110,14 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             Task.Run(() =>
                      {
-                         if (_isUpdating)
+                         if (_isFullUpdating)
                          {
                              return;
                          }
 
                          try
                          {
+                             _isFullUpdating = true;
                              var packageWeight = new PackageWeights
                                                  {
                                                      FullWeight = fullWeight
@@ -133,7 +136,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                          }
                          finally
                          {
-                             _isUpdating = false;
+                             _isFullUpdating = false;
                              _ = SignalWeightDataReceived(true);
                          }
                      });
@@ -143,14 +146,14 @@ namespace WeightScale.BusinessLogicLayer.Services
         {
             Task.Run(() =>
                      {
-                         if (_isUpdating)
+                         if (_isEmptyUpdating)
                          {
                              return;
                          }
 
                          try
                          {
-                             _isUpdating = true;
+                             _isEmptyUpdating = true;
 
                              // Use the captured UI dispatcher
                              var packageWeight = new PackageWeights
@@ -168,7 +171,7 @@ namespace WeightScale.BusinessLogicLayer.Services
                          }
                          finally
                          {
-                             _isUpdating = false;
+                             _isEmptyUpdating = false;
                              _ = SignalWeightDataReceived(false);
                          }
                      });
