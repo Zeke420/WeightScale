@@ -109,8 +109,10 @@ namespace WeightScale.BusinessLogicLayer.Services
                     dataRow.CreateCell(1)
                            .SetCellValue(string.Empty);
                     CreateNumericCell(dataRow, 2, exportModel.PackageFullTotals, numericCellStyle);
-                    CreateNumericCell(dataRow, 3, exportModel.PackageEmptyTotals, numericCellStyle);
-                    CreateNumericCell(dataRow, 4, exportModel.PackageNetTotals, numericCellStyle);
+                    dataRow.CreateCell(3)
+                           .SetCellValue(string.Empty);
+                    CreateNumericCell(dataRow, 4, exportModel.PackageEmptyTotals, numericCellStyle);
+                    CreateNumericCell(dataRow, 5, exportModel.PackageNetTotals, numericCellStyle);
 
                     sheet.CreateRow(row++);
                 }

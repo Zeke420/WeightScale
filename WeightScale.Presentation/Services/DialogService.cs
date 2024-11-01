@@ -22,7 +22,7 @@ namespace WeightScale.Presentation.Services
 
         public MessageBoxResult SuccessMessage(string message)
         {
-            return new ConfirmationDialog("Success", message)
+            return new MessageDialog("Success", message)
                     {
                             WindowStartupLocation = WindowStartupLocation.CenterOwner,
                             Owner = Application.Current.MainWindow

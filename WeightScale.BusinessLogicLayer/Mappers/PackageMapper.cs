@@ -68,12 +68,14 @@ namespace WeightScale.BusinessLogicLayer.Mappers
         public static Package MapToEntity(PackageModel packageModel)
         {
             return new Package
-                   {
-                       Id = packageModel.Id,
-                       EmptyWeight = double.Parse(packageModel.EmptyWeight),
-                       FullWeight = double.Parse(packageModel.FullWeight),
-                       ShipmentId = packageModel.ShipmentId
-                   };
+            {
+                Id = packageModel.Id,
+                EmptyWeight = double.Parse(packageModel.EmptyWeight),
+                FullWeight = double.Parse(packageModel.FullWeight),
+                EmptyPackageDate = packageModel.EmptyPackageDate,
+                FullPackageDate = packageModel.FullPackageDate,
+                ShipmentId = packageModel.ShipmentId
+            };
         }
     }
 }

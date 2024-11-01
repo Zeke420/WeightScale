@@ -23,11 +23,7 @@
             <TextBlock Text="Empty " />
             <TextBlock
                 Text="{Binding IsEmptyScaleConnected,Converter={StaticResource BooleanToConnectionStatusConverter}}" />
-            <TextBlock Text=" Stable: " />
-            <TextBlock Text="{Binding IsEmptyWeightStable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Ellipse Fill="{Binding IsEmptyWeightStable, Converter={StaticResource PassFailToColorConverter}}"
-                     Width="20"
-                     Height="20" />
+
         </StackPanel>
 
         <StackPanel Grid.Column="1"
@@ -36,11 +32,6 @@
             <TextBlock Text="Full " />
             <TextBlock
                 Text="{Binding IsFullScaleConnected,Converter={StaticResource BooleanToConnectionStatusConverter}}" />
-            <TextBlock Text=" Stable: " />
-            <TextBlock Text="{Binding IsFullWeightStable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Ellipse Fill="{Binding IsFullWeightStable, Converter={StaticResource PassFailToColorConverter}}"
-                     Width="20"
-                     Height="20" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -16,6 +16,7 @@ namespace WeightScale.BusinessLogicLayer.Services
 
     public class DeviceManager : IDeviceManager
     {
+        private const int Output2Timeout = 3500;
         private readonly IScaleDevice _emptyWeightDevice;
         private readonly IScaleDevice _fullWeightDevice;
         private readonly IMessenger _messenger;
@@ -186,14 +187,14 @@ namespace WeightScale.BusinessLogicLayer.Services
                 {
                     _logger.LogInfo("Device Manager Signaling full weight data received");
                     _fullWeightDevice.SwitchOutput2(true);
-                    await Task.Delay(1000);
+                    await Task.Delay(Output2Timeout);
                     _fullWeightDevice.SwitchOutput2(false);
                 }
                 else
                 {
                     _logger.LogInfo("Device Manager Signaling empty weight data received");
                     _emptyWeightDevice.SwitchOutput2(true);
-                    await Task.Delay(1000);
+                    await Task.Delay(Output2Timeout);
                     _emptyWeightDevice.SwitchOutput2(false);
                 }
             }

@@ -19,7 +19,7 @@ namespace WeightScale.Presentation.ViewModel
         public bool IsEmptyScaleConnected
         {
             get => _isEmptyScaleConnected;
-            set
+            private set
             {
                 _isEmptyScaleConnected = value;
                 OnPropertyChanged();
@@ -29,32 +29,17 @@ namespace WeightScale.Presentation.ViewModel
         public bool IsFullScaleConnected
         {
             get => _isFullScaleConnected;
-            set
+            private set
             {
                 _isFullScaleConnected = value;
                 OnPropertyChanged();
             }
         }
 
-        public bool IsEmptyWeightStable
-        {
-            get => _isEmptyWeightStable;
-            set => SetField(ref _isEmptyWeightStable, value);
-        }
-
-        public bool IsFullWeightStable
-        {
-            get => _isFullWeightStable;
-            set => SetField(ref _isFullWeightStable, value);
-        }
-
         public override void OnNavigatedTo(object parameter)
         {
             _messenger.Subscribe<EmptyConnectionStatus>(this, UpdateEmptyConnectionStatus);
-            _messenger.Subscribe<EmptyScaleWeightStable>(this, UpdateEmptyWeightStable);
-
             _messenger.Subscribe<FullConnectionStatus>(this, UpdateFullConnectionStatus);
-            _messenger.Subscribe<FullScaleWeightStable>(this, UpdateFullWeightStable);
         }
 
         private void UpdateEmptyConnectionStatus(object obj)
@@ -70,23 +55,6 @@ namespace WeightScale.Presentation.ViewModel
             if (obj is FullConnectionStatus fullConnectionStatus)
             {
                 IsFullScaleConnected = fullConnectionStatus.IsConnected;
-            }
-        }
-
-        private void UpdateEmptyWeightStable(object obj)
-        {
-            if (obj is EmptyScaleWeightStable scaleWeightStable)
-            {
-                IsEmptyWeightStable = scaleWeightStable.IsStable;
-            }
-        }
-
-        private void UpdateFullWeightStable(object obj)
-        {
-            if (obj is FullScaleWeightStable scaleWeightStable)
-            {
-                IsFullWeightStable = scaleWeightStable.IsStable;
-                OnPropertyChanged(nameof(IsFullWeightStable));
             }
         }
     }

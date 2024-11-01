@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
 using Microsoft.Extensions.Configuration;
@@ -33,9 +34,11 @@ namespace WeightScale.Presentation
 
         public IServiceProvider ServiceProvider { get; private set; }
         private const string CurrentCultureInfo = "en-US";
+        private Mutex _mutex;
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            CheckForSingleApplicationInstance();
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(CurrentCultureInfo);
             CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfoByIetfLanguageTag(CurrentCultureInfo);
             FrameworkElement.LanguageProperty.OverrideMetadata(
@@ -114,6 +117,22 @@ namespace WeightScale.Presentation
 
             ServiceProvider = services.BuildServiceProvider();
             return ServiceProvider;
+        }
+
+        private void CheckForSingleApplicationInstance()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var applicationName = assembly.GetName().Name;
+
+            _mutex = new Mutex(true, applicationName, out var isApplicationInstance);
+
+            if (isApplicationInstance)
+            {
+                return;
+            }
+
+            MessageBox.Show("Failed to start application (already running)");
+            Current.Shutdown();
         }
     }
 }

@@ -45,6 +45,7 @@ namespace WeightScale.BusinessLogicLayer.Services
         public void ManualMeasure(PackageModel packageModel)
         {
             packageModel.EmptyWeight = "0";
+            packageModel.EmptyPackageDate = DateTime.Now;
             var package = PackageMapper.MapToEntity(packageModel);
             _packageRepository.Update(package);
         }
